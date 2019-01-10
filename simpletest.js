@@ -36,18 +36,6 @@ var SimpleTest = {
       throw new Error('fail(): ' + msg);
   },
 
-  assert: function(value, msg) {
-      if (!value) {
-          throw new Error('assert(): ' + msg);
-      }
-  },
-
-  assertEquals: function(expected, actual) {
-      if (expected != actual) {
-          throw new Error('assertEquals() "' + expected + '" != "' + actual + '"');
-      }
-  },
-
   assertStrictEquals: function(expected, actual) {
       if (expected !== actual) {
           throw new Error('assertStrictEquals() "' + expected + '" !== "' + actual + '"');
@@ -56,8 +44,6 @@ var SimpleTest = {
 };
 
 var fail               = SimpleTest.fail,
-    assert             = SimpleTest.assert,
-    assertEquals       = SimpleTest.assertEquals,
-    eq                 = SimpleTest.assertEquals, // alias for assertEquals
     assertStrictEquals = SimpleTest.assertStrictEquals,
-    tests              = SimpleTest.run;
+    eq                 = SimpleTest.assertStrictEquals; // alias for assertStrictEquals
+
