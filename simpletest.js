@@ -25,7 +25,8 @@ var SimpleTest = {
               console.groupEnd();
           }
       }
-      setTimeout(function() { // Give document a chance to complete
+      // Give the DOM document a chance to complete
+      setTimeout(function() { 
           if (window.document && document.body) {
               document.body.style.backgroundColor = (failures == 0 ? '#99ff99' : '#ff9999');
           }
@@ -45,5 +46,6 @@ var SimpleTest = {
 
 var fail               = SimpleTest.fail,
     assertStrictEquals = SimpleTest.assertStrictEquals,
-    eq                 = SimpleTest.assertStrictEquals; // alias for assertStrictEquals
+    // alias for assertStrictEquals
+    eq                 = SimpleTest.assertStrictEquals; 
 

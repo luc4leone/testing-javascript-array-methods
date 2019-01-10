@@ -1,9 +1,9 @@
 <script src="../simpletest.js"></script>
 <script>
-/* Array.prototype method to test */
+/* Array.prototype.map method to test */
   function map (myArray, callback) {
     for (var i = 0; i < myArray.length; i++) {
-      callback(myArray[i], i);
+      callback(myArray[i], i, myArray);
     }
   }
 
@@ -32,9 +32,9 @@
     },
     '04 - It should pass in the original array as the third argument to the callback.':
     function () {
-      var a = [1];
-      map(a, function (element, index, b) {
-        eq(a, b);
+      var originalArray = [1];
+      map(originalArray, function (element, index, testArray) {
+        eq(originalArray, testArray);
       });
     },
     '05 - It should accept an optional this object.':
