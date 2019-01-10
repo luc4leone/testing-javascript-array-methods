@@ -32,10 +32,9 @@
     },
     '04 - It should pass in the original array as the third argument to the callback.':
     function () {
-
-      var a = [];
+      var a = [1];
       map(a, function (element, index, b) {
-        //eq(a, b);
+        eq(a, b);
       });
     },
     '05 - It should accept an optional this object.':

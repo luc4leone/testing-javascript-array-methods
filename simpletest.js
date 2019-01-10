@@ -17,7 +17,7 @@ var SimpleTest = {
           var testAction = tests[testName];
           try {
               testAction.apply(this);
-              console.log('%c' + testName, 'color: green');
+              console.log('%c' + testName, 'color: green; font-weight: bold');
           } catch (e) {
               failures++;
               console.groupCollapsed('%c' + testName, 'color: red');
