@@ -1,6 +1,6 @@
 /* 
 
-Things done to the tinytest.js testing framework (here) to improve the usability.
+Things done to the tinytest.js testing library to improve the usability.
 
 1) Success tests should be green
 2) Fix the total number of failures (now double the right number in tinytest.js)
@@ -11,8 +11,7 @@ Things done to the tinytest.js testing framework (here) to improve the usability
  */
 
 var SimpleTest = {
-
-  run: function(tests) {
+  runTests: function(tests) {
       var failures = 0;
       for (var testName in tests) {
           var testAction = tests[testName];
@@ -53,13 +52,12 @@ var SimpleTest = {
       if (expected !== actual) {
           throw new Error('assertStrictEquals() "' + expected + '" !== "' + actual + '"');
       }
-  },
-
+  }
 };
 
-var fail               = SimpleTest.fail.bind(SimpleTest),
-    assert             = SimpleTest.assert.bind(SimpleTest),
-    assertEquals       = SimpleTest.assertEquals.bind(SimpleTest),
-    eq                 = SimpleTest.assertEquals.bind(SimpleTest), // alias for assertEquals
-    assertStrictEquals = SimpleTest.assertStrictEquals.bind(SimpleTest),
-    tests              = SimpleTest.run.bind(SimpleTest);
+var fail               = SimpleTest.fail,
+    assert             = SimpleTest.assert,
+    assertEquals       = SimpleTest.assertEquals,
+    eq                 = SimpleTest.assertEquals, // alias for assertEquals
+    assertStrictEquals = SimpleTest.assertStrictEquals,
+    tests              = SimpleTest.run;
