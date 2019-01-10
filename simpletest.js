@@ -11,7 +11,7 @@ Things done to the tinytest.js testing library to improve the usability.
  */
 
 var SimpleTest = {
-  runTests: function(tests) {
+  runTests: function (tests) {
       var failures = 0;
       for (var testName in tests) {
           var testAction = tests[testName];
@@ -26,18 +26,18 @@ var SimpleTest = {
           }
       }
       // Give the DOM document a chance to complete
-      setTimeout(function() { 
+      setTimeout(function () { 
           if (window.document && document.body) {
               document.body.style.backgroundColor = (failures == 0 ? '#99ff99' : '#ff9999');
           }
       }, 0);
   },
 
-  fail: function(msg) {
+  fail: function (msg) {
       throw new Error('fail(): ' + msg);
   },
 
-  assertStrictEquals: function(expected, actual) {
+  assertStrictEquals: function (expected, actual) {
       if (expected !== actual) {
           throw new Error('assertStrictEquals() "' + expected + '" !== "' + actual + '"');
       }

@@ -3,6 +3,7 @@
 /* Array.prototype.map method to test */
   function map (myArray, callback, optionalObject) {
     var mapCallback = callback;
+    var newArray = [];
 
     if (optionalObject) {
       mapCallback = callback.bind(optionalObject);
@@ -11,6 +12,8 @@
     for (var i = 0; i < myArray.length; i++) {
       mapCallback(myArray[i], i, myArray);
     }
+
+    return newArray; 
   }
 
   SimpleTest.runTests({
@@ -43,7 +46,7 @@
         eq(originalArray, testArray);
       });
     },
-    '05 - It should accept an optional object, to use as "this" when executing the callback':
+    '05 - It should accept an optional object, to use as "this" when executing the callback.':
     function () {
       map([1], function () {
         eq(this.description, 'optional this object');
@@ -51,7 +54,8 @@
     },
     '06 - It should return an array.':
     function () {
-      fail();
+      var result = map([], function () {});
+      eq(Array.isArray(result), true);
     },
     '07 - It should return a new array, not the array being filtered.':
     function () {
