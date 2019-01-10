@@ -1,19 +1,19 @@
 <script src="../simpletest.js"></script>
 <script>
 /* Array.prototype.map method to test */
-  function map (myArray, callback, optionalObject) {
+  function map (arrayToMap, callback, optionalObject) {
     var mapCallback = callback;
-    var newArray = [];
+    var mappedArray = [];
 
     if (optionalObject) {
       mapCallback = callback.bind(optionalObject);
     }
 
-    for (var i = 0; i < myArray.length; i++) {
-      mapCallback(myArray[i], i, myArray);
+    for (var i = 0; i < arrayToMap.length; i++) {
+      mappedArray.push(mapCallback(arrayToMap[i], i, arrayToMap));
     }
 
-    return newArray; 
+    return mappedArray; 
   }
 
   SimpleTest.runTests({
@@ -59,11 +59,22 @@
     },
     '07 - It should return a new array, not the array being filtered.':
     function () {
-      fail();
+      var arrayToMap = [1];
+      var mappedArray = map(arrayToMap, function () {});
+      eq(arrayToMap !== mappedArray, true);
     },
-    '08 - It should return a new array that only has elements that have been transformed by the callback.':
+    '08 - It should return an array that only has elements that have been transformed by the callback.':
     function () {
-      fail();
+      var arrayToMap = [1, 2];
+      var mappedArray = map(arrayToMap, function (element) {
+        return element * 2;
+      });
+      eq(mappedArray.length, 2);
+      eq(mappedArray[0], 2);
+      
+
+
+
     }
   })
 </script>
