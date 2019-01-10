@@ -1,0 +1,16 @@
+<script src="../simpletest.js"></script>
+<script>
+
+  function map (myArray, callback) {
+    for (var i = 0; i < myArray.length; i++) {
+      callback(myArray[i], i);
+    }
+  }
+
+  tests({
+    'A sample success.': function () {},
+    'A sample failure.': function () {
+      fail();
+    }
+  });
+</script>

@@ -1,0 +1,67 @@
+<script src="../tinytest.js"></script>
+<script>
+
+  /* TESTS PROCESS
+    1. Write the name of the test (which is a property of the object
+    I pass to tests()). 
+
+    2. Make the test fail. 
+
+    3. Make it pass by writing the application code necessary to make it pass.
+
+    In general:
+
+    - Tests: go from simple to complex
+    - Try to write as little code as possible to make the test pass, 1 error
+    message at the time
+  */
+
+  function forEach(array, callback, optionalThisObject) {
+    var forEachCallback = callback;
+    
+    if (optionalThisObject) {
+      var forEachCallback = callback.bind(optionalThisObject);
+    }
+
+    for (var i = 0; i < array.length; i++) {
+      forEachCallback(array[i], i, array);
+    }
+  };
+
+  tests({
+  '01 - It should run the callback function array.length times.': 
+  function () {
+    var numberOfTimeCallbackHasRun = 0;
+
+    forEach([1, 2, 3], function () {
+      numberOfTimeCallbackHasRun++;
+    });
+
+    eq(numberOfTimeCallbackHasRun, 3);
+  },
+  '02 - It should pass in the ith element as the first argument to the callback.':
+  function () {
+    forEach([7], function (number) {
+      eq(number, 7);
+    })
+  },
+  '03 - It should pass in the array ith position as the second argument to the callback.':function () {
+    forEach([2], function (number, index) {
+      eq(index, 0);
+    })
+  },
+  '04 - It should pass in the original array as the third argument to the callback.':
+  function () {
+    var testArray = [1];
+    forEach(testArray, function (number, index, originalArray) {
+      eq(originalArray, testArray);
+    })
+  },
+  '05 - It should accept an optional this object.':
+  function () {
+    forEach([1], function () {
+      eq(this.description, 'optional this object');
+    }, {description: 'optional this object'});
+  }
+})
+</script>
