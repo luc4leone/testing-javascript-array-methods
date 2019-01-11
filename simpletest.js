@@ -10,6 +10,19 @@ Things done to the tinytest.js testing library to improve the usability.
 
  */
 
+var SimpleTestHelpers = {
+  showStats: function (tests, failures) {
+    var numberOfTests = Object.keys(tests).length;
+    var successes = numberOfTests - failures;
+    var statsText = 'Successes: ' + successes + '; ' + 'Failures: ' + failures + '.';
+    var statsEl = document.getElementById('stats');
+    statsEl.textContent = statsText;
+  },
+  showSemanticBackground: function (failures) {
+    document.body.style.backgroundColor = (failures == 0 ? '#99ff99' : '#ff9999');
+  }
+}
+
 var SimpleTest = {
   runTests: function (tests) {
     var failures = 0;
@@ -25,12 +38,8 @@ var SimpleTest = {
         console.groupEnd();
       }
     }
-
-    document.body.style.backgroundColor = (failures == 0 ? '#99ff99' : '#ff9999');
-    var totalNumberOfTests = Object.keys(tests).length;
-    var successes = totalNumberOfTests - failures;
-    var h3Els = document.getElementsByTagName('h3');
-    h3Els[0].textContent = 'Successes: ' + successes + '; ' + 'Failures: ' + failures + '.';
+    SimpleTestHelpers.showSemanticBackground(failures);
+    SimpleTestHelpers.showStats(tests, failures);
   },
 
   fail: function (msg) {
