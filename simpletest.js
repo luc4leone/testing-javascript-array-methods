@@ -12,40 +12,42 @@ Things done to the tinytest.js testing library to improve the usability.
 
 var SimpleTest = {
   runTests: function (tests) {
-      var failures = 0;
-      for (var testName in tests) {
-          var testAction = tests[testName];
-          try {
-              testAction.apply(this);
-              console.log('%c' + testName, 'color: green; font-weight: bold');
-          } catch (e) {
-              failures++;
-              console.groupCollapsed('%c' + testName, 'color: red');
-              console.error(e.stack);
-              console.groupEnd();
-          }
+    var failures = 0;
+    for (var testName in tests) {
+      var testAction = tests[testName];
+      try {
+        testAction.apply(this);
+        console.log('%c' + testName, 'color: green; font-weight: bold');
+      } catch (e) {
+        failures++;
+        console.groupCollapsed('%c' + testName, 'color: red');
+        console.error(e.stack);
+        console.groupEnd();
       }
-      // Give the DOM document a chance to complete
-      setTimeout(function () { 
-          if (window.document && document.body) {
-              document.body.style.backgroundColor = (failures == 0 ? '#99ff99' : '#ff9999');
-          }
-      }, 0);
+    }
+    // Give the DOM document a chance to complete
+    setTimeout(function () { 
+      if (window.document && document.body) {
+        document.body.style.backgroundColor = (failures == 0 ? '#99ff99' : '#ff9999');
+      }
+    }, 0);
   },
 
   fail: function (msg) {
-      throw new Error('fail(): ' + msg);
+    throw new Error('fail(): ' + msg);
   },
 
   assertStrictEquals: function (expected, actual) {
-      if (expected !== actual) {
-          throw new Error('assertStrictEquals() "' + expected + '" !== "' + actual + '"');
-      }
+    if (expected !== actual) {
+      throw new Error('assertStrictEquals() "' + expected + '" !== "' + actual + '"');
+    }
   }
 };
 
-var fail               = SimpleTest.fail,
-    assertStrictEquals = SimpleTest.assertStrictEquals,
-    // alias for assertStrictEquals
-    eq                 = SimpleTest.assertStrictEquals; 
+// Do I really want to create 3 global variables?
+var fail             = SimpleTest.fail,
+  // If I create an alias for assertStrictEquals(), maybe I don't need a "shortcut", I have it already!
+  assertStrictEquals = SimpleTest.assertStrictEquals,
+  // alias for assertStrictEquals
+  eq                 = SimpleTest.assertStrictEquals; 
 
