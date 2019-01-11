@@ -27,6 +27,10 @@ var SimpleTest = {
     }
 
     document.body.style.backgroundColor = (failures == 0 ? '#99ff99' : '#ff9999');
+    var totalNumberOfTests = Object.keys(tests).length;
+    var successes = totalNumberOfTests - failures;
+    var h3Els = document.getElementsByTagName('h3');
+    h3Els[0].textContent = 'Successes: ' + successes + '; ' + 'Failures: ' + failures + '.';
   },
 
   fail: function (msg) {
