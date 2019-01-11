@@ -4,7 +4,7 @@ I wrote these tests as part of the [Watch and Code](https://watchandcode.com) Ja
 
 ## Testing library
 
-For the forEach() and filter() methods I have used [tinytest.js](https://github.com/joewalnes/jstinytest), that from the map() tests has been renamed "simpletest.js" because of some minor edits suggested during the course by [Gordon Zhu](https://twitter.com/gordon_zhu):
+To test `forEach()` and `filter()` methods I have used [tinytest.js](https://github.com/joewalnes/jstinytest), that from the `map()` tests has been renamed [simpletest.js](https://github.com/luc4leone/testing-javascript-array-methods/blob/master/simpletest.js) because of some minor edits suggested during the course by [Gordon Zhu](https://twitter.com/gordon_zhu):
 
 1) Success tests should be green
 2) Fix the total number of failures (in tinytest.js it's double the right number)
@@ -14,19 +14,19 @@ For the forEach() and filter() methods I have used [tinytest.js](https://github.
 
 and some of my own:
 
-1) Wait for the DOM to be ready before executing javascript by putting javascript code before the closing body tag, instead of using `setTimeout()`, which looks to me more complex than necessary
-2) Set the body background with a call to a helper method, instead of doing it directly into the `runTests()` method
-3) Delete the global vars binding to the `TinyTest` object (in my case `SimpleTest`), becasue I don't see its use
-4) Delete some global var:
+1) Wait for the DOM to be ready before executing javascript by putting javascript code before the closing `body` tag, instead of using `setTimeout()`, which looks to me more complex than necessary
+2) Set the `body` background style property with a call to a helper method, instead of doing it directly into the `runTests()` method
+3) Delete the global variables binding to the `TinyTest` object (in my case `SimpleTest`), because I don't see its usefulness
+4) Delete some global variable:
   - `assert()`, becasue I don't use it
   - `assertEquals()`, becasue I always use the strict form
-  - `tests()`, becasue when I call the main method of the `SimpleTest` object, I'd like to use the dot notation for clarity: `SimpleTest.runTest()`
+  - `tests()`, because when I call the main method of the `SimpleTest` object, I'd like to use the dot notation for clarity: `SimpleTest.runTest()`
 5) Make the `eq()` alias point to `assertStrictEqual()`
 
 ## The testing process
 
 1. Write the name of the test (which is a property of the object
-I pass to `tests()`). 
+I pass to `runTests()`). 
 
 2. Make the test fail. 
 
