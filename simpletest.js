@@ -25,12 +25,8 @@ var SimpleTest = {
         console.groupEnd();
       }
     }
-    // Give the DOM document a chance to complete
-    setTimeout(function () { 
-      if (window.document && document.body) {
-        document.body.style.backgroundColor = (failures == 0 ? '#99ff99' : '#ff9999');
-      }
-    }, 0);
+
+    document.body.style.backgroundColor = (failures == 0 ? '#99ff99' : '#ff9999');
   },
 
   fail: function (msg) {
