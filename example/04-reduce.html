@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+          * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          }
+        </style>
+  </head>
+  <body>
+      <h2>Unit tests</h2>
+      <h3 id="stats"></h3>
+      <script src="../simpletest.js"></script>
+      <script>
+        /* TESTS FOR Array.prototype.reduce */
+
+        /* PROTOTYPE IMPLEMENTATION
+        function reduce (array, callback, startingValue) {
+          var resultSoFar = startingValue;
+          for (var i = 0; i < array.length; i++) {
+            resultSoFar = callback(resultSoFar, array[i]);
+          }
+          return resultSoFar;
+        }
+        */
+
+        /* Below a 'translation' of the SPEC from MDN https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce */
+
+        /* SIGNATURE 
+          reduce(array, callback[, initialValue])
+        */
+
+        /* CALLBACK PARAMETERS
+          - accumulator
+          - currentValue
+          - currentIndex
+          - array
+         */
+
+         /* RETURN VALUE
+          Returns a single value
+         */
+
+         /* DESCRIPTION
+          Executes the callback function once for each element present in the array.
+          It does not execute on the holes in the array.
+         */
+
+         /* REQUIREMENTS
+           - It should actually reduce.
+           - Callback should not run on holes in the array (e.g.: [, 1]).
+
+           - If initialValue, accumulator should start with initialValue.
+           - If initialValue, currentValue should start with the first value in the array.
+           - If initialValue, callback should start at index 0.
+           - If initialValue and array is empty, return initialValue, without calling callback.
+              e.g.:   reduce([,], function () {}, 0) >>> 0 without calling callback
+                      reduce([], function () {}, 0) >>> 0 without calling callback.
+
+           - If no initialValue, accumulator should be equal to the first value in the array.
+           - If no initialValue, currentValue should be equal to the second value in the array.
+           - If no initialValue, callback should start at index 1.
+           - If no initialValue and array has 1 element, that element should be return, without calling callback.
+             e.g.: reduce([, 1], function () {}) >>> 1 without calling callback
+                   reduce([1], function () {}) >>> 1 without calling callback
+
+           - If array is empty and no initialValue, TypeError should be thrown
+             e.g.: reduce([], function () {}) >>> TypeError
+
+          - It should pass array as forth argument to callback.
+
+          */
+
+        
+        /* tests */
+        SimpleTest.runTests({
+
+        });
+      </script>
+  </body>
+</html>
