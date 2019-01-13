@@ -26,19 +26,17 @@
 
         /* Below a 'translation' of the SPEC from MDN https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce */
 
-        /* SIGNATURE 
-          reduce(array, callback[, initialValue])
+        /* REDUCE SIGNATURE 
+          reduce(arrayToReduce, callback[, initialValue])
         */
 
-        /* CALLBACK PARAMETERS
-          - accumulator
-          - currentValue
-          - currentIndex
-          - array
+        /* CALLBACK SIGNATURE
+          callback(accumulator, currentValue[, currentIndex, array])
          */
 
          /* RETURN VALUE
-          Returns a single value
+          Returns a single value. It can be a number, a string or an object. 
+          (can be an array? a function? undefined? null?)
          */
 
          /* DESCRIPTION
@@ -46,8 +44,13 @@
           It does not execute on the holes in the array.
          */
 
-         /* REQUIREMENTS
-           - It should actually reduce.
+         /* REQUIREMENTS that I create by reading MDN
+           - It should execute a reducer callback once for each element in the array
+           - It should not execute the reducer callback for the holes in the array
+           - It should return a single output value
+
+
+           - It should actually reduce, which means combine the values in the array into a single value
            - Callback should not run on holes in the array (e.g.: [, 1]).
 
            - If initialValue, accumulator should start with initialValue.
@@ -70,10 +73,56 @@
           - It should pass array as forth argument to callback.
 
           */
+        function reduce (arrayToReduce, callback, initialValue) {
+          var startingIndex  = 0;
+          if (arguments.length < 3) {
+            startingIndex++;
+          }
+          for (var i = startingIndex; i < arrayToReduce.length; i++) {
+            callback(initialValue, arrayToReduce[0], i);
+          }
+        }
 
         
         /* tests */
         SimpleTest.runTests({
+          '01 - If initialValue is provided, and arrayToReduce has no holes, reduce() should run the reducer callback arrayToReduce.length times.':
+          function () {
+            var numberOfTimeCallbackHasRun = 0;
+
+            reduce([1, 2], function reducer () {
+              numberOfTimeCallbackHasRun++;
+            }, 0);
+
+            eq(numberOfTimeCallbackHasRun, 2);
+          },
+          '02 - If initialValue is not provided, and arrayToReduce has no holes, reduce() should run the reducer callback arrayToReduce.length - 1 times.':
+          function () {
+            var numberOfTimeCallbackHasRun = 0;
+
+            reduce([1, 2], function reducer () {
+              numberOfTimeCallbackHasRun++;
+            });
+
+            eq(numberOfTimeCallbackHasRun, 1);
+          },
+          '03 - If initialValue is provided, accumulator should start with initialValue.': function () {
+            reduce([1], function (accumulator) {
+              eq(accumulator, 0);
+            }, 0);
+          },
+          '04 - If initialValue is provided, currentValue should start with the first value in the arrayToReduce.': function () {
+            reduce([1], function (accumulator, currentValue) {
+              eq(currentValue, 1)
+            }, 0);
+          },
+          '05 - If initialValue is provided, callback should start at index 0.': function () {
+            reduce([1], function (accumulator, currentValue, currentIndex) {
+              eq(currentIndex, 0);
+            }, 0);
+
+          }
+
 
         });
       </script>
