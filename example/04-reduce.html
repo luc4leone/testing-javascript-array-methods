@@ -35,7 +35,7 @@
          */
 
          /* RETURN VALUE
-          Returns a single value. It can be a number, a string or an object. 
+          reduce Returns a single value. It can be a number, a string or an object. 
           (can be an array? a function? undefined? null?)
          */
 
@@ -71,7 +71,7 @@
            - If array is empty and no initialValue, TypeError should be thrown
              e.g.: reduce([], function () {}) >>> TypeError
 
-            - It should pass array as forth argument to callback.
+           - It should pass an optional array as forth argument to callback.
 
             IF initialValue
             IF array is sparse (has missing elements, holes)

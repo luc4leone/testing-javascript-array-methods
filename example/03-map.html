@@ -31,17 +31,15 @@
       }
 
       SimpleTest.runTests({
-        '01 - map should run the callback function array.length times.':
+        '01 - map should run callback array.length times.':
         function () {
           var numberOfTimeCallbackHasRun = 0;
-
           map([1, 2], function () {
             numberOfTimeCallbackHasRun++;
           });
-
           eq(numberOfTimeCallbackHasRun, 2);
         },
-        '02 - Map should pass in to callback as its first argument the ith element of the arrayToMap.':
+        '02 - map should pass in to callback as its first argument, the ith element of the arrayToMap.':
         function () {
           map([8], function (element) {
             eq(element, 8);
@@ -53,7 +51,7 @@
             eq(index, 0);
           });
         },
-        '04 - map should pass in to callback as the third argument to the callback the arrayToMap.':
+        '04 - map should pass in to callback as the third argument, arrayToMap.':
         function () {
           var originalArray = [1];
           map(originalArray, function (element, index, testArray) {
