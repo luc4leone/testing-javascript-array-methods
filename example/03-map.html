@@ -31,7 +31,7 @@
       }
 
       SimpleTest.runTests({
-        '01 - map should run callback array.length times.':
+        '01 - map() should run callback array.length times.':
         function () {
           var numberOfTimeCallbackHasRun = 0;
           map([1, 2], function () {
@@ -39,43 +39,43 @@
           });
           eq(numberOfTimeCallbackHasRun, 2);
         },
-        '02 - map should pass in to callback as its first argument, the ith element of the arrayToMap.':
+        '02 - map() should pass in to callback as its first argument, the ith element of the arrayToMap.':
         function () {
           map([8], function (element) {
             eq(element, 8);
           });
         },
-        '03 - map should pass in to callback as the second argument, the ith index of the arrayToMap.':
+        '03 - map() should pass in to callback as its second argument, the ith index of the arrayToMap.':
         function () {
           map([3], function (element, index) {
             eq(index, 0);
           });
         },
-        '04 - map should pass in to callback as the third argument, arrayToMap.':
+        '04 - map() should pass in to callback as its third argument, arrayToMap.':
         function () {
           var originalArray = [1];
           map(originalArray, function (element, index, testArray) {
             eq(originalArray, testArray);
           });
         },
-        '05 - map should accept a third optional object, to use as "this" when executing the callback.':
+        '05 - map() should accept a third optional object, to use as "this" when executing the callback.':
         function () {
           map([1], function () {
             eq(this.description, 'optional this object');
           }, {description: 'optional this object'});
         },
-        '06 - map should return an array.':
+        '06 - map() should return an array.':
         function () {
           var result = map([], function () {});
           eq(Array.isArray(result), true);
         },
-        '07 - map should return a new array, not arrayToMap.':
+        '07 - map() should return a new array, not arrayToMap.':
         function () {
           var arrayToMap = [1];
           var mappedArray = map(arrayToMap, function () {});
           eq(arrayToMap !== mappedArray, true);
         },
-        '08 - map should return an array that only has elements that have been transformed by callback.':
+        '08 - map() should return an array that only has elements that have been transformed by callback.':
         function () {
           var arrayToMap = [1, 2];
           var mappedArray = map(arrayToMap, function (element) {
@@ -84,7 +84,7 @@
           eq(mappedArray.length, 2);
           eq(mappedArray[0], 2);
         },
-        '09 - If the arrayToMap is sparse, i.e. it has missing elements, map should not call callback for the missing elements.': function () {
+        '09 - If the arrayToMap is sparse, i.e. it has missing elements, map() should not call callback for the missing elements.': function () {
         var arrayToMap = [, 1];
         var mappedArray = map(arrayToMap, function double (element) {
           return element * 2;

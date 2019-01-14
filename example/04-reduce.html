@@ -78,17 +78,21 @@
 
           */
         function reduce (arrayToReduce, callback, initialValue) {
+          if (Object.keys(arrayToReduce).length === 0) {
+            return initialValue;
+          }
+
           var startingIndex = 0;
           var accumulator = initialValue;
 
-          // Detects if there's no initialValue
+          // If there's no initialValue
           if (arguments.length < 3) {
+            accumulator = arrayToReduce[startingIndex]; 
             startingIndex++;
-            accumulator = arrayToReduce[0]; 
           }
 
           for (var i = startingIndex; i < arrayToReduce.length; i++) {
-            callback(accumulator, arrayToReduce[0], i);
+            callback(accumulator, arrayToReduce[i], i);
           }
         }
 
@@ -127,14 +131,31 @@
             }, 0);
           },
           '06 - If no initialValue, accumulator should start with the first value in the array.': function () {
-
             reduce([1, 2], function (accumulator) {
               eq(accumulator, 1);
             });
-          }
-
-
+          },
+          '07 - If no initialValue, currentValue should be equal to the second value in the array.': function () {
+            reduce([1, 2], function (accumulator, currentValue) {
+              eq(currentValue, 2);
+            });
+          },
+          '08 - If no initialValue, callback should start at index 1.': function () {
+            reduce([1, 2], function (accumulator, currentValue, currentIndex) {
+              eq(currentIndex, 1);
+            });
+          },
+          '09 - If initialValue and array is empty, return initialValue, without calling callback.': function () {
+            var numberOfTimeCallbackHasRun = 0;
+            var returnValue = reduce([,], function () {
+              numberOfTimeCallbackHasRun++;
+            }, 1);
+            eq(returnValue, 1);
+            eq(numberOfTimeCallbackHasRun, 0);
+          },
         });
       </script>
   </body>
 </html>
+
+< > ^ v
