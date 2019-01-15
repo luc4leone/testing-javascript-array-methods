@@ -78,8 +78,15 @@
 
           */
         function reduce (arrayToReduce, callback, initialValue) {
+
+          // if the array to reduce is an empty array
           if (Object.keys(arrayToReduce).length === 0) {
             return initialValue;
+          }
+
+          // if the array to reduce has 1 element
+          if (Object.keys(arrayToReduce).length === 1) {
+            return arrayToReduce[0];
           }
 
           var startingIndex = 0;
@@ -92,8 +99,12 @@
           }
 
           for (var i = startingIndex; i < arrayToReduce.length; i++) {
-            callback(accumulator, arrayToReduce[i], i);
+            if (arrayToReduce[i] !== undefined) {
+              accumulator = callback(accumulator, arrayToReduce[i], i);
+            }
           }
+
+          return accumulator;
         }
 
 
@@ -145,7 +156,7 @@
               eq(currentIndex, 1);
             });
           },
-          '09 - If initialValue and array is empty, return initialValue, without calling callback.': function () {
+          '09 - If initialValue and arrayToReduce is empty, return initialValue, without calling callback.': function () {
             var numberOfTimeCallbackHasRun = 0;
             var returnValue = reduce([,], function () {
               numberOfTimeCallbackHasRun++;
@@ -153,9 +164,31 @@
             eq(returnValue, 1);
             eq(numberOfTimeCallbackHasRun, 0);
           },
+          '10 - If no initialValue and arrayToReduce has 1 element, that element should be returned, without calling callback.': function () {
+            var numberOfTimeCallbackHasRun = 0;
+            var returnValue = reduce([3], function () {
+              numberOfTimeCallbackHasRun++;
+            });
+            eq(returnValue, 3);
+            eq(numberOfTimeCallbackHasRun, 0);
+          },
+          '11 - reduce() should actually reduce, i.e. it should combine the values in the array into a single value, and it should return the single value': function () {
+            var sum = reduce([1, 2, 3], function (a, b) {
+              return a + b;
+            }, 0);
+            eq(sum, 6);
+          },
+          '12 - reduce() should not call the callback on holes': function () {
+            debugger;
+            var sum = reduce([, 1, 2, 3], function (a, b) {
+              return a + b;
+            }, 0);
+            eq(sum, 6);
+          },
+
+
+
         });
       </script>
   </body>
 </html>
-
-< > ^ v
