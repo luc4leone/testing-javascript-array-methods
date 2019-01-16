@@ -24,97 +24,49 @@
         }
         */
 
-        /* Below a 'translation' of the SPEC from MDN https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce */
-
-        /* REDUCE SIGNATURE 
-          reduce(arrayToReduce, callback[, initialValue])
-        */
-
-        /* CALLBACK SIGNATURE
-          callback(accumulator, currentValue[, currentIndex, array])
-         */
-
-         /* RETURN VALUE
-          reduce returns a single value. It can be a number, a string or an object. 
-          (can be an array? a function? undefined? null?)
-         */
-
-         /* DESCRIPTION
-          Executes the callback function once for each element present in the array.
-          It does not execute on the holes in the array.
-         */
-
-         /* REQUIREMENTS that I create by reading MDN
-           - It should execute a reducer callback once for each element in the array
-           - It should not execute the reducer callback for the holes in the array
-           - It should return a single output value
-
-           - It should actually reduce, which means:
-             - combine the values in the array into a single value
-             - return the combined value
-           - Callback should not run on holes in the array (e.g.: [, 1]).
-
-           - If initialValue, accumulator should start with initialValue.
-           - If initialValue, currentValue should start with the first value in the array.
-           - If initialValue, callback should start at index 0.
-           - If initialValue and array is empty, return initialValue, without calling callback.
-              e.g.:   reduce([,], function () {}, 0) >>> 0 without calling callback
-                      reduce([], function () {}, 0) >>> 0 without calling callback.
-
-           - If no initialValue, accumulator should be equal to the first value in the array.
-           - If no initialValue, currentValue should be equal to the second value in the array.
-           - If no initialValue, callback should start at index 1.
-           - If no initialValue and array has 1 element, that element should be return, without calling callback.
-             e.g.: reduce([, 1], function () {}) >>> 1 without calling callback
-                   reduce([1], function () {}) >>> 1 without calling callback
-
-           - If array is empty and no initialValue, TypeError should be thrown
-             e.g.: reduce([], function () {}) >>> TypeError
-
-           - It should pass an optional array as forth argument to callback.
-
-            IF initialValue
-            IF array is sparse (has missing elements, aka "holes")
-
-          */
-        function reduce (arrayToReduce, callback, initialValue) {
-
-          // if the array to reduce is an empty array
-          if (Object.keys(arrayToReduce).length === 0) {
-            if (initialValue) {
-              return initialValue;
-            } else {
-              throw new TypeError('error message');
-            }
-   
-          }
-
-          // if the array to reduce has 1 element
-          if (Object.keys(arrayToReduce).length === 1) {
-            return arrayToReduce[0];
-          }
-
+        
+        function reduce (array, callback, initialValue) {
           var startingIndex = 0;
-          var accumulator = initialValue;
+          var resultSoFar = initialValue;
+          var length = array.length;
+          var arrayIndexes = Object.keys(array);
 
-          // If there's no initialValue
+          // No initialValue
           if (arguments.length < 3) {
-            for (var i = startingIndex; i < arrayToReduce.length; i++) {
-              if (arrayToReduce[i] !== undefined) {
-                accumulator = arrayToReduce[i]; 
-                startingIndex = i + 1;
-                break;
-              }
+            // array is empty, throw TypeError.
+            if (arrayIndexes.length === 0) {
+              throw new TypeError('Reduce of empty array with no initial value');
+            }
+
+            // If array has one element, just return it.
+            if (arrayIndexes === 1) {
+              var onlyIndex = arrayIndexes[0];
+              var onlyElement = array[onlyIndex];
+              return onlyElement;
+            }
+
+            // We want to skip holes at the beginning of the array.
+            while (startingIndex in array === false && startingIndex < length) {
+              startingIndex++;
+            }
+
+            resultSoFar = array[startingIndex];
+            startingIndex++;
+
+          // Has initialValue.
+          } else {
+            if (arrayIndexes.length === 0) {
+              return initialValue;
             }
           }
 
-          for (var i = startingIndex; i < arrayToReduce.length; i++) {
-            if (arrayToReduce[i] !== undefined) {
-              accumulator = callback(accumulator, arrayToReduce[i], i, arrayToReduce);
+          for (var i = startingIndex; i < length; i++) {
+            if (i in array) {
+              resultSoFar = callback(resultSoFar, array(i), i, array);
             }
           }
 
-          return accumulator;
+          return resultSoFar;
         }
 
 
