@@ -72,89 +72,88 @@
 
         /* tests */
         SimpleTest.runTests({
-          '01 - If initialValue is passed in to reduce(), and arrayToReduce is not sparse, reduce() should run the reducer callback arrayToReduce.length times.':
+          '01 - If initialValue, callback should run array.length times.':
           function () {
             var numberOfTimeCallbackHasRun = 0;
-            reduce([1, 2], function reducer () {
+            reduce([1], function () {
               numberOfTimeCallbackHasRun++;
             }, 0);
-            eq(numberOfTimeCallbackHasRun, 2);
-          },
-          '02 - If initialValue is not provided, and arrayToReduce is not sparse, reduce() should run the reducer callback arrayToReduce.length - 1 times.':
-          function () {
-            var numberOfTimeCallbackHasRun = 0;
-            reduce([1, 2], function reducer () {
-              numberOfTimeCallbackHasRun++;
-            });
             eq(numberOfTimeCallbackHasRun, 1);
           },
-          '03 - If initialValue is provided, accumulator should start with initialValue.': function () {
-            reduce([1], function (accumulator) {
+          '02 - If no initialValue, callback should run array.length -1 times.':
+          function () {
+            var numberOfTimeCallbackHasRun = 0;
+            reduce([1], function () {
+              numberOfTimeCallbackHasRun++;
+            });
+            eq(numberOfTimeCallbackHasRun, 0);
+          },
+          '03 - If initialValue, previousValue should start with initialValue.': function () {
+            reduce([1], function (previousValue) {
               eq(accumulator, 0);
             }, 0);
           },
-          '04 - If initialValue is provided, currentValue should start with the first value in arrayToReduce.': function () {
-            reduce([1], function (accumulator, currentValue) {
+          '04 - If initialValue, currentValue should start with array[0].': function () {
+            reduce([1], function (previousValue, currentValue) {
               eq(currentValue, 1)
             }, 0);
           },
-          '05 - If initialValue is provided, callback should start at index 0.': function () {
-            reduce([1], function (accumulator, currentValue, currentIndex) {
+          '05 - If initialValue, callback will start at index 0.': function () {
+            reduce([1], function (previousValue, currentValue, currentIndex) {
               eq(currentIndex, 0);
             }, 0);
           },
-          '06 - If no initialValue, accumulator should start with the first value in the array.': function () {
-            reduce([1, 2], function (accumulator) {
-              eq(accumulator, 1);
+          '06 - If no initialValue, previousValue should start with array[0].': function () {
+            reduce([1, 2], function (previousValue) {
+              eq(previousValue, 1);
             });
           },
-          '07 - If no initialValue, currentValue should be equal to the second value in the array.': function () {
-            reduce([1, 2], function (accumulator, currentValue) {
+          '07 - If no initialValue, currentValue should array[1].': function () {
+            reduce([1, 2], function (previousValue, currentValue) {
               eq(currentValue, 2);
             });
           },
           '08 - If no initialValue, callback should start at index 1.': function () {
-            reduce([1, 2], function (accumulator, currentValue, currentIndex) {
+            reduce([1, 2], function (previousValue, currentValue, currentIndex) {
               eq(currentIndex, 1);
             });
           },
-          '09 - If initialValue and arrayToReduce is empty, return initialValue, without calling callback.': function () {
+          '09 - If initialValue and array is empty, return initialValue, without calling callback.': function () {
             var numberOfTimeCallbackHasRun = 0;
-            var returnValue = reduce([,], function () {
+            var initialValue = 0;
+            var returnValue = reduce([,,], function () {
               numberOfTimeCallbackHasRun++;
-            }, 1);
+            }, initialValue);
+            eq(returnValue, initialValue);
+            eq(numberOfTimeCallbackHasRun, 0);
+          },
+          '10 - If no initialValue and array has 1 element, it should return that element without calling callback.': function () {
+            var numberOfTimeCallbackHasRun = 0;
+            var returnValue = reduce([1], function () {
+              numberOfTimeCallbackHasRun++;
+            });
             eq(returnValue, 1);
             eq(numberOfTimeCallbackHasRun, 0);
           },
-          '10 - If no initialValue and arrayToReduce has 1 element, that element should be returned, without calling callback.': function () {
-            var numberOfTimeCallbackHasRun = 0;
-            var returnValue = reduce([3], function () {
-              numberOfTimeCallbackHasRun++;
-            });
-            eq(returnValue, 3);
-            eq(numberOfTimeCallbackHasRun, 0);
-          },
-          '11 - reduce() should actually reduce, i.e. it should combine the values in the array into a single value, and it should return the single value': function () {
+          '11 - It should actually reduce.': function () {
             var sum = reduce([1, 2, 3], function (a, b) {
               return a + b;
             }, 0);
             eq(sum, 6);
           },
-          '12 - reduce() should not call the callback on holes, with initialValue': function () {
-            var sum = reduce([, 1, 2, 3], function (a, b) {
+          '12 - If initialValue, it should exclude holes.': function () {
+            var sum = reduce([, 1, , 2, 3, ], function (a, b) {
               return a + b;
             }, 0);
             eq(sum, 6);
           },
-          '13 - reduce() should not call the callback on holes, without initialValue': function () {
-            var sum = reduce([, 1, 2, 3], function (a, b) {
+          '13 - If no initialValue, it should exclude holes too.': function () {
+            var sum = reduce([, 1, , 2, 3, ], function (a, b) {
               return a + b;
             });
             eq(sum, 6);
           },
-          '14 - If arrayToReduce is empty, and no initialValue is provided, throw TypeError': function () {
-            // var result = reduce([], function () {});
-            // eq(result, new TypeError);
+          '14 - If array is empty, and no initialValue, throw TypeError.': function () {
             var isTypeError = false;
             try {
               reduce([], function () {});
@@ -163,11 +162,11 @@
             };
             eq(isTypeError, true);
           },
-          '15 - It should pass arrayToReduce as forth argument to callback': function () {
-            var arrayToReduce = [1,2];
-            reduce(arrayToReduce, function (accumulator, currentValue, currentIndex, arrayToCallback) {
-              eq(arrayToReduce, arrayToCallback);
-            }, 0);
+          '15 - It should pass array as forth argument to callback.': function () {
+            var testArray= [1,2];
+            reduce(testArray, function (previousValue, currentValue, currentIndex, arrayToReduce) {
+              eq(arrayToReduce, testArray);
+            });
           }
         });
       </script>
