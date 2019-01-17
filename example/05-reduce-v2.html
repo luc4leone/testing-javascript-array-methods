@@ -89,47 +89,14 @@
           If array has only 1 element and no initialValue is provided
             reduce() should return that without running callback
 
-
-
-
-
-          //
-
-        - It should execute a reducer callback once for each element in the array
-        - It should not execute the reducer callback for the holes in the array
-        - It should return a single output value
-
-        - It should reduce, which means:
-          - combine the values in the array into a single value
-          - return the combined value
-        - Callback should not run on holes in the array (e.g.: [, 1]).
-
-        - If initialValue, accumulator should start with initialValue.
-        - If initialValue, currentValue should start with the first value in the array.
-        - If initialValue, callback should start at index 0.
-        - If initialValue and array is empty, return initialValue, without calling callback.
-          e.g.:   reduce([,], function () {}, 0) >>> 0 without calling callback
-                  reduce([], function () {}, 0) >>> 0 without calling callback.
-
-        - If no initialValue, accumulator should be equal to the first value in the array.
-        - If no initialValue, currentValue should be equal to the second value in the array.
-        - If no initialValue, callback should start at index 1.
-        - If no initialValue and array has 1 element, that element should be return, without calling callback.
-          e.g.: reduce([, 1], function () {}) >>> 1 without calling callback
-                reduce([1], function () {}) >>> 1 without calling callback
-
-        - If array is empty and no initialValue, TypeError should be thrown
-          e.g.: reduce([], function () {}) >>> TypeError
-
-        - It should pass an optional array as forth argument to callback.
-
-        IF initialValue
-        IF array is sparse (has missing elements, aka "holes")
-
         */
         function reduce () {
           if (arguments.length === 0) {
             throw new TypeError("undefined is not an array");
+          }
+
+          if (Array.isArray(arguments[0]) === false) {
+            throw new TypeError(typeof arguments[0] + " is not an array");
           }
         }
 
@@ -141,7 +108,16 @@
             try {
               reduce();
             } catch (e) {
-            isTypeError = (e instanceof TypeError);
+            isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '02 - If the first argument passed to reduce() is not of type array, throw a TypeError': function () {
+            var isTypeError = false;
+            try {
+              reduce(1)
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
             };
             eq(isTypeError, true);
           },
