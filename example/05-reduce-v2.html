@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+          * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          }
+        </style>
+  </head>
+  <body>
+      <h2>Unit tests</h2>
+      <h3 id="stats"></h3>
+      <script src="../simpletest.js"></script>
+      <script>
+        /* TESTS FOR Array.prototype.reduce */
+
+        /* INPUT
+        reduce() signature
+          reduce(array, callback[, initialValue])
+        callback() signature
+          callback(accumulator, currentValue[, currentIndex, array])
+        */
+
+        /* OUTPUT
+        reduce() return value
+          reduce() returns a single value. It can be a number, a string or an object. 
+          (can be an array? a function? undefined? null?)
+        */
+
+        /* GENERIC DESCRIPTION
+        The reduce() method executes a reducer function (that you provide) on each 
+        member of the array resulting in a single output value.
+        */
+
+        /* REQUIREMENTS 
+
+        kind of array
+          standard 
+            [1, 2, 3]
+          sparse 
+            [, 1, , 2]
+          single element
+            [1]
+          single element and sparse
+            [, 1]
+          empty
+            []
+          empty and sparse
+            [,,]
+
+        Check reduce() inputs
+          If no argument is passed to reduce() 
+            throw a TypeError
+          If no second argument, callback(), is passed to reduce()
+            throw a TypeError
+          If the second argument passed to reduce() is not of type Function
+            throw a TypeError
+
+          If array is standard, and initialValue is provided
+            accumulator should start with initialValue
+            callback() should run array.length, e.g. above 3, times
+            currentValue should start with first element in array
+            reduce() should return a value
+
+          If array is standard and no initialValue is provided
+            accumulator should start with first element of array
+            callback() should run array.length -1, e.g. above 2, times
+            currentValue should start with second element in array
+            reduce() should return a value
+
+          If array is sparse, and initialValue is provided
+            accumulator should start with initialValue
+            callback() should not be run on holes
+            reduce() should return a value
+
+          If array is sparse and no initialValue is provided
+            accumulator should start with first non hole element
+            callback() should not be run on holes
+            reduce() should return a value
+
+          If array is empty and initialValue is provided
+            reduce() should return initialValue without running callback
+
+          If array is empty and no initialValue is provided
+            reduce() should throw a TypeError
+
+          If array has only 1 element and initialValue is provided
+            
+          If array has only 1 element and no initialValue is provided
+            reduce() should return that without running callback
+
+
+
+
+
+          //
+
+        - It should execute a reducer callback once for each element in the array
+        - It should not execute the reducer callback for the holes in the array
+        - It should return a single output value
+
+        - It should reduce, which means:
+          - combine the values in the array into a single value
+          - return the combined value
+        - Callback should not run on holes in the array (e.g.: [, 1]).
+
+        - If initialValue, accumulator should start with initialValue.
+        - If initialValue, currentValue should start with the first value in the array.
+        - If initialValue, callback should start at index 0.
+        - If initialValue and array is empty, return initialValue, without calling callback.
+          e.g.:   reduce([,], function () {}, 0) >>> 0 without calling callback
+                  reduce([], function () {}, 0) >>> 0 without calling callback.
+
+        - If no initialValue, accumulator should be equal to the first value in the array.
+        - If no initialValue, currentValue should be equal to the second value in the array.
+        - If no initialValue, callback should start at index 1.
+        - If no initialValue and array has 1 element, that element should be return, without calling callback.
+          e.g.: reduce([, 1], function () {}) >>> 1 without calling callback
+                reduce([1], function () {}) >>> 1 without calling callback
+
+        - If array is empty and no initialValue, TypeError should be thrown
+          e.g.: reduce([], function () {}) >>> TypeError
+
+        - It should pass an optional array as forth argument to callback.
+
+        IF initialValue
+        IF array is sparse (has missing elements, aka "holes")
+
+        */
+        function reduce () {
+          if (arguments.length === 0) {
+            throw new TypeError("undefined is not an array");
+          }
+        }
+
+
+        /* tests */
+        SimpleTest.runTests({
+          '01 - If no argument is passed to reduce(), throw a TypeError': function () {
+            var isTypeError = false;
+            try {
+              reduce();
+            } catch (e) {
+            isTypeError = (e instanceof TypeError);
+            };
+            eq(isTypeError, true);
+          },
+          
+        });
+      </script>
+  </body>
+</html>
