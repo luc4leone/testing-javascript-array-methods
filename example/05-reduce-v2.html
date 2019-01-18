@@ -92,7 +92,6 @@
         */
         function reduce (array, callback, initialValue) {
           var length = array.length;
-          var accumulator = initialValue;
 
           if (arguments.length === 0) {
             throw new TypeError('undefined is not an array');
@@ -107,7 +106,7 @@
           }
 
           for (var i = 0; i < array.length; i++) {
-            callback(accumulator);
+            callback(initialValue, array[0]);
           }
         }
 
@@ -153,10 +152,9 @@
               eq(accumulator, 0);
             }, 0);
           },
-          '06 - If the first argument passed to reduce() is a standard array, and initialValue is provided, accumulator should start with initialValue.': function () {
-            fail();
-            reduce([1, 2, 3], function (accumulator) {
-              eq(accumulator, 0);
+          '06 - If the first argument passed to reduce() is a standard array, and initialValue is provided, currentValue should start with first element in array.': function () {
+            reduce([1, 2, 3], function (accumulator, currentValue) {
+              eq(currentValue, 1);
             }, 0);
           },
 
