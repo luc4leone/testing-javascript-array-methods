@@ -57,25 +57,25 @@
             throw a TypeError
 
           If array is standard, and initialValue is provided
+            callback() should run array.length times
             accumulator should start with initialValue
-            callback() should run array.length, e.g. above 3, times
             currentValue should start with first element in array
             reduce() should return a value
 
           If array is standard and no initialValue is provided
-            accumulator should start with first element of array
             callback() should run array.length -1, e.g. above 2, times
+            accumulator should start with first element of array
             currentValue should start with second element in array
             reduce() should return a value
 
           If array is sparse, and initialValue is provided
-            accumulator should start with initialValue
             callback() should not be run on holes
+            accumulator should start with initialValue
             reduce() should return a value
 
           If array is sparse and no initialValue is provided
-            accumulator should start with first non hole element
             callback() should not be run on holes
+            accumulator should start with first non hole element
             reduce() should return a value
 
           If array is empty and initialValue is provided
@@ -90,20 +90,31 @@
             reduce() should return that without running callback
 
         */
-        function reduce () {
+        function reduce (array, callback, initialValue) {
+          var length = array.length;
+          var accumulator = initialValue;
+
           if (arguments.length === 0) {
-            throw new TypeError("undefined is not an array");
+            throw new TypeError('undefined is not an array');
           }
 
           if (Array.isArray(arguments[0]) === false) {
-            throw new TypeError(typeof arguments[0] + " is not an array");
+            throw new TypeError(typeof arguments[0] + ' is not an array');
+          }
+
+          if (typeof arguments[1] !== "function") {
+            throw new TypeError(typeof arguments[1] + ' is not a function');
+          }
+
+          for (var i = 0; i < array.length; i++) {
+            callback(accumulator);
           }
         }
 
 
         /* tests */
         SimpleTest.runTests({
-          '01 - If no argument is passed to reduce(), throw a TypeError': function () {
+          '01 - If no argument is passed to reduce(), throw a TypeError.': function () {
             var isTypeError = false;
             try {
               reduce();
@@ -112,7 +123,7 @@
             };
             eq(isTypeError, true);
           },
-          '02 - If the first argument passed to reduce() is not of type array, throw a TypeError': function () {
+          '02 - If the first argument passed to reduce() is not an array, throw a TypeError.': function () {
             var isTypeError = false;
             try {
               reduce(1)
@@ -121,6 +132,34 @@
             };
             eq(isTypeError, true);
           },
+          '03 - If the second argument passed to reduce() is not a function throw a TypeError.': function () {
+            var isTypeError = false;
+            try {
+              reduce([], 2)
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '04 - If the first argument passed to reduce() is a standard array, and initialValue is provided, callback() should run array.length times.': function () {
+            var numberOfTimesCallbackHasRun = 0;
+            reduce([1, 2, 3], function () {
+              numberOfTimesCallbackHasRun++;
+            }, 0);
+            eq(numberOfTimesCallbackHasRun, 3);
+          },
+          '05 - If the first argument passed to reduce() is a standard array, and initialValue is provided, accumulator should start with initialValue.': function () {
+            reduce([1, 2, 3], function (accumulator) {
+              eq(accumulator, 0);
+            }, 0);
+          },
+          '06 - If the first argument passed to reduce() is a standard array, and initialValue is provided, accumulator should start with initialValue.': function () {
+            fail();
+            reduce([1, 2, 3], function (accumulator) {
+              eq(accumulator, 0);
+            }, 0);
+          },
+
           
         });
       </script>
