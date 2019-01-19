@@ -48,7 +48,7 @@
           empty and sparse
             [,,]
 
-        Check reduce() inputs
+        Test inputs
           If no argument is passed to reduce() 
             throw a TypeError
           If no second argument, callback(), is passed to reduce()
@@ -58,25 +58,26 @@
 
         Test the reduction operation
           If initialValue is provided
-          and array is standard, 
-            1 element
-            2 elements
-              callback() should run array.length times
-              accumulator should start with initialValue
-              currentValue should start with first element in array
-              reduce() should return a value
-          and array is empty 
-            reduce() should return initialValue without running callback
+            and array is standard, 
+              1 element
+              2 elements
+                callback() should run array.length times
+                accumulator should start with initialValue
+                currentValue should start with first element in array
+                reduce() should return a value
+            and array is empty 
+              reduce() should return initialValue without running callback
+            and array is sparse
+              callback() should not be run on holes
+
+            and array is empty, but sparse
+              reduce() should return initialValue without running callback
+
 
           If array is standard and no initialValue is provided
             callback() should run array.length -1, e.g. above 2, times
             accumulator should start with first element of array
             currentValue should start with second element in array
-            reduce() should return a value
-
-          If array is sparse, and initialValue is provided
-            callback() should not be run on holes
-            accumulator should start with initialValue
             reduce() should return a value
 
           If array is sparse and no initialValue is provided
@@ -110,7 +111,10 @@
 
           var accumulator = initialValue;
           for (var i = 0; i < array.length; i++) {
-            accumulator = callback(accumulator, array[i]);
+            // skip holes
+            if (i in array) {
+              accumulator = callback(accumulator, array[i]);
+            }
           }
 
           return accumulator;
@@ -164,7 +168,6 @@
             eq(result, 2);
           },
           '07 - If initialValue is provided and array is empty, reduce() should return initialValue without running callback': function () {
-            debugger;
             var numberOfTimeCallbackHasRun = 0;
             var initialValue = 1;
             var result = reduce([], function () {
@@ -172,7 +175,17 @@
             }, initialValue);
             eq(result, initialValue);
             eq(numberOfTimeCallbackHasRun, 0);
-          }
+          },
+          '08 - If initialValue is provided and array is sparse, callback() should not be run on holes': function () {
+            var numberOfTimeCallbackHasRun = 0;
+            var result = reduce([1, , 2, 3], function (a, b) { 
+              numberOfTimeCallbackHasRun++;
+              return a + b 
+            }, 0);
+            eq(result, 6);
+            eq(numberOfTimeCallbackHasRun, 3);
+          },
+
 
 
 
