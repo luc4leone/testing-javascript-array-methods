@@ -75,6 +75,13 @@
           If initialValue is not provided
             and array is standard
               1 element
+              2 elements
+            and array is empty
+              reduce() should throw a TypeError
+            and array is sparse
+              callback() should not be run on holes
+            
+
 
 
 
@@ -90,11 +97,6 @@
             accumulator should start with first non hole element
             reduce() should return a value
 
-          If array is empty and no initialValue is provided
-            reduce() should throw a TypeError
-            
-          If array has only 1 element and no initialValue is provided
-            reduce() should return that without running callback
 
         */
         function reduce (array, callback, initialValue) {
@@ -114,6 +116,10 @@
             throw new TypeError(typeof arguments[1] + ' is not a function');
           }
 
+          if (arguments.length < 3 && array.length === 0) {
+            throw new TypeError('Trying to reduce an empty array with no initial value');
+          }
+
           // default values (when initialValue is provided)
           var accumulator = initialValue;
           var startingIndex = 0;
@@ -131,7 +137,6 @@
             }
           }
           
-
           return accumulator;
         }
 
@@ -210,7 +215,7 @@
             eq(result, initialValue);
             eq(numberOfTimeCallbackHasRun, 0);
           },
-          '10 - If initialValue is not provided and array has 1 element, reduce() should return that element': function () {
+          '10 - If initialValue is not provided and array has 1 element, reduce() should return that element, without running the callback()': function () {
             var numberOfTimeCallbackHasRun = 0;
             var result = reduce([1], function (a, b) {
               numberOfTimeCallbackHasRun++;
@@ -220,7 +225,6 @@
             eq(result, 1);
           },
           '11 - If initialValue is not provided and array is standard, 2 elements, reduce() should return that element': function () {
-
             var numberOfTimeCallbackHasRun = 0;
             var result = reduce([1, 2], function (a, b) {
               numberOfTimeCallbackHasRun++;
@@ -229,6 +233,26 @@
             eq(numberOfTimeCallbackHasRun, 1);
             eq(result, 3);
           },
+          '12 - If initialValue is not provided and array is empty, reduce() should throw a TypeError': function () {
+            var isTypeError = false;
+            try {
+              reduce([], function () {});
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            }
+            eq(isTypeError, true);
+          },
+          '13 - If initialValue is not provided and array is sparse, callback() should not be run on holes': function () {
+
+            var numberOfTimeCallbackHasRun = 0;
+            var result = reduce([1, , 2, 3], function (a, b) { 
+              numberOfTimeCallbackHasRun++;
+              return a + b 
+            });
+            eq(result, 6);
+            eq(numberOfTimeCallbackHasRun, 2);
+          },
+         
           
 
 
