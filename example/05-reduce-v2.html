@@ -109,7 +109,8 @@
 
           var accumulator = initialValue;
           for (var i = 0; i < array.length; i++) {
-            accumulator = accumulator + array[i];
+            //  accumulator = accumulator + array[i];
+            accumulator = callback(accumulator, array[i]);
           }
 
           return accumulator;
@@ -145,12 +146,23 @@
             eq(isTypeError, true);
           },
           '04 - If array has 1 element and initialValue is provided, reduce() should return the result of the reduction.': function () {
-            var result = reduce([1], function () {}, 1);
+            var result = reduce([1], function (a, b) {
+              return a + b;
+            }, 1);
             eq(result, 2);
           },
           '05 - If array is standard and initialValue is provided, reduce() should return the result of the reduction.': function () {
-            var result = reduce([1, 2], function () {}, 1);
+            var result = reduce([1, 2], function (a, b) {
+              return a + b;
+            }, 1);
             eq(result, 4);
+          },
+          '06 - If array is standard and initialValue is provided, reduce() should return the result of the reduction provided by the callback.': function () {
+
+            var result = reduce([1, 2], function (a, b) {
+              return a * b;
+            }, 1);
+            eq(result, 2);
           },
 
 
