@@ -74,6 +74,7 @@
           
           If initialValue is not provided
             and array is standard
+              1 element
 
 
 
@@ -169,7 +170,7 @@
             }, 1);
             eq(result, 2);
           },
-          '05 - If initialValue is provided and array is standard, reduce() should return the result of the reduction.': function () {
+          '05 - If initialValue is provided and array is standard, 2 elements, reduce() should return the result of the reduction.': function () {
             var result = reduce([1, 2], function (a, b) {
               return a + b;
             }, 1);
@@ -200,7 +201,6 @@
             eq(numberOfTimeCallbackHasRun, 3);
           },
           '09 - If initialValue is provided and array is sparse and empty, callback() should not be run on holes': function () {
-
             var numberOfTimeCallbackHasRun = 0;
             var initialValue = 0;
             var result = reduce([, ,], function (a, b) { 
@@ -211,7 +211,6 @@
             eq(numberOfTimeCallbackHasRun, 0);
           },
           '10 - If initialValue is not provided and array has 1 element, reduce() should return that element': function () {
-
             var numberOfTimeCallbackHasRun = 0;
             var result = reduce([1], function (a, b) {
               numberOfTimeCallbackHasRun++;
@@ -219,6 +218,16 @@
             });
             eq(numberOfTimeCallbackHasRun, 0);
             eq(result, 1);
+          },
+          '11 - If initialValue is not provided and array is standard, 2 elements, reduce() should return that element': function () {
+
+            var numberOfTimeCallbackHasRun = 0;
+            var result = reduce([1, 2], function (a, b) {
+              numberOfTimeCallbackHasRun++;
+              return a + b;
+            });
+            eq(numberOfTimeCallbackHasRun, 1);
+            eq(result, 3);
           },
           
 
