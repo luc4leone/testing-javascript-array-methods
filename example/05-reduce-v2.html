@@ -56,11 +56,17 @@
           If the second argument passed to reduce() is not of type Function
             throw a TypeError
 
-          If array is standard, and initialValue is provided
-            callback() should run array.length times
-            accumulator should start with initialValue
-            currentValue should start with first element in array
-            reduce() should return a value
+        Test the reduction operation
+          If initialValue is provided
+          and array is standard, 
+            1 element
+            2 elements
+              callback() should run array.length times
+              accumulator should start with initialValue
+              currentValue should start with first element in array
+              reduce() should return a value
+          and array is empty 
+            reduce() should return initialValue without running callback
 
           If array is standard and no initialValue is provided
             callback() should run array.length -1, e.g. above 2, times
@@ -78,13 +84,8 @@
             accumulator should start with first non hole element
             reduce() should return a value
 
-          If array is empty and initialValue is provided
-            reduce() should return initialValue without running callback
-
           If array is empty and no initialValue is provided
             reduce() should throw a TypeError
-
-          If array has only 1 element and initialValue is provided
             
           If array has only 1 element and no initialValue is provided
             reduce() should return that without running callback
@@ -109,7 +110,6 @@
 
           var accumulator = initialValue;
           for (var i = 0; i < array.length; i++) {
-            //  accumulator = accumulator + array[i];
             accumulator = callback(accumulator, array[i]);
           }
 
@@ -145,52 +145,40 @@
             };
             eq(isTypeError, true);
           },
-          '04 - If array has 1 element and initialValue is provided, reduce() should return the result of the reduction.': function () {
+          '04 - If initialValue is provided and array has 1 element, reduce() should return the result of the reduction.': function () {
             var result = reduce([1], function (a, b) {
               return a + b;
             }, 1);
             eq(result, 2);
           },
-          '05 - If array is standard and initialValue is provided, reduce() should return the result of the reduction.': function () {
+          '05 - If initialValue is provided and array is standard, reduce() should return the result of the reduction.': function () {
             var result = reduce([1, 2], function (a, b) {
               return a + b;
             }, 1);
             eq(result, 4);
           },
-          '06 - If array is standard and initialValue is provided, reduce() should return the result of the reduction provided by the callback.': function () {
-
+          '06 - If initialValue is provided and array is standard, reduce() should return the result of the reduction provided by the callback.': function () {
             var result = reduce([1, 2], function (a, b) {
               return a * b;
             }, 1);
             eq(result, 2);
           },
+          '07 - If initialValue is provided and array is empty, reduce() should return initialValue without running callback': function () {
+            debugger;
+            var numberOfTimeCallbackHasRun = 0;
+            var initialValue = 1;
+            var result = reduce([], function () {
+              numberOfTimeCallbackHasRun++;
+            }, initialValue);
+            eq(result, initialValue);
+            eq(numberOfTimeCallbackHasRun, 0);
+          }
 
 
 
 
 
-          /*
-          '06 - If the first argument passed to reduce() is a standard array, and initialValue is provided, accumulator should start with initialValue.': function () {
-            fail();
-            reduce([1, 2], function (accumulator) {
-              eq(accumulatorStartingValue, 0);
-            }, 0);
-          },
-          '07 - If the first argument passed to reduce() is a standard array, and initialValue is provided, currentValue should start with first element in array.': function () {
-            fail();
-            reduce([1], function (accumulator, currentValue) {
-              eq(currentValue, 1);
-            }, 0);
-          },
-          '08 - If the first argument passed to reduce() is a standard array, and initialValue is provided, reduce() should return the result of the reduction.': function () {
-            fail();
-
-            var result = reduce([1, 2], function (accumulator, currentValue) {
-              return accumulator + currentValue;
-            }, 0);
-            eq(result, 6);
-
-          },*/
+        
 
           
         });
