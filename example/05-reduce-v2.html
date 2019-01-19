@@ -110,6 +110,7 @@
           var resultSoFar;
           resultSoFar = initialValue;
           resultSoFar = resultSoFar + array[0];
+          resultSoFar = resultSoFar + array[1];
           
           // var resultSoFar = initialValue;
           // for (var i = 0; i < array.length; i++) {
@@ -154,7 +155,7 @@
             eq(result, 2);
           },
           '05 - If array is standard and initialValue is provided, reduce() should return the result of the reduction.': function () {
-            fail();
+
             var result = reduce([1, 2], function () {}, 1);
             eq(result, 4);
           },
