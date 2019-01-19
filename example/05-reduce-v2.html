@@ -36,7 +36,7 @@
 
         kind of array
           standard 
-            [1, 2, 3]
+            [1, 2]
           sparse 
             [, 1, , 2]
           single element
@@ -91,23 +91,32 @@
 
         */
         function reduce (array, callback, initialValue) {
-          var length = array.length;
-
+          
+          // no arguments passed in
           if (arguments.length === 0) {
             throw new TypeError('undefined is not an array');
           }
-
+          
+          // first argument is not an array
           if (Array.isArray(arguments[0]) === false) {
             throw new TypeError(typeof arguments[0] + ' is not an array');
           }
-
+          
+          // second argument is not a function
           if (typeof arguments[1] !== "function") {
             throw new TypeError(typeof arguments[1] + ' is not a function');
           }
 
-          for (var i = 0; i < array.length; i++) {
-            callback(initialValue, array[0]);
-          }
+          var resultSoFar;
+          resultSoFar = initialValue;
+          resultSoFar = resultSoFar + array[0];
+          
+          // var resultSoFar = initialValue;
+          // for (var i = 0; i < array.length; i++) {
+          //   resultSoFar = resultSoFar + array[i];
+          // }
+
+          return resultSoFar;
         }
 
 
@@ -140,23 +149,49 @@
             };
             eq(isTypeError, true);
           },
-          '04 - If the first argument passed to reduce() is a standard array, and initialValue is provided, callback() should run array.length times.': function () {
+          '04 - If array has 1 element and initialValue is provided, reduce() should return the result of the reduction.': function () {
+            var result = reduce([1], function () {}, 1);
+            eq(result, 2);
+          },
+          '05 - If array is standard and initialValue is provided, reduce() should return the result of the reduction.': function () {
+            fail();
+            var result = reduce([1, 2], function () {}, 1);
+            eq(result, 4);
+          },
+
+
+
+
+
+          /*'05 - If the first argument passed to reduce() is [1, 2], and initialValue is provided, callback() should run 2 times.': function () {
+            fail();
             var numberOfTimesCallbackHasRun = 0;
-            reduce([1, 2, 3], function () {
+            reduce([1, 2], function () {
               numberOfTimesCallbackHasRun++;
             }, 0);
-            eq(numberOfTimesCallbackHasRun, 3);
+            eq(numberOfTimesCallbackHasRun, 2);
           },
-          '05 - If the first argument passed to reduce() is a standard array, and initialValue is provided, accumulator should start with initialValue.': function () {
-            reduce([1, 2, 3], function (accumulator) {
-              eq(accumulator, 0);
+          '06 - If the first argument passed to reduce() is a standard array, and initialValue is provided, accumulator should start with initialValue.': function () {
+            fail();
+            reduce([1, 2], function (accumulator) {
+              eq(accumulatorStartingValue, 0);
             }, 0);
           },
-          '06 - If the first argument passed to reduce() is a standard array, and initialValue is provided, currentValue should start with first element in array.': function () {
-            reduce([1, 2, 3], function (accumulator, currentValue) {
+          '07 - If the first argument passed to reduce() is a standard array, and initialValue is provided, currentValue should start with first element in array.': function () {
+            fail();
+            reduce([1], function (accumulator, currentValue) {
               eq(currentValue, 1);
             }, 0);
           },
+          '08 - If the first argument passed to reduce() is a standard array, and initialValue is provided, reduce() should return the result of the reduction.': function () {
+            fail();
+
+            var result = reduce([1, 2], function (accumulator, currentValue) {
+              return accumulator + currentValue;
+            }, 0);
+            eq(result, 6);
+
+          },*/
 
           
         });
