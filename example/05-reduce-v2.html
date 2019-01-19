@@ -185,6 +185,18 @@
             eq(result, 6);
             eq(numberOfTimeCallbackHasRun, 3);
           },
+          '09 - If initialValue is provided and array is sparse and empty, callback() should not be run on holes': function () {
+            debugger;
+            var numberOfTimeCallbackHasRun = 0;
+            var initialValue = 0;
+            var result = reduce([, ,], function (a, b) { 
+              numberOfTimeCallbackHasRun++;
+              return a + b 
+            }, initialValue);
+            eq(result, initialValue);
+            eq(numberOfTimeCallbackHasRun, 0);
+          },
+          
 
 
 
