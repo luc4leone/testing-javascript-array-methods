@@ -107,19 +107,13 @@
             throw new TypeError(typeof arguments[1] + ' is not a function');
           }
 
-          var resultSoFar;
-          resultSoFar = initialValue;
-          resultSoFar = resultSoFar + array[0];
-          resultSoFar = resultSoFar + array[1];
-          
-          // var resultSoFar = initialValue;
-          // for (var i = 0; i < array.length; i++) {
-          //   resultSoFar = resultSoFar + array[i];
-          // }
+          var accumulator = initialValue;
+          for (var i = 0; i < array.length; i++) {
+            accumulator = accumulator + array[i];
+          }
 
-          return resultSoFar;
+          return accumulator;
         }
-
 
         /* tests */
         SimpleTest.runTests({
@@ -155,7 +149,6 @@
             eq(result, 2);
           },
           '05 - If array is standard and initialValue is provided, reduce() should return the result of the reduction.': function () {
-
             var result = reduce([1, 2], function () {}, 1);
             eq(result, 4);
           },
@@ -164,14 +157,7 @@
 
 
 
-          /*'05 - If the first argument passed to reduce() is [1, 2], and initialValue is provided, callback() should run 2 times.': function () {
-            fail();
-            var numberOfTimesCallbackHasRun = 0;
-            reduce([1, 2], function () {
-              numberOfTimesCallbackHasRun++;
-            }, 0);
-            eq(numberOfTimesCallbackHasRun, 2);
-          },
+          /*
           '06 - If the first argument passed to reduce() is a standard array, and initialValue is provided, accumulator should start with initialValue.': function () {
             fail();
             reduce([1, 2], function (accumulator) {
