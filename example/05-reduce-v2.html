@@ -80,6 +80,8 @@
               reduce() should throw a TypeError
             and array is sparse
               callback() should not be run on holes
+            and array is sparse and empty
+              reduce() should return initialValue without running callback
             
 
 
@@ -116,7 +118,7 @@
             throw new TypeError(typeof arguments[1] + ' is not a function');
           }
 
-          if (arguments.length < 3 && array.length === 0) {
+          if (arguments.length < 3 && Object.keys(array).length === 0) {
             throw new TypeError('Trying to reduce an empty array with no initial value');
           }
 
@@ -124,21 +126,27 @@
           var accumulator = initialValue;
           var startingIndex = 0;
 
+          // shift startingIndex until it's not a hole
+          while (startingIndex in array === false && startingIndex < array.length) {
+            startingIndex++;
+          }
+          
           // initialValue is not provided
           if (arguments.length < 3) {
-            accumulator = array[0];
-            startingIndex = 1;
+            accumulator = array[startingIndex];
+            startingIndex++;
           }
 
           for (var i = startingIndex; i < array.length; i++) {
-            // skip holes
+            // if hole, skip it
             if (i in array) {
-              accumulator = callback(accumulator, array[i]);
+              accumulator = callback(accumulator, array[i], i, array);
             }
           }
           
           return accumulator;
         }
+
 
         /* tests */
         SimpleTest.runTests({
@@ -198,7 +206,7 @@
           },
           '08 - If initialValue is provided and array is sparse, callback() should not be run on holes': function () {
             var numberOfTimeCallbackHasRun = 0;
-            var result = reduce([1, , 2, 3], function (a, b) { 
+            var result = reduce([, 1, 2, 3], function (a, b) { 
               numberOfTimeCallbackHasRun++;
               return a + b 
             }, 0);
@@ -245,13 +253,33 @@
           '13 - If initialValue is not provided and array is sparse, callback() should not be run on holes': function () {
 
             var numberOfTimeCallbackHasRun = 0;
-            var result = reduce([1, , 2, 3], function (a, b) { 
+            var result = reduce([, 1, , 2, 3], function (a, b) { 
               numberOfTimeCallbackHasRun++;
               return a + b 
             });
             eq(result, 6);
             eq(numberOfTimeCallbackHasRun, 2);
           },
+          '14 - If initialValue is not provided and array is sparse and empty, reduce() should throw a TypeError': function () {
+            var isTypeError = false;
+            try {
+              reduce([,,], function () {});
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            }
+            eq(isTypeError, true);
+          },
+          '15 - If no initialValue, callback should start at index 1.': function () {
+            reduce([1, 2], function (accumulator, currentValue, currentIndex) {
+              eq(currentIndex, 1);
+            });
+          },
+          '16 - It should pass array as forth argument to callback.': function () {
+            var testArray = [1,2];
+            reduce(testArray, function (previousValue, currentValue, currentIndex, arrayToReduce) {
+              eq(arrayToReduce, testArray);
+            });
+          }
          
           
 

@@ -62,12 +62,14 @@
 
           for (var i = startingIndex; i < length; i++) {
             if (i in array) {
-              resultSoFar = callback(resultSoFar, array(i), i, array);
+              resultSoFar = callback(resultSoFar, array[i], i, array);
             }
           }
 
           return resultSoFar;
         }
+
+
 
 
         /* tests */
@@ -90,7 +92,7 @@
           },
           '03 - If initialValue, previousValue should start with initialValue.': function () {
             reduce([1], function (previousValue) {
-              eq(accumulator, 0);
+              eq(previousValue, 0);
             }, 0);
           },
           '04 - If initialValue, currentValue should start with array[0].': function () {
