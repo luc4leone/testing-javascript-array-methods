@@ -81,9 +81,15 @@
           
         */
 
-        function find () {
+        function find (array) {
+          // no arguments passed in
           if (arguments.length < 1) {
             throw new TypeError('undefined is not an array');
+          }
+
+          // 
+          if (!Array.isArray(arguments[0])) {
+            throw new TypeError(typeof arguments[0] + ' is not an array');
           }
         }
 
@@ -92,7 +98,6 @@
          */
         SimpleTest.runTests({
           '01 - If no argument is passed to find(), throw a TypeError.': function () {
-
             var isTypeError = false;
             try {
               find();
@@ -101,6 +106,15 @@
             };
             eq(isTypeError, true);
           },
+          '02 - If the first argument passed to find() is not an array, throw a TypeError.': function () {
+            var isTypeError = false;
+            try {
+              find(1);
+            } catch (e) {
+              isTypeError = true;
+            }
+            eq(isTypeError, true);
+          }
         });
       </script>
   </body>
