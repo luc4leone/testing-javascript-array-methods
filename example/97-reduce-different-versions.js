@@ -38,3 +38,50 @@ function reduce (arrayToReduce, callback, initialValue) {
 
   return accumulator;
 }
+
+
+/* Gordon's version */
+function reduce (array, callback, initialValue) {
+  var startingIndex = 0;
+  var resultSoFar = initialValue;
+  var length = array.length;
+  var arrayIndexes = Object.keys(array);
+
+  // No initialValue
+  if (arguments.length < 3) {
+    // array is empty, throw TypeError.
+    if (arrayIndexes.length === 0) {
+      throw new TypeError('Reduce of empty array with no initial value');
+    }
+
+    // If array has one element, just return it.
+    if (arrayIndexes === 1) {
+      var onlyIndex = arrayIndexes[0];
+      var onlyElement = array[onlyIndex];
+      return onlyElement;
+    }
+
+    // We want to skip holes at the beginning of the array.
+    while (startingIndex in array === false && startingIndex < length) {
+      startingIndex++;
+    }
+
+    resultSoFar = array[startingIndex];
+    startingIndex++;
+
+  // Has initialValue.
+  } else {
+    if (arrayIndexes.length === 0) {
+      return initialValue;
+    }
+  }
+
+  for (var i = startingIndex; i < length; i++) {
+    if (i in array) {
+      resultSoFar = callback(resultSoFar, array[i], i, array);
+    }
+  }
+
+  return resultSoFar;
+}
+

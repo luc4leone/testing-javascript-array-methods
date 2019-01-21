@@ -76,33 +76,24 @@
             and array is standard
               1 element
               2 elements
+                callback() should run array.length -1, e.g. above 2, times
+                accumulator should start with first element of array
+                currentValue should start with second element in array
+                reduce() should return a value
             and array is empty
               reduce() should throw a TypeError
             and array is sparse
               callback() should not be run on holes
+              accumulator should start with first non hole element
             and array is sparse and empty
               reduce() should return initialValue without running callback
-            
-
-
-
-
-
-          If array is standard and no initialValue is provided
-            callback() should run array.length -1, e.g. above 2, times
-            accumulator should start with first element of array
-            currentValue should start with second element in array
-            reduce() should return a value
-
-          If array is sparse and no initialValue is provided
-            callback() should not be run on holes
-            accumulator should start with first non hole element
-            reduce() should return a value
-
-
         */
+
         function reduce (array, callback, initialValue) {
-          
+          /*
+           TYPE ERRORS 
+           */
+
           // no arguments passed in
           if (arguments.length === 0) {
             throw new TypeError('undefined is not an array');
@@ -118,22 +109,29 @@
             throw new TypeError(typeof arguments[1] + ' is not a function');
           }
 
+          // initialValue not provided and empty array is a TypeError
           if (arguments.length < 3 && Object.keys(array).length === 0) {
             throw new TypeError('Trying to reduce an empty array with no initial value');
           }
 
+          /*
+           CORE LOGIC
+           */
+          
           // default values (when initialValue is provided)
           var accumulator = initialValue;
           var startingIndex = 0;
 
-          // shift startingIndex until it's not a hole
+          // sparse array: shift startingIndex until it's not on a hole
           while (startingIndex in array === false && startingIndex < array.length) {
             startingIndex++;
           }
           
           // initialValue is not provided
           if (arguments.length < 3) {
+            // accumulator is the first not hole
             accumulator = array[startingIndex];
+            // shift startingIndex to shift first currentValue
             startingIndex++;
           }
 
@@ -147,8 +145,9 @@
           return accumulator;
         }
 
-
-        /* tests */
+        /*
+         TESTS
+         */
         SimpleTest.runTests({
           '01 - If no argument is passed to reduce(), throw a TypeError.': function () {
             var isTypeError = false;
@@ -280,17 +279,6 @@
               eq(arrayToReduce, testArray);
             });
           }
-         
-          
-
-
-
-
-
-
-        
-
-          
         });
       </script>
   </body>
