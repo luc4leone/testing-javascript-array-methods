@@ -16,17 +16,17 @@
 
         /* INPUT
         find() signature
-          
+          find(array, callback[, thisArg])
         callback() signature
-          
+          callback(element, index, array)
         */
 
         /* OUTPUT
-        
+        The value of the first element in the array that satisfies the provided testing function; otherwise, undefined is returned.
         */
 
         /* GENERIC DESCRIPTION
-        
+        The find() method returns the value of the first element in the array that satisfies the provided testing function. Otherwise undefined is returned.
         */
 
         /* REQUIREMENTS 
@@ -44,23 +44,63 @@
             []
           empty and sparse
             [,,]
+          [undefined, undefined]
+          [, undefined, 1]
+          [,'']
+          [null]
+          [undefined, null]
+          [{}]
+          [,[]]
 
-        Test inputs
+        Test inputs (for errors)
+        - find() takes 2 arguments
+          - array
+          - callback
+          - optionalObject (optional)
+         
+        - callback() takes 3 arguments
+          - element
+          - index (optional)
+          - array (optional)
          
 
-        Test the find operation
+        Test the find() operation
+          - executes the callback function once for each index of the array
+            - also holes
+          - if callback returns true, find() returns value of that index
+            - else returns undefined
+          - 'If a thisArg parameter is provided to find, it will be used as the this for each invocation of the callback. If it is not provided, then undefined is used' >>>
+          - 'The range of elements processed by find is set before the first invocation of callback.' >>> array.length = n
+          - Elements that are appended to the array after the call to find begins will not be visited by callback. 
+          - If an existing, unvisited element of the array is changed by callback, its value passed to the visiting callback will be the value at the time that find visits that element's index >>> ???
+          - elements that are deleted are still visited >>> ???
+
+
           
           
           
         */
 
         function find () {
+          if (arguments.length < 1) {
+            throw new TypeError('undefined is not an array');
+          }
         }
 
         /*
          TESTS
          */
         SimpleTest.runTests({
+          '01 - If no argument is passed to find(), throw a TypeError.': function () {
+
+            var isTypeError = false;
+            try {
+              find();
+            } catch (e) {
+            isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
         });
       </script>
   </body>
