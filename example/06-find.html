@@ -108,7 +108,7 @@
           }
 
           for (var i = 0; i < array.length; i++) {
-            findCallback();
+            findCallback(array[i], i);
           }
 
 
@@ -151,13 +151,17 @@
             }, {description: 'I am the context'});
           },
           '05 - Find() should execute the callback once for each index of the array': function () {
-
             var counter = 0;
             find([1, 2, 3], function () {
               counter++;
             })
             eq(counter, 3);
-          }
+          },
+          '06 - Find() should pass in the array\'s ith position as the second argument to the callback.': function () {
+              find([1], function (number, index) {
+                eq(index, 0);
+              })
+            },
         });
       </script>
   </body>
