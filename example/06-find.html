@@ -53,7 +53,7 @@
           [,[]]
 
         Test inputs (for errors)
-        - find() takes 2 arguments
+        - find() takes 3 arguments
           - array
           - callback
           - optionalObject (optional)
@@ -81,16 +81,37 @@
           
         */
 
-        function find (array) {
+        function find (array, callback, optionalObject) {
+          /*
+           TYPE ERRORS 
+           */
+
           // no arguments passed in
           if (arguments.length < 1) {
             throw new TypeError('undefined is not an array');
           }
 
-          // 
+          // first argument is not an array
           if (!Array.isArray(arguments[0])) {
             throw new TypeError(typeof arguments[0] + ' is not an array');
           }
+
+          // second argument is not a function
+          if (typeof arguments[1] !== "function") {
+            throw new TypeError(typeof arguments[1] + ' is not a function');
+          }
+
+          var findCallback = callback;
+
+          if (optionalObject !== undefined) {
+            findCallback = callback.bind(optionalObject);
+          }
+
+          for (var i = 0; i < array.length; i++) {
+            findCallback();
+          }
+
+
         }
 
         /*
@@ -114,6 +135,28 @@
               isTypeError = true;
             }
             eq(isTypeError, true);
+          },
+          '03 - If the second argument passed to find() is not a function throw a TypeError.': function () {
+            var isTypeError = false;
+            try {
+              find([], 2)
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '04 - Find() should accept as a third argument an optional object, that will be the value for this in the callback': function () {
+            find([1, 2], function () {
+              eq(this.description, 'I am the context');
+            }, {description: 'I am the context'});
+          },
+          '05 - Find() should execute the callback once for each index of the array': function () {
+
+            var counter = 0;
+            find([1, 2, 3], function () {
+              counter++;
+            })
+            eq(counter, 3);
           }
         });
       </script>
