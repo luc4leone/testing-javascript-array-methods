@@ -176,8 +176,7 @@
             });
             eq(result, 2);
           },
-          '09 - Find() should executes the callback function once for each index of the array': function () {
-
+          '09 - Find() should executes the callback also on holes': function () {
             var numberOfTimesCallbackHasRun = 0;
             var result = find([, 1, 2, 3], function (element) {
               numberOfTimesCallbackHasRun++;
