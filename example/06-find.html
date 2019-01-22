@@ -108,7 +108,7 @@
           }
 
           for (var i = 0; i < array.length; i++) {
-            findCallback(array[i], i);
+            findCallback(array[i], i, array);
           }
 
 
@@ -158,10 +158,17 @@
             eq(counter, 3);
           },
           '06 - Find() should pass in the array\'s ith position as the second argument to the callback.': function () {
-              find([1], function (number, index) {
-                eq(index, 0);
-              })
-            },
+            find([1], function (element, index) {
+              eq(index, 0);
+            })
+          },
+          '07 - Find should pass array as third argument to callback': function () {
+            var testArray = [1,2];
+            find(testArray, function (element, i, array) {
+              eq(array, testArray);
+            });
+
+          }
         });
       </script>
   </body>
