@@ -108,9 +108,10 @@
           }
 
           for (var i = 0; i < array.length; i++) {
-            findCallback(array[i], i, array);
+            if (findCallback(array[i], i, array)) {
+              return array[i];
+           }
           }
-
 
         }
 
@@ -162,13 +163,31 @@
               eq(index, 0);
             })
           },
-          '07 - Find should pass array as third argument to callback': function () {
-            var testArray = [1,2];
+          '07 - Find() should pass array as third argument to callback': function () {
+            var testArray = [1,   2];
             find(testArray, function (element, i, array) {
               eq(array, testArray);
             });
+          },
+          '08 - If callback returns true, find() should return the element of that index': function () {
+            var result = find([1, 2, 3, 4], function (element) {
+              var isGreaterThan1 = element > 1
+              return isGreaterThan1;
+            });
+            eq(result, 2);
+          },
+          '09 - Find() should executes the callback function once for each index of the array': function () {
 
-          }
+            var numberOfTimesCallbackHasRun = 0;
+            var result = find([, 1, 2, 3], function (element) {
+              numberOfTimesCallbackHasRun++;
+              var isGreaterThan1 = element > 1
+              return isGreaterThan1;
+            });
+            eq(numberOfTimesCallbackHasRun, 3);
+            eq(result, 2);
+          },
+
         });
       </script>
   </body>
