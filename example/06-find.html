@@ -69,7 +69,7 @@
             - also holes
           - if callback returns true, find() returns value of that index
             - else returns undefined
-          - 'If a thisArg parameter is provided to find, it will be used as the this for each invocation of the callback. If it is not provided, then undefined is used' >>>
+          - 'If a thisArg parameter is provided to find, it will be used as the this for each invocation of the callback. If it is not provided, then undefined is used'
           - 'The range of elements processed by find is set before the first invocation of callback.' >>> array.length = n
           - Elements that are appended to the array after the call to find begins will not be visited by callback. 
           - If an existing, unvisited element of the array is changed by callback, its value passed to the visiting callback will be the value at the time that find visits that element's index >>> ???
@@ -102,12 +102,13 @@
           }
 
           var findCallback = callback;
+          var length = array.length;
 
           if (optionalObject !== undefined) {
             findCallback = callback.bind(optionalObject);
           }
 
-          for (var i = 0; i < array.length; i++) {
+          for (var i = 0; i < length; i++) {
             if (findCallback(array[i], i, array)) {
               return array[i];
            }
@@ -146,12 +147,12 @@
             };
             eq(isTypeError, true);
           },
-          '04 - Find() should accept as a third argument an optional object, that will be the value for this in the callback': function () {
+          '04 - Find() should accept as a third argument an optional object, that will be the value for this in the callback.': function () {
             find([1, 2], function () {
               eq(this.description, 'I am the context');
             }, {description: 'I am the context'});
           },
-          '05 - Find() should execute the callback once for each index of the array': function () {
+          '05 - Find() should execute the callback once for each index of the array.': function () {
             var counter = 0;
             find([1, 2, 3], function () {
               counter++;
@@ -163,20 +164,20 @@
               eq(index, 0);
             })
           },
-          '07 - Find() should pass array as third argument to callback': function () {
+          '07 - Find() should pass array as third argument to callback.': function () {
             var testArray = [1,   2];
             find(testArray, function (element, i, array) {
               eq(array, testArray);
             });
           },
-          '08 - If callback returns true, find() should return the element of that index': function () {
+          '08 - If callback returns true, find() should return the element of that index.': function () {
             var result = find([1, 2, 3, 4], function (element) {
               var isGreaterThan1 = element > 1
               return isGreaterThan1;
             });
             eq(result, 2);
           },
-          '09 - Find() should executes the callback also on holes': function () {
+          '09 - Find() should executes the callback also on holes.': function () {
             var numberOfTimesCallbackHasRun = 0;
             var result = find([, 1, 2, 3], function (element) {
               numberOfTimesCallbackHasRun++;
@@ -186,6 +187,18 @@
             eq(numberOfTimesCallbackHasRun, 3);
             eq(result, 2);
           },
+          '10 - Elements that are appended to the array after the call to find begins will not be visited by callback.': function () {
+            var numberOfTimesCallbackHasRun = 0;
+            var result = find([, 1, 1, 1], function (element, index, array) {
+              numberOfTimesCallbackHasRun++;
+              array[array.length] = 2 ;
+              var isGreaterThan1 = element > 1
+              return isGreaterThan1;
+            });
+            eq(numberOfTimesCallbackHasRun, 4);
+            eq(result, undefined);
+          },
+
 
         });
       </script>
