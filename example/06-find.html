@@ -72,8 +72,9 @@
           - 'If a thisArg parameter is provided to find, it will be used as the this for each invocation of the callback. If it is not provided, then undefined is used'
           - 'The range of elements processed by find is set before the first invocation of callback.' >>> array.length = n
           - Elements that are appended to the array after the call to find begins will not be visited by callback. 
+
           - If an existing, unvisited element of the array is changed by callback, its value passed to the visiting callback will be the value at the time that find visits that element's index >>> ???
-          - elements that are deleted are still visited >>> ???
+          - elements that are deleted are still visited >>>
 
 
           
@@ -198,6 +199,17 @@
             eq(numberOfTimesCallbackHasRun, 4);
             eq(result, undefined);
           },
+          '11 - elements that are deleted are still visited': function () {
+            var numberOfTimesCallbackHasRun = 0;
+            var result = find([1, 2], function (element, index, array) {
+              numberOfTimesCallbackHasRun++;
+              delete array[index + 1];
+              var isGreaterThan1 = element > 1
+              return isGreaterThan1;
+            });
+            eq(numberOfTimesCallbackHasRun, 2);
+            eq(result, undefined);
+          }
 
 
         });
