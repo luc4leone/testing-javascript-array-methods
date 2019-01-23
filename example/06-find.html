@@ -44,13 +44,14 @@
             []
           empty and sparse
             [,,]
-          [undefined, undefined]
-          [, undefined, 1]
-          [,'']
-          [null]
-          [undefined, null]
-          [{}]
-          [,[]]
+          other
+            [undefined, undefined]
+            [, undefined, 1]
+            [,'']
+            [null]
+            [undefined, null]
+            [{}]
+            [,[]]
 
         Test inputs (for errors)
         - find() takes 3 arguments
@@ -69,17 +70,11 @@
             - also holes
           - if callback returns true, find() returns value of that index
             - else returns undefined
-          - 'If a thisArg parameter is provided to find, it will be used as the this for each invocation of the callback. If it is not provided, then undefined is used'
-          - 'The range of elements processed by find is set before the first invocation of callback.' >>> array.length = n
-          - Elements that are appended to the array after the call to find begins will not be visited by callback. 
-
-          - If an existing, unvisited element of the array is changed by callback, its value passed to the visiting callback will be the value at the time that find visits that element's index >>> ???
-          - elements that are deleted are still visited >>>
-
-
-          
-          
-          
+          - If a thisArg parameter is provided to find, it will be used as the this for each invocation of the callback. If it is not provided, then undefined is used
+          - The range of elements processed by find is set before the first invocation of callback. >>> array.length = n
+          - Elements that are appended to the array after the call to find begins will not be visited by callback
+          - elements that are deleted are still visited
+          - If an existing, unvisited element of the array is changed by callback, its value passed to the visiting callback will be the value at the time that find visits that element's index 
         */
 
         function find (array, callback, optionalObject) {
@@ -102,6 +97,10 @@
             throw new TypeError(typeof arguments[1] + ' is not a function');
           }
 
+           /*
+           CORE LOGIC
+           */
+
           var findCallback = callback;
           var length = array.length;
 
@@ -114,7 +113,6 @@
               return array[i];
            }
           }
-
         }
 
         /*
@@ -199,7 +197,7 @@
             eq(numberOfTimesCallbackHasRun, 4);
             eq(result, undefined);
           },
-          '11 - elements that are deleted are still visited': function () {
+          '11 - Elements that are deleted are still visited.': function () {
             var numberOfTimesCallbackHasRun = 0;
             var result = find([1, 2], function (element, index, array) {
               numberOfTimesCallbackHasRun++;
@@ -209,9 +207,18 @@
             });
             eq(numberOfTimesCallbackHasRun, 2);
             eq(result, undefined);
+          },
+          '12 - If an existing, unvisited element of the array is changed by callback, its value passed to the visiting callback will be the value at the time that find visits that element\'s index': function () {
+            var numberOfTimesCallbackHasRun = 0;
+            var result = find([1, 2], function (element, index, array) {
+              numberOfTimesCallbackHasRun++;
+              array[index + 1] = 4;
+              var isGreaterThan1 = element > 1
+              return isGreaterThan1;
+            });
+            eq(numberOfTimesCallbackHasRun, 2);
+            eq(result, 4);
           }
-
-
         });
       </script>
   </body>
