@@ -76,20 +76,26 @@
           - Elements appended to the array after the call to findIndex begins will not be processed by callback.
           - If an existing, unvisited element of the array is changed by callback, its value passed to the callback will be the value at the time that findIndex visits that element's index.
           - Elements that are deleted are still visited.
-          - also test for the only mandatory parameter of callback
-          
+
+          - Should I test also for the only mandatory parameter of callback?
         */
 
-        function findIndex () {
+        function findIndex (array, callback) {
           /*
            TYPE ERRORS 
            */
 
-          
 
-           /*
+
+          /*
            CORE LOGIC
            */
+
+          for (var i = 0; i < array.length; i++) {
+            if (callback(array[i])) {
+              return;
+            }
+          }
 
           
         }
@@ -98,8 +104,14 @@
          TESTS
          */
         SimpleTest.runTests({
-          '': function () {
-            fail();
+          'findIndex() should execute the callback function once for every array index 0..length-1 (inclusive) in the array until it finds one where callback returns a truthy value.': function () {
+            debugger;
+            var numberOfTimeCallbackHasRun = 0;
+            findIndex([1, 2, 3, 4], function (n) {
+              numberOfTimeCallbackHasRun++;
+              return n > 2;
+            });
+            eq(numberOfTimeCallbackHasRun, 3);
           }
           
         });
