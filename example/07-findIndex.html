@@ -70,9 +70,9 @@
           - If such an element is found, findIndex immediately returns that found element's index.
           - If such an element is not found, findIndex returns -1.
           - If the array's length is 0, findIndex returns -1.
-
           - If an optional object is passed to findIndex as third argument, it will be used as 'this' inside each invocation of the callback. 
-            - If it is not provided, then undefined is used.
+            - If it is not provided, then undefined is used (not meaning: "is used as this")
+
           - The range of elements processed by findIndex is set before the first invocation of callback. 
           - Elements appended to the array after the call to findIndex begins will not be processed by callback.
           - If an existing, unvisited element of the array is changed by callback, its value passed to the callback will be the value at the time that findIndex visits that element's index.
@@ -91,13 +91,14 @@
           /*
            CORE LOGIC
            */
+          var length = array.length;
 
            var findIndexCallback = callback;
            if (optionalObject) {
             findIndexCallback = callback.bind(optionalObject);
            }
 
-          for (var i = 0; i < array.length; i++) {
+          for (var i = 0; i < length; i++) {
             if (findIndexCallback(array[i])) {
               return i;
             }
@@ -152,9 +153,18 @@
             findIndex([1, 2], function () {
               eq(this.description, "optional object");
             }, {description: "optional object"});
-
-
+          },
+          '07 - The range of elements processed by findIndex is set before the first invocation of callback.': function () {
+            var testArray = [1, 2, 3];
+            var numberOfTimeCallbackHasRun = 0;
+            findIndex(testArray, function (n) {
+              numberOfTimeCallbackHasRun++;
+              testArray[testArray.length] = 4;
+              return n > 3;
+            });
+            eq(numberOfTimeCallbackHasRun, 3);
           }
+
 
 
           
