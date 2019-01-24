@@ -68,7 +68,7 @@
           - The findIndex method executes the callback function once for every array index 0..length-1 (inclusive) in the array until it finds one where callback returns a truthy value (a value that coerces to true).
             - in sparse arrays the callback is called even for indexes of entries not present in the array.
           - If such an element is found, findIndex immediately returns that found element's index.
-          - If such an element is not found, findIndex findIndex returns -1.
+          - If such an element is not found, findIndex returns -1.
           - If the array's length is 0, findIndex returns -1.
           - If an optional object is passed to findIndex as third argument, it will be used as 'this' inside each invocation of the callback. 
             - If it is not provided, then undefined is used.
@@ -93,11 +93,12 @@
 
           for (var i = 0; i < array.length; i++) {
             if (callback(array[i])) {
-              return;
+              return i;
             }
           }
 
-          
+          return -1;
+
         }
 
         /*
@@ -105,14 +106,39 @@
          */
         SimpleTest.runTests({
           'findIndex() should execute the callback function once for every array index 0..length-1 (inclusive) in the array until it finds one where callback returns a truthy value.': function () {
-            debugger;
             var numberOfTimeCallbackHasRun = 0;
             findIndex([1, 2, 3, 4], function (n) {
               numberOfTimeCallbackHasRun++;
               return n > 2;
             });
             eq(numberOfTimeCallbackHasRun, 3);
+          },
+          'In sparse arrays the callback is called even for indexes of entries not present in the array.': function () {
+            var numberOfTimeCallbackHasRun = 0;
+            findIndex([, 2, 3, 4], function (n) {
+              numberOfTimeCallbackHasRun++;
+              return n > 2;
+            });
+            eq(numberOfTimeCallbackHasRun, 3);
+          },
+          'When the callback returns a truthy value, meaning an element that satisfies the condition is found, findIndex immediately returns that found element\'s index.': function () {
+            var numberOfTimeCallbackHasRun = 0;
+            var result = findIndex([, 2, 3, 4], function (n) {
+              numberOfTimeCallbackHasRun++;
+              return n > 2;
+            });
+            eq(result, 2);
+            // testing "immediately"
+            eq(numberOfTimeCallbackHasRun, 3); 
+          },
+          'If such an element is not found, findIndex returns -1.': function () {
+            var result = findIndex([, 2, 3, 4], function (n) {
+              return n > 5;
+            });
+            eq(result, -1);
           }
+
+
           
         });
       </script>
