@@ -97,7 +97,7 @@
           }
 
           for (var i = 0; i < length; i++) {
-            if (findIndexCallback(array[i])) {
+            if (findIndexCallback(array[i], i)) {
               return i;
             }
           }
@@ -187,6 +187,20 @@
               eq(number, 1);
             })
           },
+          '11 - It should pass in the array ith position as the second argument to the callback.': function () {
+
+            findIndex([1], function (number, index) {
+              eq(index, 0);
+            })
+          },
+          '12 - It should pass in the original array as the third argument to the callback.': function () {
+            fail();
+            var testArray = [1];
+            findIndex(testArray, function (number, index, array) {
+              eq(array, testArray);
+            })
+          }
+
 
 
 
