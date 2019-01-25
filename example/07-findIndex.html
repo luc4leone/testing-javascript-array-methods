@@ -31,7 +31,6 @@
         */
 
         /* REQUIREMENTS 
-
         kind of array
           standard 
             [1, 2]
@@ -92,10 +91,10 @@
            */
           var length = array.length;
 
-           var findIndexCallback = callback;
-           if (optionalObject) {
+          var findIndexCallback = callback;
+          if (optionalObject) {
             findIndexCallback = callback.bind(optionalObject);
-           }
+          }
 
           for (var i = 0; i < length; i++) {
             if (findIndexCallback(array[i])) {
@@ -181,7 +180,13 @@
             });
             eq(result, 1);
             eq(numberOfTimeCallbackHasRun, 2);
-          }
+          },
+          '10 - It should pass in the ith element as the first argument to the callback.': function () {
+
+            findIndex([1], function (number) {
+              eq(number, 1);
+            })
+          },
 
 
 
