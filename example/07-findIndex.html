@@ -89,6 +89,11 @@
             throw new TypeError('undefined is not an array');
           }
 
+          // first argument is not an array
+          if (!Array.isArray(arguments[0])) {
+            throw new TypeError(arguments[0] + ' is not an array');
+          }
+
 
 
           /*
@@ -207,10 +212,22 @@
             try {
               findIndex();
             } catch (e) {
-            isTypeError = e instanceof TypeError;
-            eq(e.message, 'undefined is not an array');
-          };
-          }
+              isTypeError = e instanceof TypeError;
+              eq(e.message, 'undefined is not an array');
+            }
+            eq(isTypeError, true);
+          },
+          '14 - If the first argument passed to findIndex() is not an array, throw a TypeError.': function () {
+            debugger;
+            var isTypeError = false;
+            try {
+              findIndex("jack");
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+              eq(e.message, 'jack is not an array');
+            }
+            eq(isTypeError, true);
+          },
 
 
 
