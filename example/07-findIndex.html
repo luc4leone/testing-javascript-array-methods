@@ -84,6 +84,11 @@
            TYPE ERRORS 
            */
 
+          // no arguments passed in
+          if (arguments.length < 1) {
+            throw new TypeError('undefined is not an array');
+          }
+
 
 
           /*
@@ -196,6 +201,15 @@
             findIndex(testArray, function (number, index, array) {
               eq(array, testArray);
             })
+          },
+          '13 - If no argument is passed to findIndex(), throw a TypeError, with the right kind of message.': function () {
+            var isTypeError = false;
+            try {
+              findIndex();
+            } catch (e) {
+            isTypeError = e instanceof TypeError;
+            eq(e.message, 'undefined is not an array');
+          };
           }
 
 
