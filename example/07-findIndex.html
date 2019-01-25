@@ -74,7 +74,6 @@
             - If it is not provided, then undefined is used (not meaning: "is used as this". undefined can't be bind, only an object can be.)
           - The range of elements processed by findIndex is set before the first invocation of callback. 
             - Elements appended to the array after the call to findIndex begins will not be processed by callback. (this point is a different way of saying the same as the previous point)
-
           - If an existing, unvisited element of the array is changed by callback, its value passed to the callback will be the value at the time that findIndex visits that element's index.
           - Elements that are deleted are still visited.
 
@@ -171,6 +170,17 @@
               return n > 3;
             });
             eq(result, 2);
+          },
+          '09 - Elements that are deleted are still visited.': function () {
+            var testArray = [1, 2, 3];
+            var numberOfTimeCallbackHasRun = 0;
+            var result = findIndex(testArray, function (n) {
+              numberOfTimeCallbackHasRun++;
+              delete testArray[1];
+              return n === undefined;
+            });
+            eq(result, 1);
+            eq(numberOfTimeCallbackHasRun, 2);
           }
 
 
