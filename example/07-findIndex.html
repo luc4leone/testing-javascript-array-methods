@@ -94,7 +94,10 @@
             throw new TypeError(arguments[0] + ' is not an array');
           }
 
-
+          // second argument is not a function
+          if (typeof arguments[1] !== "function") {
+            throw new TypeError(arguments[1] + ' is not a function');
+          }
 
           /*
            CORE LOGIC
@@ -217,8 +220,7 @@
             }
             eq(isTypeError, true);
           },
-          '14 - If the first argument passed to findIndex() is not an array, throw a TypeError.': function () {
-            debugger;
+          '14 - If the first argument passed to findIndex is not an array, throw a TypeError.': function () {
             var isTypeError = false;
             try {
               findIndex("jack");
@@ -228,11 +230,16 @@
             }
             eq(isTypeError, true);
           },
-
-
-
-
-          
+          '15 - If the second argument passed to findIndex is not a function throw a TypeError.': function () {
+            var isTypeError = false;
+            try {
+              findIndex([], 2)
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+              eq(e.message, '2 is not a function');
+            };
+            eq(isTypeError, true);
+          }
         });
       </script>
   </body>
