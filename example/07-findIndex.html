@@ -71,10 +71,10 @@
           - If such an element is not found, findIndex returns -1.
           - If the array's length is 0, findIndex returns -1.
           - If an optional object is passed to findIndex as third argument, it will be used as 'this' inside each invocation of the callback. 
-            - If it is not provided, then undefined is used (not meaning: "is used as this")
-
+            - If it is not provided, then undefined is used (not meaning: "is used as this". undefined can't be bind, only an object can be.)
           - The range of elements processed by findIndex is set before the first invocation of callback. 
-          - Elements appended to the array after the call to findIndex begins will not be processed by callback.
+            - Elements appended to the array after the call to findIndex begins will not be processed by callback. (this point is a different way of saying the same as the previous point)
+
           - If an existing, unvisited element of the array is changed by callback, its value passed to the callback will be the value at the time that findIndex visits that element's index.
           - Elements that are deleted are still visited.
 
@@ -163,6 +163,14 @@
               return n > 3;
             });
             eq(numberOfTimeCallbackHasRun, 3);
+          },
+          '08 - If an existing, unvisited element of the array is changed by callback, its value passed to the callback will be the value at the time that findIndex visits that element\'s index.': function () {
+            var testArray = [1, 2, 3];
+            var result = findIndex(testArray, function (n) {
+              testArray[testArray.length -1] = 4;
+              return n > 3;
+            });
+            eq(result, 2);
           }
 
 
