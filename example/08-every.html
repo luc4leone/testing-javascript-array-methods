@@ -156,7 +156,15 @@
             eq(result, true);
           },
           '05 - callback() it is not called for indexes which have been deleted.': function () {
-            fail();
+            var numberOfTimesCallbackHasRun = 0;
+            var array = [2, , , 2];
+            var result = every(array, function (element) {
+              numberOfTimesCallbackHasRun++;
+              delete array[3];
+              return element > 1;
+            });
+            eq(numberOfTimesCallbackHasRun, 1);
+            eq(result, true);
           },
 
           /* Callback context */
