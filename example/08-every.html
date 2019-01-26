@@ -99,8 +99,11 @@
 
           var index = 0;
           while (index < array.length) {
-            if (!callback(array[index])) {
-              return false;
+            if(index in array){
+
+              if (!callback(array[index])) {
+                return false;
+              }
             }
             index++;
           }
@@ -144,12 +147,12 @@
 
           /* Behavior for sparse array */
           '04 - callback() is not called for indexes which have never been assigned values.': function () {
-            fail();
             var numberOfTimesCallbackHasRun = 0;
-            var result = every([2, 2, 2, 2], function (element) {
+            var result = every([2, , , 2], function (element) {
               numberOfTimesCallbackHasRun++;
               return element > 1;
             });
+            eq(numberOfTimesCallbackHasRun, 2);
             eq(result, true);
           },
           '05 - callback() it is not called for indexes which have been deleted.': function () {
