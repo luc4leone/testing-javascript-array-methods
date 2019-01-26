@@ -98,9 +98,15 @@
            */
 
           var index = 0;
-          while (index < array.length && callback(array[index])) {
+          while (index < array.length) {
+            if (!callback(array[index])) {
+              return false;
+            }
             index++;
           }
+
+          return true;
+
 
         }
 
@@ -118,10 +124,20 @@
             eq(numberOfTimesCallbackHasRun, 3);
           },
           '02 - If such an element is found, the every() immediately returns false.': function () {
-            fail();
+            var numberOfTimesCallbackHasRun = 0;
+            var result = every([2, 2, 1, 2], function (element) {
+              numberOfTimesCallbackHasRun++;
+              return element > 1;
+            });
+            eq(result, false);
           },
           '03 - If callback() returns a truthy value for all elements, every() returns true.': function () {
-            fail();
+            var numberOfTimesCallbackHasRun = 0;
+            var result = every([2, 2, 2, 2], function (element) {
+              numberOfTimesCallbackHasRun++;
+              return element > 1;
+            });
+            eq(result, true);
           },
 
           /* Behavior for sparse array */
