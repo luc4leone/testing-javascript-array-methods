@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+          * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          }
+        </style>
+  </head>
+  <body>
+      <h2>Unit tests</h2>
+      <h3 id="stats"></h3>
+      <script src="../simpletest.js"></script>
+      <script>
+        /* TESTS FOR Array.prototype.every */
+
+        /* INPUT
+        my every() signature
+          every(array, callback[, optionalObject])
+        callback() signature
+          callback(element[, index[, array]])
+        */
+
+        /* OUTPUT
+        - returns true if the callback function returns a truthy value for every array element
+        - returns false if at least once the callback returns a falsy value
+        */
+
+        /* GENERIC DESCRIPTION
+        The every() method tests whether all elements in the array pass the test implemented by the provided function.
+        */
+
+        /* REQUIREMENTS 
+        kind of array
+          standard 
+            [1, 2]
+          sparse 
+            [, 1, , 2]
+          single element
+            [1]
+          single element and sparse
+            [, 1]
+          empty
+            []
+          empty and sparse
+            [,,]
+          [undefined, undefined]
+          [, undefined, 1]
+          [,'']
+          [null]
+          [undefined, null]
+          [{}]
+          [,[]]
+
+        Test inputs (for errors)
+        - every() takes 3 arguments
+            array
+            callback
+            optionalObject (optional)
+          
+        - callback() takes 3 arguments
+            element
+            index (optional)
+            array (optional)
+          
+        Test the every() operation
+          - every() calls callback() once for each element in the array until it finds one where callback() returns a falsy value.
+          - If such an element is found, the every() immediately returns false.
+          - If callback() returns a truthy value for all elements, every() returns true. 
+          - callback() is called only for indexes of the array which have assigned values.
+          - callback() it is not called for indexes which have been deleted.
+          - callback() is not called for indexes which have never been assigned values.
+          - If an optionalObject parameter is provided to every(), it will be used as callback()'s this value. 
+          - If an optionalObject is not provided to every(), the value undefined will be used as its this value.
+          - The range of elements processed by every() is set before the first call of callback(). 
+            - Elements which are appended to the array after the call to every() begins will not be visited by callback. 
+          - If existing elements of the array are changed, their value as passed to callback(), will be the value at the time every() visits them.
+          - every() returns true for any condition put on an empty array.
+
+        */
+
+        function findIndex (array, callback, optionalObject) {
+          /*
+           TYPE ERRORS 
+           */
+
+          // no arguments passed in
+
+
+          // first argument is not an array
+
+
+          // second argument is not a function
+
+
+          /*
+           CORE LOGIC
+           */
+
+        }
+
+        /*
+         TESTS
+         */
+        SimpleTest.runTests({
+          /* Core functionality */
+          '01 - every() calls callback() once for each element in the array until it finds one where callback() returns a falsy value.': function () {
+            fail();
+          },
+          '02 - If such an element is found, the every() immediately returns false.': function () {
+            fail();
+          },
+          '03 - If callback() returns a truthy value for all elements, every() returns true.': function () {
+            fail();
+          },
+
+          /* Behavior for sparse array */
+          '04 - callback() is not called for indexes which have never been assigned values.': function () {
+            fail();
+          },
+          '05 - callback() it is not called for indexes which have been deleted.': function () {
+            fail();
+          },
+
+          /* Callback context */
+          '06 - If an optionalObject is provided to every() as a third argument, it will be used as callback()\'s this value. ': function () {
+            fail();
+          },
+          '07 - If an optionalObject is not provided to every(), the value undefined will be used as its this value.': function () {
+            fail();
+          },
+
+          /* Changes to elements */
+          '08 - The range of elements processed by every() is set before the first call of callback().': function () {
+            fail();
+          },
+          '09 - If existing elements of the array are changed, their value as passed to callback(), will be the value at the time every() visits them.': function () {
+            fail();
+          },
+
+          /* Empty array edge case */
+          '10 - every() returns true for any condition put on an empty array.': function () {
+            fail();
+          },
+
+          /* Checking callback() inputs */
+          '11 - It should pass in the ith element as the first argument to callback().': function () {
+            fail();
+          },
+          '12 - It should pass in the array ith position as the second argument to callback().': function () {
+            fail();
+          },
+          '13 - It should pass in the original array as the third argument to callback().': function () {
+            fail();
+          },
+
+          /* Checking TypeError on missing every() arguments  */
+          '14 - If no argument is passed to every(), throw a TypeError, with the right kind of message.': function () {
+            fail();
+          },
+          '15 - If the first argument passed to findIndex is not an array, throw a TypeError.': function () {
+            fail();
+          },
+          '16 - If the second argument passed to findIndex is not a function throw a TypeError.': function () {
+            fail();
+          }
+        });
+      </script>
+  </body>
+</html>
