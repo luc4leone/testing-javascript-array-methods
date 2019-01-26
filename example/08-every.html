@@ -79,7 +79,7 @@
 
         */
 
-        function findIndex (array, callback, optionalObject) {
+        function every (array, callback) {
           /*
            TYPE ERRORS 
            */
@@ -97,6 +97,11 @@
            CORE LOGIC
            */
 
+          var index = 0;
+          while (index < array.length && callback(array[index])) {
+            index++;
+          }
+
         }
 
         /*
@@ -105,7 +110,12 @@
         SimpleTest.runTests({
           /* Core functionality */
           '01 - every() calls callback() once for each element in the array until it finds one where callback() returns a falsy value.': function () {
-            fail();
+            var numberOfTimesCallbackHasRun = 0;
+            every([2, 2, 1, 2], function (element) {
+              numberOfTimesCallbackHasRun++;
+              return element > 1;
+            });
+            eq(numberOfTimesCallbackHasRun, 3);
           },
           '02 - If such an element is found, the every() immediately returns false.': function () {
             fail();
