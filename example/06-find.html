@@ -102,13 +102,13 @@
            */
 
           var findCallback = callback;
-          var arrayLength = array.length;
+          var length = array.length;
 
           if (optionalObject !== undefined) {
             findCallback = callback.bind(optionalObject);
           }
 
-          for (var i = 0; i < arrayLength; i++) {
+          for (var i = 0; i < length; i++) {
             if (findCallback(array[i], i, array)) {
               return array[i];
            }
