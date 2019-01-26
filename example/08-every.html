@@ -129,6 +129,7 @@
               numberOfTimesCallbackHasRun++;
               return element > 1;
             });
+            eq(numberOfTimesCallbackHasRun, 3);
             eq(result, false);
           },
           '03 - If callback() returns a truthy value for all elements, every() returns true.': function () {
@@ -137,12 +138,19 @@
               numberOfTimesCallbackHasRun++;
               return element > 1;
             });
+            eq(numberOfTimesCallbackHasRun, 4);
             eq(result, true);
           },
 
           /* Behavior for sparse array */
           '04 - callback() is not called for indexes which have never been assigned values.': function () {
             fail();
+            var numberOfTimesCallbackHasRun = 0;
+            var result = every([2, 2, 2, 2], function (element) {
+              numberOfTimesCallbackHasRun++;
+              return element > 1;
+            });
+            eq(result, true);
           },
           '05 - callback() it is not called for indexes which have been deleted.': function () {
             fail();
