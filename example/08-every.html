@@ -77,6 +77,8 @@
           - If existing elements of the array are changed, their value as passed to callback(), will be the value at the time every() visits them.
           - every() returns true for any condition put on an empty array.
 
+          - every() does not mutate the array on which it is called.
+
         */
 
         function every (array, callback, optionalObject) {
@@ -101,7 +103,7 @@
           if (optionalObject) {
             everyCallback = callback.bind(optionalObject);
           }
-          
+
           var index = 0;
           while (index < array.length) {
             if (index in array) {
