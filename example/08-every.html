@@ -79,7 +79,7 @@
 
         */
 
-        function every (array, callback) {
+        function every (array, callback, optionalObject) {
           /*
            TYPE ERRORS 
            */
@@ -97,11 +97,15 @@
            CORE LOGIC
            */
 
+          var everyCallback = callback;
+          if (optionalObject) {
+            everyCallback = callback.bind(optionalObject);
+          }
+          
           var index = 0;
           while (index < array.length) {
-            if(index in array){
-
-              if (!callback(array[index])) {
+            if (index in array) {
+              if (!everyCallback(array[index])) {
                 return false;
               }
             }
@@ -168,8 +172,11 @@
           },
 
           /* Callback context */
-          '06 - If an optionalObject is provided to every() as a third argument, it will be used as callback()\'s this value. ': function () {
-            fail();
+          '06 - If an optionalObject is provided to every() as a third argument, it will be used as callback()\'s this value.': function () {
+
+            every([1, 2, 3], function () {
+              eq(this.description, 'optional object');
+            }, {description: 'optional object'});
           },
           '07 - If an optionalObject is not provided to every(), the value undefined will be used as its this value.': function () {
             fail();
