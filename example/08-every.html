@@ -100,12 +100,14 @@
            */
 
           var everyCallback = callback;
+          
           if (optionalObject) {
             everyCallback = callback.bind(optionalObject);
           }
 
           var index = 0;
-          while (index < array.length) {
+          var arrayLength = array.length;
+          while (index < arrayLength) {
             if (index in array) {
               if (!everyCallback(array[index])) {
                 return false;
@@ -187,7 +189,15 @@
 
           /* Changes to elements */
           '08 - The range of elements processed by every() is set before the first call of callback().': function () {
-            fail();
+            var numberOfTimesCallbackHasRun = 0;
+            var array = [2, 2];
+            var result = every(array, function (element) {
+              numberOfTimesCallbackHasRun++;
+              array[array.length] = 1;
+              return element > 1;
+            });
+            eq(numberOfTimesCallbackHasRun, 2);
+            eq(result, true);
           },
           '09 - If existing elements of the array are changed, their value as passed to callback(), will be the value at the time every() visits them.': function () {
             fail();
