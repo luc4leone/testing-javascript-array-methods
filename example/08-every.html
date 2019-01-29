@@ -207,14 +207,19 @@
               testArray[testArray.length -1] = 1;
               return element > 1;
             });
-            console.log(testArray);
             eq(numberOfTimesCallbackHasRun, 2);
             eq(result, false);
           },
 
           /* Empty array edge case */
-          '10 - every() returns true for any condition put on an empty array.': function () {
-            fail();
+          '10 - every() returns true for any condition put on an empty array, and callback is not called.': function () {
+            var numberOfTimesCallbackHasRun = 0;
+            var result = every([,], function (el) {
+              numberOfTimesCallbackHasRun++;
+              return false;
+            });
+            eq(result, true);
+            eq(numberOfTimesCallbackHasRun, 0);
           },
 
           /* Checking callback() inputs */
