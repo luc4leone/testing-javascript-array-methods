@@ -92,6 +92,9 @@
           }
 
           // first argument is not an array
+          if (!Array.isArray(arguments[0])) {
+            throw new TypeError(arguments[0] + ' is not an array');
+          }
 
 
           // second argument is not a function
@@ -251,10 +254,18 @@
             }
             eq(isTypeError, true);
           },
-          '14 - If the first argument passed to findIndex is not an array, throw a TypeError.': function () {
-            fail();
+          '14 - If the first argument passed to every() is not an array, throw a TypeError.': function () {
+
+            var isTypeError = false;
+            try {
+              every("jack");
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+              eq(e.message, 'jack is not an array');
+            }
+            eq(isTypeError, true);
           },
-          '15 - If the second argument passed to findIndex is not a function throw a TypeError.': function () {
+          '15 - If the second argument passed to every() is not a function throw a TypeError.': function () {
             fail();
           }
         });
