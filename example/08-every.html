@@ -87,7 +87,9 @@
            */
 
           // no arguments passed in
-
+          if (arguments.length < 1) {
+            throw new TypeError('undefined is not an array');
+          }
 
           // first argument is not an array
 
@@ -232,17 +234,22 @@
             });
           },
           '12 - It should pass in the original array as the third argument to callback().': function () {
-
             var testArray = [1];
             every(testArray, function (number, index, array) {
               eq(array, testArray);
             });
-
           },
 
           /* Checking TypeError on missing every() arguments  */
           '13 - If no argument is passed to every(), throw a TypeError, with the right kind of message.': function () {
-            fail();
+            var isTypeError = false;
+            try {
+              every();
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+              eq(e.message, 'undefined is not an array');
+            }
+            eq(isTypeError, true);
           },
           '14 - If the first argument passed to findIndex is not an array, throw a TypeError.': function () {
             fail();
