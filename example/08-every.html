@@ -109,7 +109,7 @@
           var arrayLength = array.length;
           while (index < arrayLength) {
             if (index in array) {
-              if (!everyCallback(array[index])) {
+              if (!everyCallback(array[index], index)) {
                 return false;
               }
             }
@@ -214,7 +214,7 @@
           /* Empty array edge case */
           '10 - every() returns true for any condition put on an empty array, and callback is not called.': function () {
             var numberOfTimesCallbackHasRun = 0;
-            var result = every([,], function (el) {
+            var result = every([,], function (el) { // pass also with []
               numberOfTimesCallbackHasRun++;
               return false;
             });
@@ -223,24 +223,27 @@
           },
 
           /* Checking callback() inputs */
-          '11 - It should pass in the ith element as the first argument to callback().': function () {
-            fail();
+          //'It should pass in the ith element as the first argument to callback().'
+          /* already implicitly tested in test 01 */
+
+          '11 - It should pass in the array ith position as the second argument to callback().': function () {
+
+            every([1], function (number, index) {
+              eq(index, 0);
+            });
           },
-          '12 - It should pass in the array ith position as the second argument to callback().': function () {
-            fail();
-          },
-          '13 - It should pass in the original array as the third argument to callback().': function () {
+          '12 - It should pass in the original array as the third argument to callback().': function () {
             fail();
           },
 
           /* Checking TypeError on missing every() arguments  */
-          '14 - If no argument is passed to every(), throw a TypeError, with the right kind of message.': function () {
+          '13 - If no argument is passed to every(), throw a TypeError, with the right kind of message.': function () {
             fail();
           },
-          '15 - If the first argument passed to findIndex is not an array, throw a TypeError.': function () {
+          '14 - If the first argument passed to findIndex is not an array, throw a TypeError.': function () {
             fail();
           },
-          '16 - If the second argument passed to findIndex is not a function throw a TypeError.': function () {
+          '15 - If the second argument passed to findIndex is not a function throw a TypeError.': function () {
             fail();
           }
         });
