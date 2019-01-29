@@ -35,13 +35,13 @@ tests({
   function () {
     filter([1], function (number) {
       eq(number, 1);
-    })
+    });
   },
   '03 - It should pass in the array ith position as the second argument to the callback.':
   function () {
     filter([1], function (number, index) {
       eq(index, 0);
-    })
+    });
   },
   '04 - It should pass in the original array as the third argument to the callback.':
   function () {

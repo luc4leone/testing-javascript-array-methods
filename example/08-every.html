@@ -109,7 +109,7 @@
           var arrayLength = array.length;
           while (index < arrayLength) {
             if (index in array) {
-              if (!everyCallback(array[index], index)) {
+              if (!everyCallback(array[index], index, array)) {
                 return false;
               }
             }
@@ -227,13 +227,17 @@
           /* already implicitly tested in test 01 */
 
           '11 - It should pass in the array ith position as the second argument to callback().': function () {
-
             every([1], function (number, index) {
               eq(index, 0);
             });
           },
           '12 - It should pass in the original array as the third argument to callback().': function () {
-            fail();
+
+            var testArray = [1];
+            every(testArray, function (number, index, array) {
+              eq(array, testArray);
+            });
+
           },
 
           /* Checking TypeError on missing every() arguments  */
