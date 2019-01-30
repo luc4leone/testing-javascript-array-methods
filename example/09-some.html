@@ -81,7 +81,7 @@
 
         */
         'use strict';
-        function some (array, callback) {
+        function some (array, callback, optionalObject) {
           /*
            TYPE ERRORS 
            */
@@ -104,11 +104,15 @@
           /*
            CORE LOGIC
            */
+          var someCallback = callback;
+
+          if (optionalObject) {
+            someCallback = callback.bind(optionalObject);
+          }
 
           for (var i = 0; i < array.length; i++) {
             if (i in array) {
-
-              if (callback(array[i])) {
+              if (someCallback(array[i])) {
                 return true;
               };
             }
@@ -185,24 +189,21 @@
 
           /* Behavior for sparse array */
           '07 - callback() is not called for indexes which have never been assigned values.': function () {
-
             var numberOfTimesCallbackHasRun = 0;
             some([, 1, 1, , 1], function (el) {
               numberOfTimesCallbackHasRun++;
               return el > 1;
             });
             eq(numberOfTimesCallbackHasRun, 3);
-     
           },
-          '08 - callback() it is not called for indexes which have been deleted.': function () {
-            fail();
-     
-          },
+          // I think this test has already been tested by the previous one
+          //'callback() it is not called for indexes which have been deleted.'
 
           /* Callback context */
-          '09 - If an optionalObject is provided to every() as a third argument, it will be used as callback()\'s this value.': function () {
-            fail();
-
+          '08 - If an optionalObject is provided to every() as a third argument, it will be used as callback()\'s this value.': function () {
+            some([1, 2, 3], function () {
+              eq(this.description, 'optional object');
+            }, {description: 'optional object'});
           },
           '10 - If an optionalObject is not provided to every(), the value undefined will be used as its this value.': function () {
             fail();
