@@ -113,7 +113,7 @@
 
           for (var i = 0; i < arrayLength; i++) {
             if (i in array) {
-              if (someCallback(array[i], i)) {
+              if (someCallback(array[i], i, array)) {
                 return true;
               };
             }
@@ -256,7 +256,6 @@
             });
           },
           '14 - It should pass in the original array as the third argument to callback().': function () {
-            fail();
             var testArray = [1];
             some(testArray, function (number, index, array) {
               eq(array, testArray);
