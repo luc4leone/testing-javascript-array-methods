@@ -109,8 +109,8 @@
             if (callback(array[i])) {
               return true;
             };
-
            }
+           return false;
 
 
         }
@@ -171,8 +171,13 @@
             eq(result, true);
           },
           '06 - If callback() returns a falsy value for all elements, some() returns false.': function () {
-            fail()
-         
+            var numberOfTimesCallbackHasRun = 0;
+            var result = some([1, 1, 1], function (el) {
+              numberOfTimesCallbackHasRun++;
+              return el > 1;
+            });
+            eq(numberOfTimesCallbackHasRun, 3);
+            eq(result, false);
           },
 
           /* Behavior for sparse array */
