@@ -200,27 +200,27 @@
           //'callback() it is not called for indexes which have been deleted.'
 
           /* Callback context */
-          '08 - If an optionalObject is provided to every() as a third argument, it will be used as callback()\'s this value.': function () {
+          '08 - If an optionalObject is provided to some() as a third argument, it will be used as callback()\'s this value.': function () {
             some([1, 2, 3], function () {
               eq(this.description, 'optional object');
             }, {description: 'optional object'});
           },
-          '10 - If an optionalObject is not provided to every(), the value undefined will be used as its this value.': function () {
+          '09 - If an optionalObject is not provided to every(), the value undefined will be used as its this value.': function () {
             fail();
 
           },
 
           /* Changes to elements */
-          '11 - The range of elements processed by every() is set before the first call of callback().': function () {
+          '10 - The range of elements processed by every() is set before the first call of callback().': function () {
             fail();
          
           },
-          '12 - If existing elements of the array are changed, their value as passed to callback() will be the value at the time every() visits them.': function () {
+          '11 - If existing elements of the array are changed, their value as passed to callback() will be the value at the time every() visits them.': function () {
             fail();
           },
 
           /* Empty array edge case */
-          '13 - every() returns true for any condition put on an empty array, and callback is not called.': function () {
+          '12 - every() returns true for any condition put on an empty array, and callback is not called.': function () {
             fail();
           },
 
@@ -228,10 +228,10 @@
           //'It should pass in the ith element as the first argument to callback().'
           /* already implicitly tested in test 01 */
 
-          '14 - It should pass in the array ith position as the second argument to callback().': function () {
+          '13 - It should pass in the array ith position as the second argument to callback().': function () {
             fail();
           },
-          '15 - It should pass in the original array as the third argument to callback().': function () {
+          '14 - It should pass in the original array as the third argument to callback().': function () {
             fail();
           }
 
