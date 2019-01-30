@@ -217,15 +217,22 @@
             var testArray = [1, 1];
             var result = some(testArray, function (element) {
               numberOfTimesCallbackHasRun++;
-              testArray[testArray.length] = 1;
+              testArray[testArray.length] = 2;
               return element > 1;
             });
             eq(numberOfTimesCallbackHasRun, 2);
             eq(result, false);
-         
           },
-          '11 - If existing elements of the array are changed, their value as passed to callback() will be the value at the time every() visits them.': function () {
-            fail();
+          '11 - If existing elements of the array are changed, their value as passed to callback() will be the value at the time some() visits them.': function () {
+            var numberOfTimesCallbackHasRun = 0;
+            var testArray = [1, 1];
+            var result = some(testArray, function (element) {
+              numberOfTimesCallbackHasRun++;
+              testArray[testArray.length - 1] = 2;
+              return element > 1;
+            });
+            eq(numberOfTimesCallbackHasRun, 2);
+            eq(result, true);
           },
 
           /* Empty array edge case */
