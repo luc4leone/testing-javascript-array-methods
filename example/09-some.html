@@ -67,8 +67,8 @@
         - some() calls callback() once for each element present in the array until it finds one where callback returns a truthy value. 
         - If such an element is found, some() immediately returns true. 
         - Otherwise, some() returns false. 
-        - callback() is invoked only for indexes of the array which have assigned values; 
-        - it is not invoked for indexes which have been deleted or which have never been assigned values.
+        - callback() is called only for indexes of the array which have assigned values; 
+          - it is not called for indexes which have been deleted or which have never been assigned values.
         - callback is called with three arguments: the value of the element, the index of the element, and the array object being traversed.
         - If an optional object is provided to some(), it will be used as callbacks' this value. 
         - Otherwise, the value undefined will be used as its this value. 
@@ -105,12 +105,15 @@
            CORE LOGIC
            */
 
-           for (var i = 0; i < array.length; i++) {
-            if (callback(array[i])) {
-              return true;
-            };
-           }
-           return false;
+          for (var i = 0; i < array.length; i++) {
+            if (i in array) {
+
+              if (callback(array[i])) {
+                return true;
+              };
+            }
+          }
+          return false;
 
 
         }
@@ -182,7 +185,13 @@
 
           /* Behavior for sparse array */
           '07 - callback() is not called for indexes which have never been assigned values.': function () {
-            fail();
+
+            var numberOfTimesCallbackHasRun = 0;
+            some([, 1, 1, , 1], function (el) {
+              numberOfTimesCallbackHasRun++;
+              return el > 1;
+            });
+            eq(numberOfTimesCallbackHasRun, 3);
      
           },
           '08 - callback() it is not called for indexes which have been deleted.': function () {
