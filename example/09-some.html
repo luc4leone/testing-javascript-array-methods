@@ -75,7 +75,7 @@
         - some() does not mutate the array on which it is called.
         - The range of elements processed by some() is set before the first invocation of callback. 
         - Elements that are appended to the array after the call to some() begins will not be visited by callback. I
-        - f an existing, unvisited element of the array is changed by callback, its value passed to the visiting callback will be the value at the time that some() visits that element's index; 
+        - If an existing, unvisited element of the array is changed by callback, its value passed to the visiting callback will be the value at the time that some() visits that element's index; 
         - elements that are deleted are not visited.
           
 
@@ -236,8 +236,14 @@
           },
 
           /* Empty array edge case */
-          '12 - every() returns true for any condition put on an empty array, and callback is not called.': function () {
-            fail();
+          '12 - some() returns false for any condition put on an empty array, and callback is not called.': function () {
+            var numberOfTimesCallbackHasRun = 0;
+            var result = some([,], function (el) { // pass also with []
+              numberOfTimesCallbackHasRun++;
+              return true;
+            });
+            eq(result, false);
+            eq(numberOfTimesCallbackHasRun, 0);
           },
 
           /* Checking callback() inputs */
