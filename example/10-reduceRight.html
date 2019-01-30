@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+          * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          }
+        </style>
+  </head>
+  <body>
+      <h2>Unit tests</h2>
+      <h3 id="stats"></h3>
+      <script src="../simpletest.js"></script>
+      <script>
+        /* TESTS FOR Array.prototype.reduceRight */
+
+        /* INPUT
+        reduceRight() signature
+          arr.reduceRight(callback[, initialValue])
+        callback() signature
+          callback(accumulator, currentValue[, currentIndex, array])
+        */
+
+        /* OUTPUT
+        reduceRight() return the value that results from the reduction.
+        */
+
+        /* GENERIC DESCRIPTION
+        The reduceRight() method applies a function against an accumulator and each value of the array (from right-to-left) to reduce it to a single value.
+        */
+
+        /* REQUIREMENTS 
+
+        kind of array
+          standard 
+            [1, 2]
+          sparse 
+            [, 1, , 2]
+          single element
+            [1]
+          single element and sparse
+            [, 1]
+          empty
+            []
+          empty and sparse
+            [,,]
+
+        Test inputs
+          If no argument is passed to reduceRight() 
+            throw a TypeError
+          If no second argument, callback(), is passed to reduceRight()
+            throw a TypeError
+          If the second argument passed to reduceRight() is not of type Function
+            throw a TypeError
+
+        Test the reduction operation
+          If initialValue is provided
+            and array is standard
+              1 element
+              2 elements
+                callback() should run array.length times
+                accumulator should start with initialValue
+                currentValue should start with last element in array
+                reduceRight() should return the result value from the reduction
+            and array is empty 
+              reduceRight() should return initialValue without running callback
+            and array is sparse
+              callback() should not be run on holes
+            and array is sparse and empty
+              reduceRight() should return initialValue without running callback
+          
+          If initialValue is not provided
+            and array is standard
+              1 element
+              2 elements
+                callback() should run array.length - 1, e.g. above 2, times
+                accumulator should start with the last element of array
+                currentValue should start with second to last element of array
+                reduceRight() should return the result value from the reduction
+            and array is empty
+              reduceRight() should throw a TypeError
+            and array is sparse
+              callback() should not be run on holes
+              accumulator should start with first non hole element
+            and array is sparse and empty
+              reduceRight() should return initialValue without running callback
+        */
+
+        function reduceRight (array, callback, initialValue) {
+          /*
+           TYPE ERRORS 
+           */
+
+          // no arguments passed in
+          if (arguments.length === 0) {
+            throw new TypeError('undefined is not an array');
+          }
+          
+          // first argument is not an array
+          if (Array.isArray(arguments[0]) === false) {
+            throw new TypeError(typeof arguments[0] + ' is not an array');
+          }
+          
+          // second argument is not a function
+          if (typeof arguments[1] !== "function") {
+            throw new TypeError(typeof arguments[1] + ' is not a function');
+          }
+
+          // initialValue not provided and empty array is a TypeError
+          if (arguments.length < 3 && Object.keys(array).length === 0) {
+            throw new TypeError('Trying to reduce an empty array with no initial value');
+          }
+
+          /*
+           CORE LOGIC
+           */
+          
+          // default values (when initialValue is provided)
+          //var accumulator = initialValue;
+          //var startingIndex = 0;
+
+          // sparse array: shift startingIndex until it's not on a hole
+          //while (startingIndex in array === false && startingIndex < array.length) {
+            //startingIndex++;
+          //}
+          
+          // initialValue is not provided
+          //if (arguments.length < 3) {
+            // accumulator is the first not hole
+            //accumulator = array[startingIndex];
+            // shift startingIndex to shift first currentValue
+            //startingIndex++;
+          //}
+
+          //for (var i = startingIndex; i < array.length; i++) {
+            // if hole, skip it
+            //if (i in array) {
+              //accumulator = callback(accumulator, array[i], i, array);
+            //}
+          //}
+          
+          //return accumulator;
+        }
+
+        /*
+         TESTS
+         */
+        SimpleTest.runTests({
+          '01 - If no argument is passed to reduceRight(), throw a TypeError.': function () {
+            var isTypeError = false;
+            try {
+              reduceRight();
+            } catch (e) {
+            isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '02 - If the first argument passed to reduceRight() is not an array, throw a TypeError.': function () {
+            var isTypeError = false;
+            try {
+              reduceRight(1)
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '03 - If the second argument passed to reduceRight() is not a function throw a TypeError.': function () {
+            var isTypeError = false;
+            try {
+              reduceRight([], 2)
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '04 - If initialValue is not provided and array is empty, reduceRight() should throw a TypeError': function () {
+            var isTypeError = false;
+            try {
+              reduceRight([], function () {});
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            }
+            eq(isTypeError, true);
+          },
+          '05 - If initialValue is not provided and array is sparse and empty, reduceRight() should throw a TypeError': function () {
+            var isTypeError = false;
+            try {
+              reduceRight([,,], function () {});
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            }
+            eq(isTypeError, true);
+          },
+          '06 - If initialValue is provided and array has 1 element, reduceRight() should return the result of the reduction.': function () {
+            fail();
+            var result = reduceRight([1], function (a, b) {
+              return a + b;
+            }, 1);
+            eq(result, 2);
+          },
+          '07 - If initialValue is provided and array is standard, 2 elements, reduceRight() should return the result of the reduction.': function () {
+            fail();
+            var result = reduceRight([1, 2], function (a, b) {
+              return a + b;
+            }, 1);
+            eq(result, 4);
+          },
+          '08 - If initialValue is provided and array is standard, reduceRight() should return the result of the reduction provided by the callback.': function () {
+            fail();
+            var result = reduceRight([1, 2], function (a, b) {
+              return a * b;
+            }, 1);
+            eq(result, 2);
+          },
+          '09 - If initialValue is provided and array is empty, reduceRight() should return initialValue without running callback': function () {
+            fail();
+            var numberOfTimeCallbackHasRun = 0;
+            var initialValue = 1;
+            var result = reduceRight([], function () {
+              numberOfTimeCallbackHasRun++;
+            }, initialValue);
+            eq(result, initialValue);
+            eq(numberOfTimeCallbackHasRun, 0);
+          },
+          '10 - If initialValue is provided and array is sparse, callback() should not be run on holes': function () {
+            fail();
+            var numberOfTimeCallbackHasRun = 0;
+            var result = reduceRight([, 1, 2, 3], function (a, b) { 
+              numberOfTimeCallbackHasRun++;
+              return a + b 
+            }, 0);
+            eq(result, 6);
+            eq(numberOfTimeCallbackHasRun, 3);
+          },
+          '11 - If initialValue is provided and array is sparse and empty, callback() should not be run on holes': function () {
+            fail();
+            var numberOfTimeCallbackHasRun = 0;
+            var initialValue = 0;
+            var result = reduceRight([, ,], function (a, b) { 
+              numberOfTimeCallbackHasRun++;
+              return a + b 
+            }, initialValue);
+            eq(result, initialValue);
+            eq(numberOfTimeCallbackHasRun, 0);
+          },
+          '12 - If initialValue is not provided and array has 1 element, reduceRight() should return that element, without running the callback()': function () {
+            fail();
+            var numberOfTimeCallbackHasRun = 0;
+            var result = reduceRight([1], function (a, b) {
+              numberOfTimeCallbackHasRun++;
+              return a + b;
+            });
+            eq(numberOfTimeCallbackHasRun, 0);
+            eq(result, 1);
+          },
+          '13 - If initialValue is not provided and array is standard, 2 elements, reduceRight() should return that element': function () {
+            fail();
+            var numberOfTimeCallbackHasRun = 0;
+            var result = reduceRight([1, 2], function (a, b) {
+              numberOfTimeCallbackHasRun++;
+              return a + b;
+            });
+            eq(numberOfTimeCallbackHasRun, 1);
+            eq(result, 3);
+          },
+          '14 - If initialValue is not provided and array is sparse, callback() should not be run on holes': function () {
+            fail();
+            var numberOfTimeCallbackHasRun = 0;
+            var result = reduceRight([, 1, , 2, 3], function (a, b) { 
+              numberOfTimeCallbackHasRun++;
+              return a + b 
+            });
+            eq(result, 6);
+            eq(numberOfTimeCallbackHasRun, 2);
+          },
+          '15 - If no initialValue, callback should start at index 1.': function () {
+            fail();
+            reduceRight([1, 2], function (accumulator, currentValue, currentIndex) {
+              eq(currentIndex, 1);
+            });
+          },
+          '16 - It should pass array as forth argument to callback.': function () {
+            fail();
+            var testArray = [1,2];
+            reduceRight(testArray, function (previousValue, currentValue, currentIndex, arrayToReduce) {
+              eq(arrayToReduce, testArray);
+            });
+          }
+        });
+      </script>
+  </body>
+</html>
