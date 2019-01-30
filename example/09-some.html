@@ -205,9 +205,10 @@
               eq(this.description, 'optional object');
             }, {description: 'optional object'});
           },
-          '09 - If an optionalObject is not provided to every(), the value undefined will be used as its this value.': function () {
-            fail();
-
+          '09 - If an optionalObject is not provided to some(), the value undefined will be used as its this value.': function () {
+            some([1, 2, 3], function () {
+              eq(this, undefined);
+            });
           },
 
           /* Changes to elements */
