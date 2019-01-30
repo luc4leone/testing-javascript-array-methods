@@ -113,7 +113,7 @@
 
           for (var i = 0; i < arrayLength; i++) {
             if (i in array) {
-              if (someCallback(array[i])) {
+              if (someCallback(array[i], i)) {
                 return true;
               };
             }
@@ -251,10 +251,16 @@
           /* already implicitly tested in test 01 */
 
           '13 - It should pass in the array ith position as the second argument to callback().': function () {
-            fail();
+            some([1], function (number, index) {
+              eq(index, 0);
+            });
           },
           '14 - It should pass in the original array as the third argument to callback().': function () {
             fail();
+            var testArray = [1];
+            some(testArray, function (number, index, array) {
+              eq(array, testArray);
+            });
           }
 
           
