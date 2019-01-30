@@ -109,7 +109,7 @@
             if (callback(array[i])) {
               return true;
             };
-            
+
            }
 
 
@@ -154,7 +154,6 @@
 
           /* Core functionality */
           '04 - some() calls callback() once for each element in the array until it finds one where callback() returns a truthy value.': function () {
-
             var numberOfTimesCallbackHasRun = 0;
             some([1, 3, 5], function (el) {
               numberOfTimesCallbackHasRun++;
@@ -162,9 +161,14 @@
             });
             eq(numberOfTimesCallbackHasRun, 2);
           },
-          '05 - some() should immediately return true if callback returns a thruthy value.': function () {
-            fail();
-         
+          '05 - some() should immediately return true if callback returns a truthy value.': function () {
+            var numberOfTimesCallbackHasRun = 0;
+            var result = some([1, 3, 5], function (el) {
+              numberOfTimesCallbackHasRun++;
+              return el > 1;
+            });
+            eq(numberOfTimesCallbackHasRun, 2);
+            eq(result, true);
           },
           '06 - If callback() returns a falsy value for all elements, some() returns false.': function () {
             fail()
