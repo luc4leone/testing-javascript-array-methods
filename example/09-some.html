@@ -81,7 +81,7 @@
 
         */
         'use strict';
-        function some () {
+        function some (array, callback) {
           /*
            TYPE ERRORS 
            */
@@ -104,6 +104,13 @@
           /*
            CORE LOGIC
            */
+
+           for (var i = 0; i < array.length; i++) {
+            if (callback(array[i])) {
+              return true;
+            };
+            
+           }
 
 
         }
@@ -146,14 +153,20 @@
           },
 
           /* Core functionality */
-          '04 - every() calls callback() once for each element in the array until it finds one where callback() returns a falsy value.': function () {
-            fail();
+          '04 - some() calls callback() once for each element in the array until it finds one where callback() returns a truthy value.': function () {
+
+            var numberOfTimesCallbackHasRun = 0;
+            some([1, 3, 5], function (el) {
+              numberOfTimesCallbackHasRun++;
+              return el > 1;
+            });
+            eq(numberOfTimesCallbackHasRun, 2);
           },
-          '05 - If such an element is found, the every() immediately returns false.': function () {
+          '05 - some() should immediately return true if callback returns a thruthy value.': function () {
             fail();
          
           },
-          '06 - If callback() returns a truthy value for all elements, every() returns true.': function () {
+          '06 - If callback() returns a falsy value for all elements, some() returns false.': function () {
             fail()
          
           },
