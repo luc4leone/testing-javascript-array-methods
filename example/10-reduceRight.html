@@ -200,7 +200,7 @@
             eq(result, 2);
           },
           '07 - If initialValue is provided and array is standard, 2 elements, reduceRight() should return the result of the reduction.': function () {
-            fail();
+
             var result = reduceRight([1, 2], function (a, b) {
               return a + b;
             }, 1);
