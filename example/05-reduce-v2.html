@@ -8,7 +8,7 @@
         </style>
   </head>
   <body>
-      <h2>Unit tests</h2>
+      <h2>Test Drive reduce()</h2>
       <h3 id="stats"></h3>
       <script src="../simpletest.js"></script>
       <script>
@@ -250,7 +250,6 @@
             eq(isTypeError, true);
           },
           '13 - If initialValue is not provided and array is sparse, callback() should not be run on holes': function () {
-
             var numberOfTimeCallbackHasRun = 0;
             var result = reduce([, 1, , 2, 3], function (a, b) { 
               numberOfTimeCallbackHasRun++;
