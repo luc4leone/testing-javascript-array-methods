@@ -200,21 +200,18 @@
             eq(result, 2);
           },
           '07 - If initialValue is provided and array is standard, 2 elements, reduceRight() should return the result of the reduction.': function () {
-
             var result = reduceRight([1, 2], function (a, b) {
               return a + b;
             }, 1);
             eq(result, 4);
           },
           '08 - If initialValue is provided and array is standard, reduceRight() should return the result of the reduction provided by the callback.': function () {
-            fail();
             var result = reduceRight([1, 2], function (a, b) {
-              return a * b;
+              return a * b; // multiply instead of sum
             }, 1);
             eq(result, 2);
           },
           '09 - If initialValue is provided and array is empty, reduceRight() should return initialValue without running callback.': function () {
-            fail();
             var numberOfTimeCallbackHasRun = 0;
             var initialValue = 1;
             var result = reduceRight([], function () {
