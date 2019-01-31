@@ -137,7 +137,7 @@
           for (var i = startingIndex; i >= 0; i--) {
             // if hole, skip it
             if (i in array) {
-              accumulator = callback(accumulator, array[i], i);
+              accumulator = callback(accumulator, array[i], i, array);
             }
           }
           
@@ -272,7 +272,6 @@
             });
           },
           '16 - It should pass array as forth argument to callback.': function () {
-            fail();
             var testArray = [1,2];
             reduceRight(testArray, function (previousValue, currentValue, currentIndex, arrayToReduce) {
               eq(arrayToReduce, testArray);
