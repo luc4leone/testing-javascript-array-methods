@@ -111,6 +111,8 @@
           /*
            CORE LOGIC
            */
+
+           return [];
           
         }
 
@@ -119,7 +121,6 @@
          */
         SimpleTest.runTests({
           '01 - If no argument is passed to reduceRight(), throw a TypeError.': function () {
-
             var isTypeError = false;
             try {
               concat();
@@ -129,10 +130,9 @@
             eq(isTypeError, true);
           },
           '02 - concat() should return an array.': function () {
-            fail();
             var baseArray = [1, 2];
             var resultArray = concat(baseArray);
-            eq(Array.isArray(result), true);
+            eq(Array.isArray(resultArray), true);
           },
           '03 - concat() should return a new array, not baseArray.': function () {
             fail();
