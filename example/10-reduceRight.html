@@ -248,8 +248,7 @@
             eq(numberOfTimeCallbackHasRun, 0);
             eq(result, 1);
           },
-          '13 - If initialValue is not provided and array is standard, 2 elements, reduceRight() should return that element.': function () {
-            fail();
+          '13 - If initialValue is not provided and array is standard, 2 elements, reduceRight() should return the result of the reduction.': function () {
             var numberOfTimeCallbackHasRun = 0;
             var result = reduceRight([1, 2], function (a, b) {
               numberOfTimeCallbackHasRun++;
