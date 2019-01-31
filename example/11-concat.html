@@ -135,10 +135,10 @@
             eq(Array.isArray(resultArray), true);
           },
           '03 - concat() should return a new array, not baseArray.': function () {
-            fail();
-            var arrayToMap = [1];
-            var mappedArray = map(arrayToMap, function () {});
-            eq(arrayToMap !== mappedArray, true);
+
+            var baseArray = [1, 2];
+            var resultArray = concat(baseArray);
+            eq(baseArray !== resultArray, true);
           },
           '04 - concat() should creates a new array consisting of the elements in the array on which it is called, followed in order by, the argument itself.': function () {
             fail();
