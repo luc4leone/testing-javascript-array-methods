@@ -122,9 +122,9 @@
           var startingIndex = arrayLength - 1;
 
           // sparse array: shift startingIndex until it's not on a hole
-          //while (startingIndex in array === false && startingIndex < array.length) {
-            //startingIndex++;
-          //}
+          while (startingIndex in array === false && startingIndex >= 0) {
+            startingIndex--;
+          }
           
           // initialValue is not provided
           if (arguments.length < 3) {
@@ -258,9 +258,9 @@
             eq(result, 3);
           },
           '14 - If initialValue is not provided and array is sparse, callback() should not be run on holes.': function () {
-            fail();
+
             var numberOfTimeCallbackHasRun = 0;
-            var result = reduceRight([, 1, , 2, 3], function (a, b) { 
+            var result = reduceRight([1, , 2, 3, ,], function (a, b) { 
               numberOfTimeCallbackHasRun++;
               return a + b 
             });
