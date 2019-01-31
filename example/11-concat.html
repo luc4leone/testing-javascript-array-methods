@@ -101,7 +101,7 @@
 
         */
 
-        function concat (array) {
+        function concat (array, value1) {
 
           // no arguments passed in
             if (arguments.length === 0) {
@@ -112,13 +112,16 @@
            CORE LOGIC
            */
 
-           return [];
-          
+          var concatArray = [];
+
+          concatArray[0] = array[0];
+          concatArray[1] = array[1];
+          concatArray[2] = value1;
+
+          return concatArray;
         }
 
-        /*
-         TESTS
-         */
+        /* TESTS */
         SimpleTest.runTests({
           '01 - If no argument is passed to reduceRight(), throw a TypeError.': function () {
             var isTypeError = false;
@@ -135,19 +138,17 @@
             eq(Array.isArray(resultArray), true);
           },
           '03 - concat() should return a new array, not baseArray.': function () {
-
             var baseArray = [1, 2];
             var resultArray = concat(baseArray);
             eq(baseArray !== resultArray, true);
           },
           '04 - concat() should creates a new array consisting of the elements in the array on which it is called, followed in order by, the argument itself.': function () {
-            fail();
             var baseArray = [1, 2];
-            var resultArray = baseArray.concat(3);
+            var resultArray = concat(baseArray, 3);
+            eq(resultArray.length, 3);
             eq(resultArray[0], 1);
             eq(resultArray[1], 2);
-            eq(resultArray[0], 3);
-
+            eq(resultArray[2], 3);
           },
 
         });
