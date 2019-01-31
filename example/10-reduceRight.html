@@ -127,12 +127,12 @@
           //}
           
           // initialValue is not provided
-          //if (arguments.length < 3) {
-            // accumulator is the first not hole
-            //accumulator = array[startingIndex];
-            // shift startingIndex to shift first currentValue
-            //startingIndex++;
-          //}
+          if (arguments.length < 3) {
+            // accumulator is the first not hole starting from the last element
+            accumulator = array[startingIndex];
+            // shift startingIndex to the left to shift first currentValue
+            startingIndex--;
+          }
 
           for (var i = startingIndex; i >= 0; i--) {
             // if hole, skip it
@@ -240,7 +240,6 @@
             eq(numberOfTimeCallbackHasRun, 0);
           },
           '12 - If initialValue is not provided and array has 1 element, reduceRight() should return that element, without running the callback().': function () {
-            fail();
             var numberOfTimeCallbackHasRun = 0;
             var result = reduceRight([1], function (a, b) {
               numberOfTimeCallbackHasRun++;
