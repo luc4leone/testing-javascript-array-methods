@@ -137,7 +137,7 @@
           for (var i = startingIndex; i >= 0; i--) {
             // if hole, skip it
             if (i in array) {
-              accumulator = callback(accumulator, array[i]);
+              accumulator = callback(accumulator, array[i], i);
             }
           }
           
@@ -258,7 +258,6 @@
             eq(result, 3);
           },
           '14 - If initialValue is not provided and array is sparse, callback() should not be run on holes.': function () {
-
             var numberOfTimeCallbackHasRun = 0;
             var result = reduceRight([1, , 2, 3, ,], function (a, b) { 
               numberOfTimeCallbackHasRun++;
@@ -267,10 +266,9 @@
             eq(result, 6);
             eq(numberOfTimeCallbackHasRun, 2);
           },
-          '15 - If no initialValue, callback should start at index 1.': function () {
-            fail();
+          '15 - If no initialValue, callback should start at the second to last index.': function () {
             reduceRight([1, 2], function (accumulator, currentValue, currentIndex) {
-              eq(currentIndex, 1);
+              eq(currentIndex, 0);
             });
           },
           '16 - It should pass array as forth argument to callback.': function () {

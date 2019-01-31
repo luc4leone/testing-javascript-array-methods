@@ -250,7 +250,6 @@
             eq(isTypeError, true);
           },
           '13 - If initialValue is not provided and array is sparse, callback() should not be run on holes': function () {
-            debugger;
             var numberOfTimeCallbackHasRun = 0;
             var result = reduce([, 1, , 2, 3], function (a, b) { 
               numberOfTimeCallbackHasRun++;
