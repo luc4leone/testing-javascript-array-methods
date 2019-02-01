@@ -48,7 +48,8 @@ var SimpleTest = {
 
   assertStrictEquals: function (expected, actual) {
     if (expected !== actual) {
-      throw new Error('assertStrictEquals() "' + expected + '" !== "' + actual + '"');
+      //throw new Error('assertStrictEquals() "' + expected + '" !== "' + actual + '"');
+      throw new Error('assertStrictEquals() >>> ' + JSON.stringify(expected) + ' is not equal to ' + JSON.stringify(actual));
     }
   }
 };
