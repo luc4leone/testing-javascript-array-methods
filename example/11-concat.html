@@ -114,9 +114,15 @@
 
           var concatArray = [];
 
-          concatArray[0] = array[0];
-          concatArray[1] = array[1];
-          concatArray[2] = value1;
+          // concatArray[0] = array[0];
+          // concatArray[1] = array[1];
+          // concatArray[2] = arguments[1];
+          for (var i = 0; i < array.length; i++) {
+            concatArray[i] = array[i];
+          }
+          for (var i = 1; i < arguments.length; i++) {
+            concatArray[concatArray.length] = arguments[i];
+          }
 
           return concatArray;
         }
@@ -143,6 +149,7 @@
             eq(baseArray !== resultArray, true);
           },
           '04 - concat() should creates a new array consisting of the elements in the array on which it is called, followed in order by, the argument itself.': function () {
+
             var baseArray = [1, 2];
             var resultArray = concat(baseArray, 3);
             eq(resultArray.length, 3);
