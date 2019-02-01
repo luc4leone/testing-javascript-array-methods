@@ -121,9 +121,7 @@
             concatArray[i] = array[i];
           }
           for (var i = 1; i < arguments.length; i++) {
-            /* se arguments[i] è un array
-                 inserisci arguments[i][i]
-             */
+            // se arguments[i] è un array, inserisci arguments[i][i]
             if (Array.isArray(arguments[i])) {
               for (var j = 0; j < arguments[i].length; j++) {
                 concatArray[concatArray.length] = arguments[i][j];
@@ -165,8 +163,7 @@
             eq(resultArray[1], 2);
             eq(resultArray[2], 3);
           },
-          '05 - concat() should creates a new array consisting of the elements in the array on which it is called, followed in order by, for each argument, the elements of that argument (if the argument is an array)': function () {
-            debugger;
+          '05 - concat() should creates a new array consisting of the elements in the array on which it is called, followed in order by, for each argument, the elements of that argument (if the argument is an array).': function () {
             var baseArray = [1, 2];
             var resultArray = concat(baseArray, 3, [4]);
             eq(resultArray.length, 4);
@@ -174,6 +171,16 @@
             eq(resultArray[1], 2);
             eq(resultArray[2], 3);
             eq(resultArray[3], 4);
+          },
+          '06 - It does not recurse into nested array arguments.': function () {
+            var baseArray = [1, 2];
+            var testArray = [3];
+            var resultArray = concat(baseArray, [testArray]);
+            eq(resultArray.length, 3);
+            eq(resultArray[0], 1);
+            eq(resultArray[1], 2);
+            eq(resultArray[2], testArray);
+
           }
 
 
