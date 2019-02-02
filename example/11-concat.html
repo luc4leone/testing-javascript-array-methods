@@ -194,14 +194,14 @@
             eq(resultArray[1], 2);
             eq(resultArray[2], testArray);
           },
-          '07 - concat() should preserve holes': function () {
+          '07 - concat() should preserve holes.': function () {
             var baseArray = [1, 2];
             var sparseArray = [, 4];
             var resultArray = concat(baseArray, sparseArray);
             eq(Object.keys(resultArray).length, 3);
             eq(resultArray[2], undefined);
           },
-          '08 - concat() should preserve holes (part II)': function () {
+          '08 - concat() should preserve holes (part II).': function () {
             var baseArray = [, 2];
             var sparseArray = [3, 4];
             var resultArray = concat(baseArray, sparseArray);

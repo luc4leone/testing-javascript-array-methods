@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+          * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          }
+        </style>
+  </head>
+  <body>
+      <h2>Test Drive indexOf()</h2>
+      <h3 id="stats"></h3>
+      <script src="../simpletest.js"></script>
+      <script>
+        /* TESTS FOR Array.prototype.indexOf */
+
+        /* INPUT
+        - indexOf() signature
+            arr.indexOf(searchElement[, fromIndex])
+        - searchElement is the element to locate
+        - fromIndex is optional. It's the index to start the search at. 
+        */
+
+        /* OUTPUT
+        - returns the first index at which a given element can be found
+        - returns -1 if the element is not present
+        */
+
+        /* GENERIC DESCRIPTION
+        The indexOf() method returns the first index at which a given element can be found in the array, or -1 if it is not present.
+        */
+
+        /* REQUIREMENTS 
+
+        - indexOf() compares searchElement to elements of the Array using strict equality (the same method used by the === or triple-equals operator).
+        - If fromIndex is greater than or equal to the array's length, -1 is returned, which means the array will not be searched. 
+        - If the provided index value is a negative number, it is taken as the offset from the end of the array. Note: if the provided index is negative, the array is still searched from front to back. 
+        - If the provided index is 0, then the whole array will be searched. Default: 0 (entire array is searched).
+
+        KIND OF ARRAY
+          standard 
+            [1, 2]
+          sparse 
+            [, 1, , 2]
+          single element
+            [1]
+          single element and sparse
+            [, 1]
+          empty
+            []
+          empty and sparse
+            [,,]
+          last empty element
+            [1, ,]
+
+        */
+
+        function indexOf (array) {
+
+          /*
+           CORE LOGIC
+           */
+
+        }
+
+        /* TESTS */
+        SimpleTest.runTests({
+          '': function () {
+            fail();
+          }
+        });
+      </script>
+  </body>
+</html>
