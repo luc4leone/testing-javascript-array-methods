@@ -8,7 +8,7 @@
         </style>
   </head>
   <body>
-      <h2>Test Drive reduceRight()</h2>
+      <h2>Test Drive concat()</h2>
       <h3 id="stats"></h3>
       <script src="../simpletest.js"></script>
       <script>
@@ -48,12 +48,13 @@
 
         Test inputs
           If no argument is passed to concat()
-            return the same array it was called on
+            throw a typeError
         
         - The concat method creates a new array 
         - consisting of the elements in the array on which it is called, followed in order by, for each argument, the elements of that argument (if the argument is an array) or the argument itself (if the argument is not an array). 
         - It does not recurse into nested array arguments.
-        - The concat method does not alter 'this'or any of the arrays provided as arguments 
+
+        - The concat method does not alter 'this' or any of the arrays provided as arguments.
         - but instead returns a shallow copy that contains copies of the same elements combined from the original arrays. 
         - Elements of the original arrays are copied into the new array as follows:
 
@@ -71,7 +72,7 @@
         >arr.concat([])
         (2) [1, 2]
 
-        >arr.concat([,])
+        >arr.concat([,]) // ?
         (3) [1, 2, empty]
 
         >arr.concat(1)
@@ -89,7 +90,7 @@
         >arr.concat([1,2])
         (4) [1, 2, 1, 2]
 
-        >arr.concat([1,2], 1, [1, 2, , [1]])
+        >arr.concat([1,2], 1, [1, 2, , [1]]) // ?
         (9) [1, 2, 1, 2, 1, 1, 2, empty, Array(1)] // nested array will not be 'extracted'
 
         >arr.concat([1,2], 1, obj)
@@ -101,10 +102,10 @@
 
         */
 
-        function concat (array, value1, value2) {
+        function concat (array) {
 
           // no arguments passed in
-            if (arguments.length === 0) {
+          if (arguments.length === 0) {
             throw new TypeError('undefined is not an array');
           }
 
@@ -121,14 +122,22 @@
             concatArray[i] = array[i];
           }
           for (var i = 1; i < arguments.length; i++) {
-            // se arguments[i] è un array, inserisci arguments[i][i]
-            if (Array.isArray(arguments[i])) {
-              for (var j = 0; j < arguments[i].length; j++) {
-                concatArray[concatArray.length] = arguments[i][j];
+
+
+              // se arguments[i] è un array, inserisci arguments[i][i]
+              if (Array.isArray(arguments[i])) {
+                for (var j = 0; j < arguments[i].length; j++) {
+                  // holes are preserved
+                  if (j in arguments[i]) {
+                    concatArray[concatArray.length] = arguments[i][j];
+                  } else {
+                    concatArray.length++;
+                  }
+                }
+              } else {
+                concatArray[concatArray.length] = arguments[i];
               }
-            } else {
-              concatArray[concatArray.length] = arguments[i];
-            }
+
           }
 
           return concatArray;
@@ -180,7 +189,21 @@
             eq(resultArray[0], 1);
             eq(resultArray[1], 2);
             eq(resultArray[2], testArray);
-
+          },
+          '07 - concat() should preserve holes': function () {
+            var baseArray = [1, 2];
+            var sparseArray = [, 4];
+            var resultArray = concat(baseArray, sparseArray);
+            eq(Object.keys(resultArray).length, 3);
+            eq(resultArray[2], undefined);
+          },
+          '08 - concat() should preserve holes (part II)': function () {
+            fail();
+            var baseArray = [, 2];
+            var sparseArray = [3, 4];
+            var resultArray = concat(baseArray, sparseArray);
+            eq(Object.keys(resultArray).length, 3);
+            eq(resultArray[0], undefined);
           }
 
 
