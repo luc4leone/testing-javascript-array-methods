@@ -16,7 +16,7 @@
 
         /* INPUT
         - indexOf() signature
-            arr.indexOf(searchElement[, fromIndex])
+            indexOf(arr, searchElement[, fromIndex])
         - searchElement is the element to locate
         - fromIndex is optional. It's the index to start the search at. 
         */
@@ -56,6 +56,10 @@
         */
 
         function indexOf (array) {
+          // no arguments passed in
+          if (arguments.length === 0) {
+            throw new TypeError('undefined is not an array');
+          }
 
           /*
            CORE LOGIC
@@ -65,7 +69,17 @@
 
         /* TESTS */
         SimpleTest.runTests({
-          '': function () {
+          '01 - If no argument is passed to indexOf(), throw a TypeError.': function () {
+
+            var isTypeError = false;
+            try {
+              indexOf();
+            } catch (e) {
+            isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '02 - ': function () {
             fail();
           }
         });
