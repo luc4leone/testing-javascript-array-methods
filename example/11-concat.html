@@ -119,11 +119,15 @@
           // concatArray[1] = array[1];
           // concatArray[2] = arguments[1];
           for (var i = 0; i < array.length; i++) {
-            concatArray[i] = array[i];
+            // holes are preserved
+            if (i in array) {
+              concatArray[i] = array[i];
+            } else {
+              concatArray.length++;
+            }
           }
+
           for (var i = 1; i < arguments.length; i++) {
-
-
               // se arguments[i] è un array, inserisci arguments[i][i]
               if (Array.isArray(arguments[i])) {
                 for (var j = 0; j < arguments[i].length; j++) {
@@ -198,15 +202,12 @@
             eq(resultArray[2], undefined);
           },
           '08 - concat() should preserve holes (part II)': function () {
-            fail();
             var baseArray = [, 2];
             var sparseArray = [3, 4];
             var resultArray = concat(baseArray, sparseArray);
             eq(Object.keys(resultArray).length, 3);
             eq(resultArray[0], undefined);
           }
-
-
         });
       </script>
   </body>
