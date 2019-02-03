@@ -55,7 +55,7 @@
 
         */
 
-        function indexOf (array) {
+        function indexOf (array, searchElement) {
           // no arguments passed in
           if (arguments.length === 0) {
             throw new TypeError('undefined is not an array');
@@ -65,12 +65,18 @@
            CORE LOGIC
            */
 
+          for (var i = 0; i < array.length; i++) {
+            if (array[i] === searchElement) {
+              return i;
+            }
+          }
+
+          return -1;
         }
 
         /* TESTS */
         SimpleTest.runTests({
           '01 - If no argument is passed to indexOf(), throw a TypeError.': function () {
-
             var isTypeError = false;
             try {
               indexOf();
@@ -79,8 +85,15 @@
             };
             eq(isTypeError, true);
           },
-          '02 - ': function () {
-            fail();
+          '02 - indexOf() compares searchElement to each element of the Array using strict equality. The first match it returns the match index.': function () {
+            var result = indexOf([1, 2], 1);
+            eq(result, 0);
+          },
+          '03 - indexOf() returns -1 if the element is not present.': function () {
+
+            var result = indexOf([1, 2], 3);
+            eq(result, -1);
+
           }
         });
       </script>
