@@ -55,7 +55,7 @@
 
         */
 
-        function indexOf (array, searchElement) {
+        function indexOf (array, searchElement, fromIndex) {
           // no arguments passed in
           if (arguments.length === 0) {
             throw new TypeError('undefined is not an array');
@@ -65,7 +65,11 @@
            CORE LOGIC
            */
 
-          for (var i = 0; i < array.length; i++) {
+          var startingIndex = 0;
+          if (fromIndex) {
+            startingIndex = fromIndex;
+          }
+          for (var i = startingIndex; i < array.length; i++) {
             // skip holes in array
             if (i in array) {
               if (array[i] === searchElement) {
@@ -96,9 +100,14 @@
             var result = indexOf([1, 2], 3);
             eq(result, -1);
           },
-          '04 - indexOf() should skip holes': function () {
-            var result = indexOf([,1,2], undefined);
+          '04 - indexOf() should skip holes.': function () {
+            var result = indexOf([, 1, 2], undefined);
             eq(result, -1);
+          },
+          '05 - if fromIndex optional parameter is passed in, indexOf() should start the search from fromIndex': function () {
+
+            var result = indexOf([1, 1, 1], 1, 1);
+            eq(result, 1);
           }
         });
       </script>
