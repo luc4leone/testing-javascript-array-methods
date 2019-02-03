@@ -66,8 +66,11 @@
            */
 
           for (var i = 0; i < array.length; i++) {
-            if (array[i] === searchElement) {
-              return i;
+            // skip holes in array
+            if (i in array) {
+              if (array[i] === searchElement) {
+                return i;
+              }
             }
           }
 
@@ -92,7 +95,10 @@
           '03 - indexOf() returns -1 if the element is not present.': function () {
             var result = indexOf([1, 2], 3);
             eq(result, -1);
-
+          },
+          '04 - indexOf() should skip holes': function () {
+            var result = indexOf([,1,2], undefined);
+            eq(result, -1);
           }
         });
       </script>
