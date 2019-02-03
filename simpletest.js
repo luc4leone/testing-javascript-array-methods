@@ -20,7 +20,8 @@ var SimpleTestHelpers = {
   },
   showSemanticBackground: function (failures) {
     document.body.style.backgroundColor = (failures == 0 ? '#99ff99' : '#ff9999');
-  }
+  },
+  failMessage: 'Making the test fail on purpose'
 }
 
 var SimpleTest = {
@@ -42,8 +43,8 @@ var SimpleTest = {
     SimpleTestHelpers.showStats(tests, failures);
   },
 
-  fail: function (msg) {
-    throw new Error('fail(): ' + msg);
+  fail: function () {
+    throw new Error(SimpleTestHelpers.failMessage);
   },
 
   assertStrictEquals: function (expected, actual) {
