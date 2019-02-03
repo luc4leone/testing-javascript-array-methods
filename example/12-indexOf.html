@@ -104,10 +104,13 @@
             var result = indexOf([, 1, 2], undefined);
             eq(result, -1);
           },
-          '05 - if fromIndex optional parameter is passed in, indexOf() should start the search from fromIndex': function () {
-
+          '05 - If fromIndex optional parameter is passed in, indexOf() should start the search from fromIndex.': function () {
             var result = indexOf([1, 1, 1], 1, 1);
             eq(result, 1);
+          },
+          '06 - If fromIndex is greater than or equal to the array\'s length, -1 is returned, which means the array will not be searched. ': function () {
+            var result = indexOf([1, 1, 1], 1, 3);
+            eq(result, -1);
           }
         });
       </script>
