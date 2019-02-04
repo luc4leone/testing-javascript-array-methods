@@ -32,7 +32,7 @@
 
         - lastIndexOf compares searchElement to elements of the Array using strict equality (the same method used by the ===, or triple-equals, operator)
         - fromIndex is the index at which to start searching backwards
-        - Defaults to the array's length minus one (arr.length - 1), i.e. the whole array will be searched
+        - fromIndex defaults to the array's length minus one (arr.length - 1), i.e. the whole array will be searched
         - If the index is greater than or equal to the length of the array, the whole array will be searched
         - If negative, it is taken as the offset from the end of the array
           - Note that even when the index is negative, the array is still searched from back to front
@@ -78,6 +78,12 @@
            CORE LOGIC
            */
 
+          for (var i = array.length -1; i >= 0; i--) {
+            if (array[i] === searchElement) {
+                  return i;
+            }
+          }
+
 
         }
 
@@ -92,10 +98,9 @@
             };
             eq(isTypeError, true);
           },
-          '02 - lastIndexOf() compares searchElement to each element of the Array using strict equality. The first match it returns the match index.': function () {
-            fail('forced fail');
-            var result = lastIndexOf([1, 2], 1);
-            eq(result, 0);
+          '02 - lastIndexOf() compares searchElement to each element of the Array using strict equality. At the first match, it returns the match index.': function () {
+            var result = lastIndexOf([1, 2, 1], 1);
+            eq(result, 2);
           },
           '03 - lastIndexOf() returns -1 if the element is not present.': function () {
             fail('forced fail');
