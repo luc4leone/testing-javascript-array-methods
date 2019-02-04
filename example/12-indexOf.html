@@ -56,9 +56,15 @@
         */
 
         function indexOf (array, searchElement, fromIndex) {
+
           // no arguments passed in
           if (arguments.length === 0) {
             throw new TypeError('undefined is not an array');
+          }
+
+          // first argument is not an array
+          if (Array.isArray(arguments[0]) === false) {
+            throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
           }
 
           /*
@@ -67,7 +73,9 @@
 
           var startingIndex = 0;
         
+          // fromIndex is passed in
           if (fromIndex) {
+            // offset from the end of array
             if (fromIndex < 0) {
               fromIndex = array.length + fromIndex;
             }
@@ -117,10 +125,18 @@
             eq(result, -1);
           },
           '07 - If the provided index value is a negative number, it is taken as the offset from the end of the array. Note: if the provided index is negative, the array is still searched from front to back.': function () {
-            debugger;
-
             var result = indexOf([1, 1, 1], 1, -1);
             eq(result, 2);
+          },
+          '08 - If the first argument passed to indexOf() is not an array, throw a TypeError.': function () {
+
+            var isTypeError = false;
+            try {
+              indexOf(1);
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
           }
         });
       </script>
