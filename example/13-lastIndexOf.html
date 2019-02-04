@@ -78,7 +78,14 @@
            CORE LOGIC
            */
 
-          for (var i = array.length -1; i >= 0; i--) {
+          var startingIndex = array.length - 1;
+
+          // fromIndex is passed in
+          if (arguments.length === 3) { // if (fromIndex) would not work if 0 (which converts to false)
+            startingIndex = fromIndex;
+          }
+
+          for (var i = startingIndex; i >= 0; i--) {
             // skip holes in array
             if (i in array) {
               if (array[i] === searchElement) {
@@ -112,14 +119,12 @@
             eq(result, -1);
           },
           '04 - lastIndexOf() should skip holes.': function () {
-
             var result = lastIndexOf([, 1, 2], undefined);
             eq(result, -1);
           },
           '05 - If fromIndex optional parameter is passed in, lastIndexOf() should start the search from fromIndex.': function () {
-            fail('forced fail');
-            var result = lastIndexOf([1, 1, 1], 1, 1);
-            eq(result, 1);
+            var result = lastIndexOf([1, 1, 1], 1, 0);
+            eq(result, 0);
           },
           '06 - If fromIndex is greater than or equal to the array\'s length, -1 is returned, which means the array will not be searched. ': function () {
             fail('forced fail');
