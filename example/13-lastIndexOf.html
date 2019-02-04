@@ -79,8 +79,11 @@
            */
 
           for (var i = array.length -1; i >= 0; i--) {
-            if (array[i] === searchElement) {
-                  return i;
+            // skip holes in array
+            if (i in array) {
+              if (array[i] === searchElement) {
+                    return i;
+              }
             }
           }
 
@@ -105,12 +108,11 @@
             eq(result, 2);
           },
           '03 - lastIndexOf() returns -1 if the element is not present.': function () {
-
             var result = lastIndexOf([1, 2], 3);
             eq(result, -1);
           },
           '04 - lastIndexOf() should skip holes.': function () {
-            fail('forced fail');
+
             var result = lastIndexOf([, 1, 2], undefined);
             eq(result, -1);
           },
