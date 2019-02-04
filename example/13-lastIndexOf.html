@@ -65,9 +65,9 @@
         function lastIndexOf (array, searchElement, fromIndex) {
 
           // no arguments passed in
-          // if (arguments.length === 0) {
-          //   throw new TypeError('undefined is not an array');
-          // }
+          if (arguments.length === 0) {
+            throw new TypeError('undefined is not an array');
+          }
 
           // first argument is not an array
           // if (Array.isArray(arguments[0]) === false) {
@@ -84,7 +84,7 @@
         /* TESTS */
         SimpleTest.runTests({
           '01 - If no argument is passed to lastIndexOf(), throw a TypeError.': function () {
-            fail('forced fail');
+
             var isTypeError = false;
             try {
               lastIndexOf();
