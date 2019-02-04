@@ -126,10 +126,9 @@
             var result = lastIndexOf([1, 1, 1], 1, 0);
             eq(result, 0);
           },
-          '06 - If fromIndex is greater than or equal to the array\'s length, -1 is returned, which means the array will not be searched. ': function () {
-            fail('forced fail');
+          '06 - If fromIndex is greater than or equal to the array\'s length, the whole array will be searched. ': function () {
             var result = lastIndexOf([1, 1, 1], 1, 3);
-            eq(result, -1);
+            eq(result, 2);
           },
           '07 - If the provided index value is a negative number, it is taken as the offset from the end of the array. Note: if the provided index is negative, the array is still searched from front to back.': function () {
             fail('forced fail');
