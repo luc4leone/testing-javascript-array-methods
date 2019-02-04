@@ -84,6 +84,8 @@
             }
           }
 
+          return -1;
+
 
         }
 
@@ -103,7 +105,7 @@
             eq(result, 2);
           },
           '03 - lastIndexOf() returns -1 if the element is not present.': function () {
-            fail('forced fail');
+
             var result = lastIndexOf([1, 2], 3);
             eq(result, -1);
           },
