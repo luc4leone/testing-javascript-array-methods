@@ -70,9 +70,9 @@
           }
 
           // first argument is not an array
-          // if (Array.isArray(arguments[0]) === false) {
-          //   throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
-          // }
+          if (Array.isArray(arguments[0]) === false) {
+            throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
+          }
 
           /*
            CORE LOGIC
@@ -84,7 +84,6 @@
         /* TESTS */
         SimpleTest.runTests({
           '01 - If no argument is passed to lastIndexOf(), throw a TypeError.': function () {
-
             var isTypeError = false;
             try {
               lastIndexOf();
@@ -103,31 +102,30 @@
             var result = lastIndexOf([1, 2], 3);
             eq(result, -1);
           },
-          '04 - lastLndexOf() should skip holes.': function () {
+          '04 - lastIndexOf() should skip holes.': function () {
             fail('forced fail');
-            var result = lastLndexOf([, 1, 2], undefined);
+            var result = lastIndexOf([, 1, 2], undefined);
             eq(result, -1);
           },
-          '05 - If fromIndex optional parameter is passed in, lastLndexOf() should start the search from fromIndex.': function () {
+          '05 - If fromIndex optional parameter is passed in, lastIndexOf() should start the search from fromIndex.': function () {
             fail('forced fail');
-            var result = lastLndexOf([1, 1, 1], 1, 1);
+            var result = lastIndexOf([1, 1, 1], 1, 1);
             eq(result, 1);
           },
           '06 - If fromIndex is greater than or equal to the array\'s length, -1 is returned, which means the array will not be searched. ': function () {
             fail('forced fail');
-            var result = lastLndexOf([1, 1, 1], 1, 3);
+            var result = lastIndexOf([1, 1, 1], 1, 3);
             eq(result, -1);
           },
           '07 - If the provided index value is a negative number, it is taken as the offset from the end of the array. Note: if the provided index is negative, the array is still searched from front to back.': function () {
             fail('forced fail');
-            var result = lastLndexOf([1, 1, 1], 1, -1);
+            var result = lastIndexOf([1, 1, 1], 1, -1);
             eq(result, 2);
           },
-          '08 - If the first argument passed to lastLndexOf() is not an array, throw a TypeError.': function () {
-            fail('forced fail');
+          '08 - If the first argument passed to lastindexOf() is not an array, throw a TypeError.': function () {
             var isTypeError = false;
             try {
-              lastLndexOf(1);
+              lastIndexOf(1);
             } catch (e) {
               isTypeError = e instanceof TypeError;
             };
