@@ -49,12 +49,12 @@
 
         */
 
-        function includes (array) {
+        function includes (array, valueToFind) {
 
           // no arguments passed in
-          // if (arguments.length === 0) {
-          //   throw new TypeError('undefined is not an array');
-          // }
+          if (arguments.length === 0) {
+            throw new TypeError('undefined is not an array');
+          }
 
           // first argument is not an array
           // if (Array.isArray(arguments[0]) === false) {
@@ -70,10 +70,9 @@
         /* TESTS */
         SimpleTest.runTests({
           '01 - If no argument is passed to includes(), throw a TypeError.': function () {
-            fail('force fail');
             var isTypeError = false;
             try {
-              lastIndexOf();
+              includes();
             } catch (e) {
             isTypeError = e instanceof TypeError;
             };
@@ -82,7 +81,7 @@
           '02 - If the first argument passed to includes() is not an array, throw a TypeError.': function () {
             var isTypeError = false;
             try {
-              lastIndexOf(1);
+              includes(1);
             } catch (e) {
               isTypeError = e instanceof TypeError;
             };
