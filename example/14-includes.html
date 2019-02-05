@@ -49,7 +49,7 @@
 
         */
 
-        function includes (array, valueToFind) {
+        function includes (array, valueToFind, fromIndex) {
 
           // no arguments passed in
           if (arguments.length === 0) {
@@ -65,8 +65,13 @@
            CORE LOGIC
            */
 
+          var startingIndex = 0;
+          if (arguments.length === 3) {
+            startingIndex = fromIndex;
+          }
 
-          for (var i = 0; i < array.length; i++) {
+
+          for (var i = startingIndex; i < array.length; i++) {
             if (valueToFind === array[i]) {
               return true;
             }
@@ -118,6 +123,12 @@
           '08 - But false is not considered to be the same as 0.': function () {
             var result = includes([0,2,1,2], false);
             eq(result, false);
+          },
+          '09 - The first element to be searched is found at fromIndex for positive values of fromIndex.': function () {
+            var noFromIndexResult = includes([0, 1, 2, 3], 0);
+            var setFromIndeResult = includes([0, 1, 2, 3], 0, 1);
+            eq(noFromIndexResult, true);
+            eq(setFromIndeResult, false);
           }
         });
       </script>
