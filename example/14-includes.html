@@ -57,9 +57,9 @@
           }
 
           // first argument is not an array
-          // if (Array.isArray(arguments[0]) === false) {
-          //   throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
-          // }
+          if (Array.isArray(arguments[0]) === false) {
+            throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
+          }
 
           /*
            CORE LOGIC
