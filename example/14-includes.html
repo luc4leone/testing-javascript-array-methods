@@ -65,6 +65,13 @@
            CORE LOGIC
            */
 
+
+          for (var i = 0; i < array.length; i++) {
+            if (valueToFind === array[i]) {
+              return true;
+            }
+          }
+
         }
 
         /* TESTS */
@@ -87,8 +94,9 @@
             };
             eq(isTypeError, true);
           },
-          '03 - ': function () {
-            fail('force fail');
+          '03 - If the array includes a certain value, returns true.': function () {
+            var result = includes([1,2], 1);
+            eq(result, true);
           },
           '04 - ': function () {
             fail('force fail');
