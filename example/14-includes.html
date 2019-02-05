@@ -71,6 +71,7 @@
               return true;
             }
           }
+          return false;
 
         }
 
@@ -94,7 +95,7 @@
             };
             eq(isTypeError, true);
           },
-          '03 - If the array includes() a certain value, returns true.': function () {
+          '03 - If the array includes valueToFind, returns true.': function () {
             var result = includes([1,2], 1);
             eq(result, true);
           },
@@ -102,12 +103,13 @@
             var result = includes([,1,2], undefined);
             eq(result, true);
           },
-          '05 - if second argument is not passed into array, no error.': function () {
+          '05 - If second argument is not passed into array, no error.': function () {
             var result = includes([,1,2]);
             eq(result, true);
           },
-          '06 - ': function () {
-            fail('force fail');
+          '06 - If the array doesn\'t include valueToFind, returns false.': function () {
+            var result = includes([0,2,1,2]);
+            eq(result, false);
           },
           '07 - ': function () {
             fail('force fail');
