@@ -111,8 +111,9 @@
             var result = includes([0,2,1,2]);
             eq(result, false);
           },
-          '07 - ': function () {
-            fail('force fail');
+          '07 - Values of zero are all considered to be equal regardless of sign, that is, -0 is considered to be equal to both 0 and +0.': function () {
+            var result = includes([-0,2,1,2], +0);
+            eq(result, true);
           },
           '08 - ': function () {
             fail('force fail');
