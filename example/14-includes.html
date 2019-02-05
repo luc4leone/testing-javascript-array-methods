@@ -115,8 +115,9 @@
             var result = includes([-0,2,1,2], +0);
             eq(result, true);
           },
-          '08 - ': function () {
-            fail('force fail');
+          '08 - But false is not considered to be the same as 0.': function () {
+            var result = includes([0,2,1,2], false);
+            eq(result, false);
           }
         });
       </script>
