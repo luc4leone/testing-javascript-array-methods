@@ -94,12 +94,14 @@
             };
             eq(isTypeError, true);
           },
-          '03 - If the array includes a certain value, returns true.': function () {
+          '03 - If the array includes() a certain value, returns true.': function () {
             var result = includes([1,2], 1);
             eq(result, true);
           },
-          '04 - ': function () {
-            fail('force fail');
+          '04 - includes() checks holes.': function () {
+            debugger;
+            var result = includes([,1,2], undefined);
+            eq(result, true);
           },
           '05 - ': function () {
             fail('force fail');
