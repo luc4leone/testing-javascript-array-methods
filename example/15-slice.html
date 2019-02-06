@@ -75,10 +75,12 @@
             startingIndex = begin;
           }
 
-          // slicing ends at 'end' -1
           if (arguments.length === 3) {
             startingIndex = begin;
-            endingIndex = end;
+            if (end <= array.length) {
+              // slicing ends at 'end' -1
+              endingIndex = end;
+            }
           }
 
           for (var i = startingIndex; i < endingIndex; i++) {
@@ -140,7 +142,12 @@
             eq(slicedArray[1], 3);
           },
           '08 - If end is greater than the length of the sequence, slice() extracts through to the end of the sequence (arr.length).': function () {
-
+            var arrayToSlice = [1, 2, 3, 4];
+            var slicedArray = slice(arrayToSlice, 1, 5);
+            eq(slicedArray.length, 3);
+            eq(slicedArray[0], 2);
+            eq(slicedArray[1], 3);
+            eq(slicedArray[2], 4);
           }
         });
       </script>
