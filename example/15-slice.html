@@ -63,8 +63,12 @@
           /*
            CORE LOGIC
            */
+          var slicedArr = [];
+          for (var i = 0; i < array.length; i++) {
+            slicedArr[i] = array[i];
+          }
 
-           return [];
+           return slicedArr;
         }
 
         /* TESTS */
@@ -97,13 +101,12 @@
             eq(arrayToSlice !== slicedArray, true);
           },
           '05 - It returns a shallow copy of elements from the original array.': function () {
-            fail();
             var arrayToSlice = [1, 2, 3];
             var slicedArray = slice(arrayToSlice);
-            eq(arrayToSlice.length === slicedArray, true);
-            eq(slicedArray[0], 0);
-            eq(slicedArray[1], 1);
-            eq(slicedArray[2], 2);
+            eq(arrayToSlice.length === slicedArray.length, true);
+            eq(slicedArray[0], 1);
+            eq(slicedArray[1], 2);
+            eq(slicedArray[2], 3);
           },
         });
       </script>
