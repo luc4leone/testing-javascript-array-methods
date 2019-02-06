@@ -68,17 +68,23 @@
 
           var slicedArr = [];
           var startingIndex = 0;
+          var endingIndex = array.length;
 
           // slicing starts at 'begin'
-          if(arguments.length === 2) {
+          if (arguments.length === 2) {
             startingIndex = begin;
           }
 
-          for (var i = startingIndex; i < array.length; i++) {
+          // slicing ends at 'end'
+          if (arguments.length === 3) {
+            endingIndex = end;
+          }
+
+          for (var i = startingIndex; i < endingIndex; i++) {
             slicedArr[slicedArr.length] = array[i];
           }
 
-           return slicedArr;
+          return slicedArr;
         }
 
         /* TESTS */
@@ -124,8 +130,14 @@
             eq(slicedArray.length, 2);
             eq(slicedArray[0], 2);
             eq(slicedArray[1], 3);
-
-          }
+          },
+          '07 - If \'end\' is passed in, extraction should stop at \'end - 1\'': function () {
+            var arrayToSlice = [1, 2, 3];
+            var slicedArray = slice(arrayToSlice, 0, 2);
+            eq(slicedArray.length, 2);
+            eq(slicedArray[0], 1);
+            eq(slicedArray[1], 2);
+          },
         });
       </script>
   </body>
