@@ -72,13 +72,19 @@
 
           // slicing starts at 'begin'
           if (arguments.length === 2) {
-            startingIndex = begin;
+            /* se begin < 0 
+                  begin = offset */
+            if (begin < 0) {
+              startingIndex = endingIndex + begin;
+            } else {
+              startingIndex = begin;
+            }
           }
 
           if (arguments.length === 3) {
             startingIndex = begin;
             if (end <= array.length) {
-              // slicing ends at 'end' -1
+              // slicing ends at 'end' - 1
               endingIndex = end;
             }
           }
@@ -127,14 +133,14 @@
             eq(slicedArray[1], 2);
             eq(slicedArray[2], 3);
           },
-          '06 - If \'begin\' is passed in, extraction should start at \'begin\'': function () {
+          '06 - If \'begin\' is passed in, extraction should start at \'begin\'.': function () {
             var arrayToSlice = [1, 2, 3];
             var slicedArray = slice(arrayToSlice, 1);
             eq(slicedArray.length, 2);
             eq(slicedArray[0], 2);
             eq(slicedArray[1], 3);
           },
-          '07 - If \'end\' is passed in, extraction should stop at \'end - 1\'': function () {
+          '07 - If \'end\' is passed in, extraction should stop at \'end \' - 1': function () {
             var arrayToSlice = [1, 2, 3, 4];
             var slicedArray = slice(arrayToSlice, 1, 3);
             eq(slicedArray.length, 2);
@@ -148,6 +154,14 @@
             eq(slicedArray[0], 2);
             eq(slicedArray[1], 3);
             eq(slicedArray[2], 4);
+          },
+          '09 - A negative \'begin\' index can be used, indicating an offset from the end of the sequence.': function () {
+            var arrayToSlice = [1, 2, 3, 4];
+            var slicedArray = slice(arrayToSlice, -2);
+            eq(slicedArray.length, 2);
+            eq(slicedArray[0], 3);
+            eq(slicedArray[1], 4);
+
           }
         });
       </script>
