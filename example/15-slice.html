@@ -43,6 +43,8 @@
         - Elements of the original array are copied into the returned array as follows:
           - For object references (and not the actual object), slice copies object references into the new array. 
           - For strings, numbers and booleans (not String, Number and Boolean objects), slice copies the values into the new array.
+
+          - holes
         
    
 
@@ -63,9 +65,17 @@
           /*
            CORE LOGIC
            */
+
           var slicedArr = [];
-          for (var i = 0; i < array.length; i++) {
-            slicedArr[i] = array[i];
+          var startingIndex = 0;
+
+          // slicing starts at 'begin'
+          if(arguments.length === 2) {
+            startingIndex = begin;
+          }
+
+          for (var i = startingIndex; i < array.length; i++) {
+            slicedArr[slicedArr.length] = array[i];
           }
 
            return slicedArr;
@@ -108,6 +118,14 @@
             eq(slicedArray[1], 2);
             eq(slicedArray[2], 3);
           },
+          '06 - If \'begin\' is passed in, extraction should start at \'begin\'': function () {
+            var arrayToSlice = [1, 2, 3];
+            var slicedArray = slice(arrayToSlice, 1);
+            eq(slicedArray.length, 2);
+            eq(slicedArray[0], 2);
+            eq(slicedArray[1], 3);
+
+          }
         });
       </script>
   </body>
