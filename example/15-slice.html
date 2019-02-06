@@ -64,7 +64,7 @@
            CORE LOGIC
            */
 
-    
+           return [];
         }
 
         /* TESTS */
@@ -86,6 +86,25 @@
               isTypeError = e instanceof TypeError;
             };
             eq(isTypeError, true);
+          },
+          '03 - slice() should return an array.': function () {
+            var result = slice([1, 2, 3]);
+            eq(Array.isArray(result), true);
+          },
+          '04 - slice() should return a new array, not arrayToMap.': function () {
+            fail();
+            var arrayToSlice = [1];
+            var slicedArray = slice(arrayToSlice);
+            eq(arrayToSlice !== slicedArray, true);
+          },
+          '05 - It returns a shallow copy of elements from the original array.': function () {
+            fail();
+            var arrayToSlice = [1, 2, 3];
+            var slicedArray = slice(arrayToSlice);
+            eq(arrayToSlice.length === slicedArray, true);
+            eq(slicedArray[0], 0);
+            eq(slicedArray[1], 1);
+            eq(slicedArray[2], 2);
           },
         });
       </script>
