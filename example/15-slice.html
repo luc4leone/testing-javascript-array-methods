@@ -91,8 +91,7 @@
             var result = slice([1, 2, 3]);
             eq(Array.isArray(result), true);
           },
-          '04 - slice() should return a new array, not arrayToMap.': function () {
-            fail();
+          '04 - slice() should return a new array, not arrayToSlice.': function () {
             var arrayToSlice = [1];
             var slicedArray = slice(arrayToSlice);
             eq(arrayToSlice !== slicedArray, true);
