@@ -105,6 +105,10 @@
           '05 - Use saparator if passed in.': function () {
             var joinedArray = join(['b', 'i', 'r', 'b', 'i'], '.');
             eq(joinedArray === 'b.i.r.b.i', true);
+          },
+          '06 - If the array has only one item, then that item will be returned without using the separator.': function () {
+            var joinedArray = join(['b'], '.');
+            eq(joinedArray === 'b', true);
           }
           
         });
