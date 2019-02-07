@@ -72,9 +72,8 @@
 
           // slicing starts at 'begin'
           if (arguments.length === 2) {
-            /* se begin < 0 
-                  begin = offset */
             if (begin < 0) {
+              // begin is an offset from the end
               startingIndex = endingIndex + begin;
             } else {
               startingIndex = begin;
@@ -161,7 +160,23 @@
             eq(slicedArray.length, 2);
             eq(slicedArray[0], 3);
             eq(slicedArray[1], 4);
+          },
+          '10 - If begin is greater than the length of the sequence, an empty array is returned.': function () {
 
+
+            var arrayToSlice = [1, 2, 3, 4];
+            var slicedArray = slice(arrayToSlice, 5);
+
+            // empty array means 0 element, it's not about the length
+            function countElements(arr) {
+              var elemCount = 0;
+              arr.forEach(function () {
+                  elemCount++;
+              });
+              return elemCount;
+            }
+
+            eq(countElements(slicedArray), 0);
           }
         });
       </script>
