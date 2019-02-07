@@ -59,17 +59,23 @@
            CORE LOGIC
            */
 
+          // default separator is comma
           var joinSeparator = ',';
+          var joinedArray = '';
+
+          // separator is passed in
           if (arguments.length === 2) {
             joinSeparator = separator;
           }
 
-          var joinedArray = '';
-
           for (var i = 0; i < array.length; i++) {
             joinedArray += array[i] + joinSeparator;
           }
-          joinedArray = joinedArray.slice(0, joinedArray.length - 1);
+
+          // don't cut off last char if separtor is the empty string
+          if (joinSeparator !== '') {
+            joinedArray = joinedArray.slice(0, joinedArray.length - 1);
+          }
 
           return joinedArray;
         }
@@ -109,6 +115,10 @@
           '06 - If the array has only one item, then that item will be returned without using the separator.': function () {
             var joinedArray = join(['b'], '.');
             eq(joinedArray === 'b', true);
+          },
+          '07 - If separator is an empty string, all elements are joined without any characters in between them.': function () {
+            var joinedArray = join(['b', 'i', 'r', 'b', 'i'], '');
+            eq(joinedArray === 'birbi', true);
           }
           
         });
