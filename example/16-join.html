@@ -50,7 +50,6 @@
           }
 
           // join() accepts array-like object, that means the next check is too strict
-
           // first argument is not an array 
           if (Array.isArray(arguments[0]) === false) {
             throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
@@ -74,7 +73,7 @@
             };
             eq(isTypeError, true);
           },
-          '02 - If the first argument passed to join() is not an array, or an array-like object, throw a TypeError.': function () {
+          '02 - If the first argument passed to join() is not an array, throw a TypeError.': function () {
             var isTypeError = false;
             try {
               join(1);
