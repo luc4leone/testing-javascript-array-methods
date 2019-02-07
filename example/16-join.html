@@ -45,9 +45,9 @@
         function join (array, separator) {
 
           // no arguments passed in
-          // if (arguments.length === 0) {
-          //   throw new TypeError('undefined is not an array');
-          // }
+          if (arguments.length === 0) {
+            throw new TypeError('undefined is not an array');
+          }
 
           // join() accepts array-like object, that means the next check is too strict
 
