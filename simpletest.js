@@ -45,9 +45,9 @@ var SimpleTest = {
 
   fail: function (msg) {
     if (msg) {
-      throw new Error('fail() >>> ' + msg);
+      throw new Error(msg);
     }
-    throw new Error('fail() >>> ' + SimpleTestHelpers.failMessage);
+    throw new Error(SimpleTestHelpers.failMessage);
   },
 
   assertStrictEquals: function (expected, actual) {
