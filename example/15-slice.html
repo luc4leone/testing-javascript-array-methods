@@ -187,6 +187,9 @@
             var slicedArrayIndexes = Object.keys(slicedArray);
             eq(slicedArrayIndexes.length, 4);
             eq(slicedArrayIndexes[3], '4');
+            // to check type in the console and compare:
+            //console.log(Object.keys([1, 2, 3, , 4, , 5].slice()));
+            //Object.keys(slice([1, 2, 3, , 4, , 5]));
           }
         });
       </script>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+          * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          }
+        </style>
+  </head>
+  <body>
+      <h2>Test Drive join()</h2>
+      <h3 id="stats"></h3>
+      <script src="../simpletest.js"></script>
+      <script>
+        /* TESTS FOR Array.prototype.join */
+
+        /* INPUT
+        - signature
+            arr.join([separator])
+        - separator (Optional)
+            - Specifies a string to separate each pair of adjacent elements of the array. 
+            - The separator is converted to a string if necessary. 
+            - If omitted, the array elements are separated with a comma (","). 
+            - If separator is an empty string, all elements are joined without any characters in between them.
+
+        */
+
+        /* OUTPUT
+        - A string with all array elements joined. 
+        - If arr.length is 0, the empty string is returned.
+        */
+
+        /* GENERIC DESCRIPTION
+        The join() method creates and returns a new string by concatenating all of the elements in an array (or an array-like object), separated by commas or a specified separator string. If the array has only one item, then that item will be returned without using the separator.
+        */
+
+        /* REQUIREMENTS
+        - If an element is undefined or null, it is converted to the empty string.
+
+        - holes?
+        
+        
+        */
+
+        function join (array, separator) {
+
+          // no arguments passed in
+          // if (arguments.length === 0) {
+          //   throw new TypeError('undefined is not an array');
+          // }
+
+          // join() accepts array-like object, that means the next check is too strict
+
+          // first argument is not an array 
+          // if (Array.isArray(arguments[0]) === false) {
+          //   throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
+          // }
+
+          /*
+           CORE LOGIC
+           */
+
+          
+        }
+
+        /* TESTS */
+        SimpleTest.runTests({
+          '01 - If no argument is passed to join(), throw a TypeError.': function () {
+            var isTypeError = false;
+            try {
+              join();
+            } catch (e) {
+            isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '02 - If the first argument passed to join() is not an array, or an array-like object, throw a TypeError.': function () {
+            var isTypeError = false;
+            try {
+              join(1);
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          
+        });
+      </script>
+  </body>
+</html>
