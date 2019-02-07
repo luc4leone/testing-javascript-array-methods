@@ -58,8 +58,15 @@
           /*
            CORE LOGIC
            */
+          /* array[0] + ',' + array[1] + ',' +  + array[array.length - 1] */
+          var joinSeparator = ',';
+          var joinedArray = '';
+          for (var i = 0; i < array.length; i++) {
+            joinedArray += array[i] + joinSeparator;
+          }
+          joinedArray = joinedArray.slice(0, joinedArray.length-1);
 
-           return '';
+          return joinedArray;
 
           
         }
@@ -87,6 +94,10 @@
           '03 - It should return a string.': function () {
             var joinedArray = join(['b', 'i', 'r', 'b', 'i']);
             eq(typeof joinedArray, 'string');
+          },
+          '04 - The returned string should be the result of concatenating all of the elements in an array using default comma separator.': function () {
+            var joinedArray = join(['b', 'i', 'r', 'b', 'i']);
+            eq(joinedArray === 'b,i,r,b,i', true);
           }
           
         });
