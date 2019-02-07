@@ -80,6 +80,7 @@
             }
           }
 
+          // slicing starts at 'begin' and ends at 'end'
           if (arguments.length === 3) {
             startingIndex = begin;
             if (end <= array.length) {
@@ -89,7 +90,11 @@
           }
 
           for (var i = startingIndex; i < endingIndex; i++) {
-            slicedArr[slicedArr.length] = array[i];
+            // preserve holes
+            if (i in array) {
+
+              slicedArr[slicedArr.length] = array[i];
+            }
           }
 
           return slicedArr;
@@ -162,8 +167,6 @@
             eq(slicedArray[1], 4);
           },
           '10 - If begin is greater than the length of the sequence, an empty array is returned.': function () {
-
-
             var arrayToSlice = [1, 2, 3, 4];
             var slicedArray = slice(arrayToSlice, 5);
 
@@ -177,6 +180,9 @@
             }
 
             eq(countElements(slicedArray), 0);
+          },
+          '11 - slice() should preserve holes.': function () {
+            eq( (Object.keys(slice([1, 2, 3, , 4, ,]))).length, 4);
           }
         });
       </script>
