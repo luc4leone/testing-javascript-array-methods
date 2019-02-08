@@ -70,10 +70,15 @@
 
           for (var i = 0; i < array.length; i++) {
             if (i in array) {
+              if (array[i] === undefined) {
+                array[i] = '';
+              }
+              if (array[i] === null) {
+                array[i] = '';
+              }
               joinedArray += array[i] + joinSeparator;
             } else {
               joinedArray += joinSeparator;
-
             }
           }
 
@@ -125,12 +130,17 @@
             var joinedArray = join(['b', 'i', 'r', 'b', 'i'], '');
             eq(joinedArray === 'birbi', true);
           },
-          '08 - holes should be preserved.': function () {
-            debugger;
+          '08 - Holes (sparse array) should be preserved.': function () {
             var joinedArray = join(['b', 'i', 'r', , 'i']);
             eq(joinedArray === 'b,i,r,,i', true);
+          },
+          '09 - If an element is undefined or null, it is converted to the empty string.': function () {
+
+            var joinedArray = join(['b', 'i', 'r', undefined, null],'');
+            eq(joinedArray === 'bir', true);
+
+
           }
-          
         });
       </script>
   </body>
