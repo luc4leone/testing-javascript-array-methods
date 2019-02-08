@@ -61,7 +61,7 @@
 
           // default separator is comma
           var joinSeparator = ',';
-          var joinedArray = '';
+          var joinedElements = '';
 
           // separator is passed in
           if (arguments.length === 2) {
@@ -69,25 +69,25 @@
           }
 
           for (var i = 0; i < array.length; i++) {
+            // if element is there..
             if (i in array) {
-              if (array[i] === undefined) {
+              // transform undefined and null into empty string
+              if (array[i] === undefined || array[i] === null) {
                 array[i] = '';
               }
-              if (array[i] === null) {
-                array[i] = '';
-              }
-              joinedArray += array[i] + joinSeparator;
+              //.. add it to the string
+              joinedElements += array[i] + joinSeparator;
             } else {
-              joinedArray += joinSeparator;
+              joinedElements += joinSeparator;
             }
           }
 
           // don't cut off last char if separtor is the empty string
           if (joinSeparator !== '') {
-            joinedArray = joinedArray.slice(0, joinedArray.length - 1);
+            joinedElements = joinedElements.slice(0, joinedElements.length - 1);
           }
 
-          return joinedArray;
+          return joinedElements;
         }
 
         /* TESTS */
@@ -111,35 +111,32 @@
             eq(isTypeError, true);
           },
           '03 - It should return a string.': function () {
-            var joinedArray = join(['b', 'i', 'r', 'b', 'i']);
-            eq(typeof joinedArray, 'string');
+            var joinedElements = join(['b', 'i', 'r', 'b', 'i']);
+            eq(typeof joinedElements, 'string');
           },
           '04 - The returned string should be the result of concatenating all of the elements in an array using default comma separator.': function () {
-            var joinedArray = join(['b', 'i', 'r', 'b', 'i']);
-            eq(joinedArray === 'b,i,r,b,i', true);
+            var joinedElements = join(['b', 'i', 'r', 'b', 'i']);
+            eq(joinedElements === 'b,i,r,b,i', true);
           },
           '05 - Use saparator if passed in.': function () {
-            var joinedArray = join(['b', 'i', 'r', 'b', 'i'], '.');
-            eq(joinedArray === 'b.i.r.b.i', true);
+            var joinedElements = join(['b', 'i', 'r', 'b', 'i'], '.');
+            eq(joinedElements === 'b.i.r.b.i', true);
           },
           '06 - If the array has only one item, then that item will be returned without using the separator.': function () {
-            var joinedArray = join(['b'], '.');
-            eq(joinedArray === 'b', true);
+            var joinedElements = join(['b'], '.');
+            eq(joinedElements === 'b', true);
           },
           '07 - If separator is an empty string, all elements are joined without any characters in between them.': function () {
-            var joinedArray = join(['b', 'i', 'r', 'b', 'i'], '');
-            eq(joinedArray === 'birbi', true);
+            var joinedElements = join(['b', 'i', 'r', 'b', 'i'], '');
+            eq(joinedElements === 'birbi', true);
           },
           '08 - Holes (sparse array) should be preserved.': function () {
-            var joinedArray = join(['b', 'i', 'r', , 'i']);
-            eq(joinedArray === 'b,i,r,,i', true);
+            var joinedElements = join(['b', 'i', 'r', , 'i']);
+            eq(joinedElements === 'b,i,r,,i', true);
           },
           '09 - If an element is undefined or null, it is converted to the empty string.': function () {
-
-            var joinedArray = join(['b', 'i', 'r', undefined, null],'');
-            eq(joinedArray === 'bir', true);
-
-
+            var joinedElements = join(['b', 'i', 'r', undefined, null],'');
+            eq(joinedElements === 'bir', true);
           }
         });
       </script>
