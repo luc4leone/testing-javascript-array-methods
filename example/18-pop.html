@@ -59,7 +59,6 @@
         /* TESTS */
         SimpleTest.runTests({
           '01 - If no argument is passed to pop(), throw a TypeError.': function () {
-            fail();
             var isTypeError = false;
             try {
               pop();
@@ -69,7 +68,6 @@
             eq(isTypeError, true);
           },
           '02 - If the first argument passed to pop() is not an array, throw a TypeError.': function () {
-            fail();
             var isTypeError = false;
             try {
               pop(1);
