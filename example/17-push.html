@@ -58,9 +58,10 @@
             array[array.length] = arguments[i];
           }
 
+          return array.length;
 
 
-          
+
         }
 
         /* TESTS */
@@ -83,19 +84,24 @@
             };
             eq(isTypeError, true);
           },
-          '03 - The push() method adds one element to the end of an array.': 
+          '03 - push() adds one element to the end of an array.': 
           function () {
             var array = ['b', 'i', 'r', 'b'];
             push(array, 'i');
             eq(array.length, 5);
             eq(array[array.length - 1], 'i');
           },
-          '04 - The push() method adds two or more elements to the end of an array.': 
+          '04 - push() adds two or more elements to the end of an array.': 
           function () {
             var array = ['b', 'i', 'r', 'b'];
             push(array, 'i', '!');
             eq(array.length, 6);
             eq(array[array.length - 1], '!');
+          },
+          '05 - push() returns the new length of the array.': function () {
+
+            var result = push([1, 2], 3);
+            eq(result, 3);
           }
 
         });
