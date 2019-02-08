@@ -36,7 +36,6 @@
         - This includes the possibility of length being nonexistent, in which case length will also be created.
         - Although strings are native, Array-like objects, they are not suitable in applications of this method, as strings are immutable.  Similarly for the native, Array-like object arguments.
 
-        - holes?
         */
 
         function push (array) {
@@ -63,7 +62,7 @@
           '01 - If no argument is passed to push(), throw a TypeError.': function () {
             var isTypeError = false;
             try {
-              join();
+              push();
             } catch (e) {
             isTypeError = e instanceof TypeError;
             };
@@ -72,7 +71,7 @@
           '02 - If the first argument passed to push() is not an array, throw a TypeError.': function () {
             var isTypeError = false;
             try {
-              join(1);
+              push(1);
             } catch (e) {
               isTypeError = e instanceof TypeError;
             };
