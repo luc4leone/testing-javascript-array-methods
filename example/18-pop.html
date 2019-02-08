@@ -54,6 +54,8 @@
            CORE LOGIC
            */
 
+          array.length = array.length - 1;
+
         }
 
         /* TESTS */
@@ -76,6 +78,14 @@
             };
             eq(isTypeError, true);
           },
+          '03 - pop() removes the last element from an array.': function () {
+            var array = [1, 2, 3];
+            pop(array);
+            eq(array.length, 2);
+            eq(array[0], 1);
+            eq(array[1], 2);
+
+          }
 
         });
       </script>
