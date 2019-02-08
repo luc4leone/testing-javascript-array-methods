@@ -38,7 +38,7 @@
 
         */
 
-        function push (array) {
+        function push (array, element) {
 
           // no arguments passed in
           if (arguments.length === 0) {
@@ -53,6 +53,10 @@
           /*
            CORE LOGIC
            */
+
+          array[array.length] = element;
+
+
 
           
         }
@@ -77,6 +81,23 @@
             };
             eq(isTypeError, true);
           },
+          '03 - The push() method adds one element to the end of an array.': 
+          function () {
+            var array = ['b', 'i', 'r', 'b'];
+            push(array, 'i');
+            eq(array.length, 5);
+            eq(array[array.length - 1], 'i');
+          },
+          '04 - The push() method adds two elements to the end of an array.': 
+          function () {
+            fail();
+            var array = ['b', 'i', 'r', 'b'];
+            push(array, 'i', '!');
+            eq(array.length, 6);
+            eq(array[array.length - 1], '!');
+
+          }
+
         });
       </script>
   </body>
