@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+          * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          }
+        </style>
+  </head>
+  <body>
+      <h2>Test Drive pop()</h2>
+      <h3 id="stats"></h3>
+      <script src="../simpletest.js"></script>
+      <script>
+        /* TESTS FOR Array.prototype.pop */
+
+        /* INPUT
+        - signature
+          arr.pop()
+
+        */
+
+        /* OUTPUT
+        - The removed element from the array; 
+        - undefined if the array is empty.
+        */
+
+        /* GENERIC DESCRIPTION
+        The pop() method removes the last element from an array and returns that element. This method changes the length of the array.
+        */
+
+        /* REQUIREMENTS
+        - The pop() method removes the last element from an array
+        - pop() returns that element
+        - or undefined if the array is empty.
+        - pop() is intentionally generic: this method can be called or applied to objects resembling arrays
+        
+
+        */
+
+        function pop (array) {
+
+          // no arguments passed in
+          if (arguments.length === 0) {
+            throw new TypeError('undefined is not an array');
+          }
+
+          // first argument is not an array 
+          if (Array.isArray(arguments[0]) === false) {
+            throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
+          }
+
+          /*
+           CORE LOGIC
+           */
+
+        }
+
+        /* TESTS */
+        SimpleTest.runTests({
+          '01 - If no argument is passed to pop(), throw a TypeError.': function () {
+            fail();
+            var isTypeError = false;
+            try {
+              pop();
+            } catch (e) {
+            isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '02 - If the first argument passed to pop() is not an array, throw a TypeError.': function () {
+            fail();
+            var isTypeError = false;
+            try {
+              pop(1);
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+
+        });
+      </script>
+  </body>
+</html>
