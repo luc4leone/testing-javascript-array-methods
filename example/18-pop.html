@@ -54,7 +54,10 @@
            CORE LOGIC
            */
 
+          var lastElement = array[array.length - 1]
           array.length = array.length - 1;
+
+          return lastElement;
 
         }
 
@@ -84,7 +87,11 @@
             eq(array.length, 2);
             eq(array[0], 1);
             eq(array[1], 2);
-
+          },
+          '04 - pop() returns that element': function () {
+            var array = [1, 2, 3];
+            var poppedEl = pop(array);
+            eq(poppedEl, 3);
           }
 
         });
