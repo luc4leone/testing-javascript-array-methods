@@ -69,7 +69,12 @@
           }
 
           for (var i = 0; i < array.length; i++) {
-            joinedArray += array[i] + joinSeparator;
+            if (i in array) {
+              joinedArray += array[i] + joinSeparator;
+            } else {
+              joinedArray += joinSeparator;
+
+            }
           }
 
           // don't cut off last char if separtor is the empty string
@@ -119,6 +124,11 @@
           '07 - If separator is an empty string, all elements are joined without any characters in between them.': function () {
             var joinedArray = join(['b', 'i', 'r', 'b', 'i'], '');
             eq(joinedArray === 'birbi', true);
+          },
+          '08 - holes should be preserved.': function () {
+            debugger;
+            var joinedArray = join(['b', 'i', 'r', , 'i']);
+            eq(joinedArray === 'b,i,r,,i', true);
           }
           
         });
