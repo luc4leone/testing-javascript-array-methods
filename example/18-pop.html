@@ -54,7 +54,8 @@
            CORE LOGIC
            */
 
-          if (array.length === 0) {
+          // empty array
+          if (Object.keys(array).length === 0) {
             return undefined;
           }
 
@@ -98,13 +99,17 @@
             var poppedEl = pop(array);
             eq(poppedEl, 3);
           },
-          '05 - pop() returns undefined if the array is empty.': function () {
+          '05 - pop() returns undefined if the array is empty.': 
+          function () {
+            debugger;
             var emptyArr = [];
             var poppedEl = pop(emptyArr);
             eq(poppedEl, undefined);
           },
-          '06 - pop() returns undefined if the array is empty and sparse.': function () {
-            var emptyArr = [,,];
+          '06 - pop() returns undefined if the array is empty and sparse.': 
+          function () {
+            debugger;
+            var emptyArr = [,];
             var poppedEl = pop(emptyArr);
             eq(poppedEl, undefined);
           }

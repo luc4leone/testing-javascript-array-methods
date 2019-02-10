@@ -19,3 +19,11 @@ describe('Subtraction', function () {
 })
 ```
 
+## Check if an array is empty
+
+```javascript
+Object.keys(array).length === 0
+```
+
+This is a better condition than `array.length` to check if an array is empty because it will catch also sparse arrays, like `[,]` or `[,,]`.
+
