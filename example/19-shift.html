@@ -31,7 +31,8 @@
         */
 
         /* REQUIREMENTS
-        - The shift method removes the element at the zeroeth index and shifts the values at consecutive indexes down, 
+        - The shift method removes the element at the zeroeth index 
+        - and shifts the values at consecutive indexes down, 
         - then returns the removed value. 
         - If the length property is 0, undefined is returned.
 
@@ -56,6 +57,14 @@
            CORE LOGIC
            */
 
+           for (var i = 0; i < array.length -1; i++) {
+             array[i] = array[i + 1];
+           }
+
+           array.length = array.length -1;
+
+
+
         }
 
         /* TESTS */
@@ -78,6 +87,13 @@
             };
             eq(isTypeError, true);
           },
+          '03 - shift() removes the element at the zeroeth index, and shifts the values at consecutive indexes down': function () {
+            var array = [1, 2, 3];
+            var poppedEl = shift(array);
+            eq(array.length, 2);
+            eq(array[0], 2);
+            eq(array[1], 3);
+          }
         });
       </script>
   </body>
