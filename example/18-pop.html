@@ -102,6 +102,11 @@
             var emptyArr = [];
             var poppedEl = pop(emptyArr);
             eq(poppedEl, undefined);
+          },
+          '06 - pop() returns undefined if the array is empty and sparse.': function () {
+            var emptyArr = [,,];
+            var poppedEl = pop(emptyArr);
+            eq(poppedEl, undefined);
           }
         });
       </script>
