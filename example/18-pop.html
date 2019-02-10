@@ -54,6 +54,10 @@
            CORE LOGIC
            */
 
+          if (array.length === 0) {
+            return undefined;
+          }
+
           var lastElement = array[array.length - 1]
           array.length = array.length - 1;
 
@@ -88,12 +92,18 @@
             eq(array[0], 1);
             eq(array[1], 2);
             eq(array[2], undefined);
-
           },
           '04 - pop() returns that element': function () {
             var array = [1, 2, 3];
             var poppedEl = pop(array);
             eq(poppedEl, 3);
+          },
+          '05 - pop() returns undefined if the array is empty.': function () {
+
+            var emptyArr = [];
+            var poppedEl = pop(emptyArr);
+            eq(poppedEl, undefined);
+
           }
 
         });
