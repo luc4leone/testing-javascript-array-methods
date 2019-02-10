@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+          * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          }
+        </style>
+  </head>
+  <body>
+      <h2>Test Drive shift()</h2>
+      <h3 id="stats"></h3>
+      <script src="../simpletest.js"></script>
+      <script>
+        /* TESTS FOR Array.prototype.shift */
+
+        /* INPUT
+        - signature
+          arr.shift()
+
+
+        */
+
+        /* OUTPUT
+        The removed element from the array; 
+        undefined if the array is empty.
+        */
+
+        /* GENERIC DESCRIPTION
+        The shift() method removes the first element from an array and returns that removed element. This method changes the length of the array.
+        */
+
+        /* REQUIREMENTS
+        - The shift method removes the element at the zeroeth index and shifts the values at consecutive indexes down, 
+        - then returns the removed value. 
+        - If the length property is 0, undefined is returned.
+
+        - shift is intentionally generic; this method can be called or applied to objects resembling arrays. 
+        - Objects which do not contain a length property reflecting the last in a series of consecutive, zero-based numerical properties may not behave in any meaningful manner.
+
+        */
+
+        function shift (array) {
+
+          // no arguments passed in
+          // if (arguments.length === 0) {
+          //   throw new TypeError('undefined is not an array');
+          // }
+
+          // first argument is not an array 
+          // if (Array.isArray(arguments[0]) === false) {
+          //   throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
+          // }
+
+          /*
+           CORE LOGIC
+           */
+
+        }
+
+        /* TESTS */
+        SimpleTest.runTests({
+          '01 - If no argument is passed to shift(), throw a TypeError.': function () {
+            fail();
+            var isTypeError = false;
+            try {
+              shift();
+            } catch (e) {
+            isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '02 - If the first argument passed to shift() is not an array, throw a TypeError.': function () {
+            fail();
+            var isTypeError = false;
+            try {
+              shift(1);
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+        });
+      </script>
+  </body>
+</html>

@@ -33,9 +33,8 @@
         - The pop() method removes the last element from an array
         - pop() returns that element
         - or undefined if the array is empty.
-        - pop() is intentionally generic: this method can be called or applied to objects resembling arrays
         
-
+        - pop() is intentionally generic: this method can be called or applied to objects resembling arrays (!!! NON TESTED, WORSE: TYPEERROR WILL NOT ALLOW MY FUNCTION TO ALLOW FOR ARRAY-LIKE OBJECT)
         */
 
         function pop (array) {
@@ -63,7 +62,6 @@
           array.length = array.length - 1;
 
           return lastElement;
-
         }
 
         /* TESTS */
@@ -101,14 +99,12 @@
           },
           '05 - pop() returns undefined if the array is empty.': 
           function () {
-            debugger;
             var emptyArr = [];
             var poppedEl = pop(emptyArr);
             eq(poppedEl, undefined);
           },
           '06 - pop() returns undefined if the array is empty and sparse.': 
           function () {
-            debugger;
             var emptyArr = [,];
             var poppedEl = pop(emptyArr);
             eq(poppedEl, undefined);
