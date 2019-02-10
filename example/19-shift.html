@@ -43,14 +43,14 @@
         function shift (array) {
 
           // no arguments passed in
-          // if (arguments.length === 0) {
-          //   throw new TypeError('undefined is not an array');
-          // }
+          if (arguments.length === 0) {
+            throw new TypeError('undefined is not an array');
+          }
 
           // first argument is not an array 
-          // if (Array.isArray(arguments[0]) === false) {
-          //   throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
-          // }
+          if (Array.isArray(arguments[0]) === false) {
+            throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
+          }
 
           /*
            CORE LOGIC
@@ -61,7 +61,6 @@
         /* TESTS */
         SimpleTest.runTests({
           '01 - If no argument is passed to shift(), throw a TypeError.': function () {
-            fail();
             var isTypeError = false;
             try {
               shift();
@@ -71,7 +70,6 @@
             eq(isTypeError, true);
           },
           '02 - If the first argument passed to shift() is not an array, throw a TypeError.': function () {
-            fail();
             var isTypeError = false;
             try {
               shift(1);
