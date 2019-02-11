@@ -37,7 +37,7 @@
           - Hence, calling unshift with n arguments once, or calling it n times with 1 argument (with a loop, for example), don't yield the same results.
         */
 
-        function unshift (array) {
+        function unshift (array, element) {
 
           // no arguments passed in
           if (arguments.length === 0) {
@@ -53,8 +53,15 @@
            CORE LOGIC
            */
 
-          // empty array
-         
+          var arrayLength = array.length;
+          for (var i = 1; i <= arrayLength; i++) {
+            array[i] = array[i - 1];
+          }
+          // array[1] = array[0];
+          // array[2] = array[1];
+          // array[3] = array[2];
+          array[0] = element;
+
 
         }
 
@@ -78,9 +85,11 @@
             };
             eq(isTypeError, true);
           },
-          '03 - ': function () {
-            fail();
-            
+          '03 - unshift() adds one element to the beginning of an array.': function () {
+            var array = [1, 2, 3];
+            unshift(array, 0);
+            eq(array.length, 4);
+            eq(array[0], 0);
           },
           '04 - ': function () {
             fail();
