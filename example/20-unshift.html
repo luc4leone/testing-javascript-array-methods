@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+          * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          }
+        </style>
+  </head>
+  <body>
+      <h2>Test Drive unshift()</h2>
+      <h3 id="stats"></h3>
+      <script src="../simpletest.js"></script>
+      <script>
+        /* TESTS FOR Array.prototype.unshift */
+
+        /* INPUT
+        - signature
+          - arr.unshift(element1[, ...[, elementN]])
+            - elementN (optional)
+              The elements to add to the front of the array.
+        */
+
+        /* OUTPUT
+        - returns the new length of the array.
+        */
+
+        /* GENERIC DESCRIPTION
+        The unshift() method adds one or more elements to the beginning of an array and returns the new length of the array.
+        */
+
+        /* REQUIREMENTS
+        - The unshift method inserts the given values to the beginning of an 
+        - array-like object.
+          - unshift is intentionally generic; this method can be called or applied to objects resembling arrays. Objects which do not contain a length property reflecting the last in a series of consecutive, zero-based numerical properties may not behave in any meaningful manner.
+        - Please note that, if multiple elements are passed as parameters, they're inserted in chunk at the beginning of the object, in the exact same order they were passed as parameters. 
+          - Hence, calling unshift with n arguments once, or calling it n times with 1 argument (with a loop, for example), don't yield the same results.
+        */
+
+        function unshift (array) {
+
+          // no arguments passed in
+          if (arguments.length === 0) {
+            throw new TypeError('undefined is not an array');
+          }
+
+          // first argument is not an array 
+          if (Array.isArray(arguments[0]) === false) {
+            throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
+          }
+
+          /*
+           CORE LOGIC
+           */
+
+          // empty array
+         
+
+        }
+
+        /* TESTS */
+        SimpleTest.runTests({
+          '01 - If no argument is passed to unshift(), throw a TypeError.': function () {
+            fail();
+            var isTypeError = false;
+            try {
+              unshift();
+            } catch (e) {
+            isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '02 - If the first argument passed to unshift() is not an array, throw a TypeError.': function () {
+            fail();
+            var isTypeError = false;
+            try {
+              unshift(1);
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '03 - ': function () {
+            fail();
+            
+          },
+          '04 - ': function () {
+            fail();
+            
+          },
+          '05 - ': function () {
+            fail();
+            
+          }
+        });
+      </script>
+  </body>
+</html>
