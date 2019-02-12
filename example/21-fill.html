@@ -63,8 +63,14 @@
            CORE LOGIC
            */
 
+           var startingIndex = 0;
+           
+           if (start) {
+             startingIndex = start;
+           }
 
-           for (var i = 0; i < array.length; i++) {
+
+           for (var i = startingIndex; i < array.length; i++) {
              array[i] = value;
            }
 
@@ -108,6 +114,14 @@
             fill(arrayToFill, 1);
             eq(arrayToFill.length, 3);
             eq(arrayToFill[0], 1);
+            eq(arrayToFill[1], 1);
+            eq(arrayToFill[2], 1);
+          },
+          '06 - fill() should fill all the elements from start to the end of the array with a static value.': function () {
+            var arrayToFill = [0, 0, 0]
+            fill(arrayToFill, 1, 1);
+            eq(arrayToFill.length, 3);
+            eq(arrayToFill[0], 0);
             eq(arrayToFill[1], 1);
             eq(arrayToFill[2], 1);
           }
