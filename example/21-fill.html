@@ -47,7 +47,7 @@
 
         */
 
-        function fill (array, start, end) {
+        function fill (array, value, start, end) {
 
           // no arguments passed in
           if (arguments.length === 0) {
@@ -62,6 +62,13 @@
           /*
            CORE LOGIC
            */
+
+
+           for (var i = 0; i < array.length; i++) {
+             array[i] = value;
+           }
+
+
 
            return array;
 
@@ -96,11 +103,13 @@
             var result = fill(arrayToFill, 1);
             eq(result === arrayToFill, true);
           },
-          '03 - fill() fills all the elements of an array from a start index to an end index with a static value.': function () {
-            fail();
-            var array = [0,0,0]
-            fill(array, 1);
-
+          '05 - fill() should fill all the elements of an array with a static value.': function () {
+            var arrayToFill = [0, 0, 0]
+            fill(arrayToFill, 1);
+            eq(arrayToFill.length, 3);
+            eq(arrayToFill[0], 1);
+            eq(arrayToFill[1], 1);
+            eq(arrayToFill[2], 1);
           }
 
         });
