@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+          * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          }
+        </style>
+  </head>
+  <body>
+      <h2>Test Drive reverse()</h2>
+      <h3 id="stats"></h3>
+      <script src="../simpletest.js"></script>
+      <script>
+        /* TESTS FOR Array.prototype.reverse */
+
+        /* INPUT
+        - signature
+          a.reverse()
+
+        */
+
+        /* OUTPUT
+        The reversed array.
+        */
+
+        /* GENERIC DESCRIPTION
+        The reverse() method reverses an array in place. The first array element becomes the last, and the last array element becomes the first.
+
+        */
+
+        /* REQUIREMENTS
+        The reverse method transposes the elements of the calling array object in place, mutating the array, and returning a reference to the array.
+
+        */
+
+        function reverse (array) {
+
+          // no arguments passed in
+          if (arguments.length === 0) {
+            throw new TypeError('undefined is not an array');
+          }
+
+          // first argument is not an array 
+          if (Array.isArray(arguments[0]) === false) {
+            throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
+          }
+
+          /*
+           CORE LOGIC
+           */
+
+
+        }
+
+        /* TESTS */
+        SimpleTest.runTests({
+          '01 - If no argument is passed to reverse(), throw a TypeError.': 
+          function () {
+            fail();
+            var isTypeError = false;
+            try {
+              reverse();
+            } catch (e) {
+            isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '02 - If the first argument passed to reverse() is not an array, throw a TypeError.': function () {
+            fail();
+            var isTypeError = false;
+            try {
+              reverse(1);
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+        });
+      </script>
+  </body>
+</html>
