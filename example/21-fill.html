@@ -67,7 +67,11 @@
            var endingIndex = array.length;
 
            if (start) {
-             startingIndex = start;
+             if (start < 0) {
+             startingIndex = array.length + start;
+             } else {
+               startingIndex = start;
+             }
            }
 
            if (end) {
@@ -82,7 +86,6 @@
 
 
            return array;
-
         }
 
         /* TESTS */
@@ -115,7 +118,7 @@
             eq(result === arrayToFill, true);
           },
           '05 - fill() should fill all the elements of an array with a static value.': function () {
-            var arrayToFill = [0, 0, 0]
+            var arrayToFill = [0, 0, 0];
             fill(arrayToFill, 1);
             eq(arrayToFill.length, 3);
             eq(arrayToFill[0], 1);
@@ -123,7 +126,7 @@
             eq(arrayToFill[2], 1);
           },
           '06 - fill() should fill all the elements from the start index passed in to the end of the array with a static value.': function () {
-            var arrayToFill = [0, 0, 0]
+            var arrayToFill = [0, 0, 0];
             fill(arrayToFill, 1, 1);
             eq(arrayToFill.length, 3);
             eq(arrayToFill[0], 0);
@@ -131,12 +134,21 @@
             eq(arrayToFill[2], 1);
           },
           '07 - fill() should fill all the elements from start to end - 1 index passed in with a static value.': function () {
-            var arrayToFill = [0, 0, 0]
+            var arrayToFill = [0, 0, 0];
             fill(arrayToFill, 1, 0, 2);
             eq(arrayToFill.length, 3);
             eq(arrayToFill[0], 1);
             eq(arrayToFill[1], 1);
             eq(arrayToFill[2], 0);
+          },
+          '08 - If start is negative, it is treated as length + start where length is the length of the array.': function () {
+            debugger;
+            var arrayToFill = [0, 0, 0];
+            fill(arrayToFill, 1, - 1);
+            eq(arrayToFill.length, 3);
+            eq(arrayToFill[0], 0);
+            eq(arrayToFill[1], 0);
+            eq(arrayToFill[2], 1);
           }
 
         });
