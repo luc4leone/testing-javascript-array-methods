@@ -32,7 +32,7 @@
         */
 
         /* GENERIC DESCRIPTION
-        The fill() method fills all the elements of an array from a start index to an end index with a static value. 
+        fill() fills all the elements of an array from a start index to an end index with a static value. 
         If the end index is not included, it will modify all the elements from the start index to the end of the array. 
         It returns the modified array.
         */
@@ -63,6 +63,8 @@
            CORE LOGIC
            */
 
+           return array;
+
         }
 
         /* TESTS */
@@ -85,6 +87,19 @@
             };
             eq(isTypeError, true);
           },
+          '03 - fill() should return an array': function () {
+            eq(Array.isArray(fill([],1)), true);
+          },
+          '04 - fill() should return the same array that was passed in': function () {
+            fail();
+
+          },
+          '03 - fill() fills all the elements of an array from a start index to an end index with a static value.': function () {
+            fail();
+            var array = [0,0,0]
+            fill(array, 1);
+
+          }
 
         });
       </script>
