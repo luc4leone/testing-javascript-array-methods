@@ -87,12 +87,14 @@
             };
             eq(isTypeError, true);
           },
-          '03 - fill() should return an array': function () {
+          '03 - fill() should return an array.': function () {
             eq(Array.isArray(fill([],1)), true);
           },
-          '04 - fill() should return the same array that was passed in': function () {
-            fail();
-
+          '04 - fill() should return the same array that was passed in.':
+          function () {
+            var arrayToFill = [1];
+            var result = fill(arrayToFill, 1);
+            eq(result === arrayToFill, true);
           },
           '03 - fill() fills all the elements of an array from a start index to an end index with a static value.': function () {
             fail();
