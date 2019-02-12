@@ -68,14 +68,18 @@
 
            if (start) {
              if (start < 0) {
-             startingIndex = array.length + start;
+               startingIndex = array.length + start;
              } else {
                startingIndex = start;
              }
            }
 
            if (end) {
-             endingIndex = end;
+             if (end < 0) {
+               endingIndex = array.length + end;
+             } else {
+               endingIndex = end;
+             }
            }
 
 
@@ -142,13 +146,20 @@
             eq(arrayToFill[2], 0);
           },
           '08 - If start is negative, it is treated as length + start where length is the length of the array.': function () {
-            debugger;
             var arrayToFill = [0, 0, 0];
-            fill(arrayToFill, 1, - 1);
+            fill(arrayToFill, 1, -1);
             eq(arrayToFill.length, 3);
             eq(arrayToFill[0], 0);
             eq(arrayToFill[1], 0);
             eq(arrayToFill[2], 1);
+          },
+          '09 - If end is negative, it is treated as length + end.': function () {
+            var arrayToFill = [0, 0, 0];
+            fill(arrayToFill, 1, 0, -1);
+            eq(arrayToFill.length, 3);
+            eq(arrayToFill[0], 1);
+            eq(arrayToFill[1], 1);
+            eq(arrayToFill[2], 0);
           }
 
         });
