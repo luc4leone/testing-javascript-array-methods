@@ -60,9 +60,7 @@
             array[0] = arguments[j];
           }
 
-
-
-
+          return array.length;
         }
 
         /* TESTS */
@@ -86,7 +84,6 @@
             eq(isTypeError, true);
           },
           '03 - unshift() adds one element to the beginning of an array.': function () {
-
             var array = [1, 2, 3];
             unshift(array, 0);
             eq(array.length, 4);
@@ -99,6 +96,11 @@
             eq(array[0], 4);
             eq(array[1], 5);
           },
+          '05 - unshift() returns the new length of the array.': function () {
+            var array = [1, 2, 3];
+            var result = unshift(array, 4, 5);
+            eq(result, 5);
+          }
 
         });
       </script>
