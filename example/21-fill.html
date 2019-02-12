@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+          * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          }
+        </style>
+  </head>
+  <body>
+      <h2>Test Drive fill()</h2>
+      <h3 id="stats"></h3>
+      <script src="../simpletest.js"></script>
+      <script>
+        /* TESTS FOR Array.prototype.fill */
+
+        /* INPUT
+        - signature
+          arr.fill(value[, start[, end]])
+            value 
+              Value to fill an array.
+            start (Optional)
+              Start index, defaults to 0.
+            end (Optional)
+              End index, defaults to this.length.
+
+        */
+
+        /* OUTPUT
+        The modified array.
+
+        */
+
+        /* GENERIC DESCRIPTION
+        The fill() method fills all the elements of an array from a start index to an end index with a static value. 
+        If the end index is not included, it will modify all the elements from the start index to the end of the array. 
+        It returns the modified array.
+        */
+
+        /* REQUIREMENTS
+        - fill() takes up to three arguments value, start and end. The start and end arguments are optional with default values of 0 and the length of the this object.
+        - If start is negative, it is treated as length + start where length is the length of the array. 
+        - If end is negative, it is treated as length + end.
+        - fill() is intentionally generic, it does not require that its this value be an Array object.
+        - fill() is a mutable method, it will change this object itself, and return it, not just return a copy of it.
+        - When fill gets passed an object, it will copy the reference and fill the array with references to that object.
+
+        */
+
+        function fill (array, start, end) {
+
+          // no arguments passed in
+          if (arguments.length === 0) {
+            throw new TypeError('undefined is not an array');
+          }
+
+          // first argument is not an array 
+          if (Array.isArray(arguments[0]) === false) {
+            throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
+          }
+
+          /*
+           CORE LOGIC
+           */
+
+        }
+
+        /* TESTS */
+        SimpleTest.runTests({
+          '01 - If no argument is passed to fill(), throw a TypeError.': function () {
+            var isTypeError = false;
+            try {
+              fill();
+            } catch (e) {
+            isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '02 - If the first argument passed to fill() is not an array, throw a TypeError.': function () {
+            var isTypeError = false;
+            try {
+              fill(1);
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+
+        });
+      </script>
+  </body>
+</html>

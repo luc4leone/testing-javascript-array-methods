@@ -59,9 +59,11 @@
               if (i-1 in array) {
                   array[i] = array[i - 1];
               } else {
+                // last element is empty
                 if (i === array.length) {
-                  array.length++} 
-                else {
+                  array.length++
+                // any other element is empty
+                } else {
                   delete array[i];
                 }
               }
