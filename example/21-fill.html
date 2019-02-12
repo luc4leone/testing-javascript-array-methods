@@ -64,13 +64,18 @@
            */
 
            var startingIndex = 0;
-           
+           var endingIndex = array.length;
+
            if (start) {
              startingIndex = start;
            }
 
+           if (end) {
+             endingIndex = end;
+           }
 
-           for (var i = startingIndex; i < array.length; i++) {
+
+           for (var i = startingIndex; i < endingIndex; i++) {
              array[i] = value;
            }
 
@@ -117,13 +122,21 @@
             eq(arrayToFill[1], 1);
             eq(arrayToFill[2], 1);
           },
-          '06 - fill() should fill all the elements from start to the end of the array with a static value.': function () {
+          '06 - fill() should fill all the elements from the start index passed in to the end of the array with a static value.': function () {
             var arrayToFill = [0, 0, 0]
             fill(arrayToFill, 1, 1);
             eq(arrayToFill.length, 3);
             eq(arrayToFill[0], 0);
             eq(arrayToFill[1], 1);
             eq(arrayToFill[2], 1);
+          },
+          '07 - fill() should fill all the elements from start to end - 1 index passed in with a static value.': function () {
+            var arrayToFill = [0, 0, 0]
+            fill(arrayToFill, 1, 0, 2);
+            eq(arrayToFill.length, 3);
+            eq(arrayToFill[0], 1);
+            eq(arrayToFill[1], 1);
+            eq(arrayToFill[2], 0);
           }
 
         });
