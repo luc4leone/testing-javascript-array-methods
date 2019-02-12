@@ -1,6 +1,4 @@
 # Todos
 
-### pop()
-
-- [x] lorem ipsum
-- [] lorem ipsum
+- [] `shift()` should accept array-like object
+- [] `unshift()` should accept array-like object
