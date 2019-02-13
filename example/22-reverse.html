@@ -17,7 +17,6 @@
         /* INPUT
         - signature
           a.reverse()
-
         */
 
         /* OUTPUT
@@ -57,7 +56,6 @@
         SimpleTest.runTests({
           '01 - If no argument is passed to reverse(), throw a TypeError.': 
           function () {
-            fail();
             var isTypeError = false;
             try {
               reverse();
@@ -67,7 +65,6 @@
             eq(isTypeError, true);
           },
           '02 - If the first argument passed to reverse() is not an array, throw a TypeError.': function () {
-            fail();
             var isTypeError = false;
             try {
               reverse(1);
