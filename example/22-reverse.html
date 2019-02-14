@@ -53,14 +53,22 @@
           var a = [];
 
           for (var i = array.length -1; i >= 0; i--) {
-             a[a.length] = array[i]
-           }
+            if (i in array) {
+              a[a.length] = array[i];
+            } else {
+              a.length++;
+            }
 
-           for (var i = 0; i < array.length; i++) {
-             array[i] = a[i];
-           }
+          }
 
-           
+          for (var i = 0; i < array.length; i++) {
+            if (i in a) {
+              array[i] = a[i];
+            } else {
+              delete array[i];
+            }
+          }
+
 
            return array;
         }
@@ -97,6 +105,12 @@
             eq(reversedArray.length, 2);
             eq(reversedArray[0], 2);
             eq(reversedArray[1], 1);
+          },
+          '05 - reverse() should preserve holes.': function () {
+            debugger;
+            eq(Object.keys(reverse([1, , 3, 4])).length, 3);
+            eq(reverse([1, , 3, 4])[0], 4);
+            
           }
         });
       </script>
