@@ -40,7 +40,7 @@
         */
 
         /* GENERIC DESCRIPTION
-        The copyWithin() method shallow copies part of an array to another location in the same array and returns it, without modifying its size.
+        copyWithin() copies part of an array to another location in the same array and returns it, without modifying its size.
         */
 
         /* REQUIREMENTS
@@ -67,9 +67,17 @@
            CORE LOGIC
            */
 
-          return array;
+          var arrayLength = array.length;
+          var startingIndex = target;
 
-          
+          for (var i = arrayLength - 1; i >= startingIndex; i--) {
+            array[i] = array[i - 1];
+          }
+
+
+
+
+          return array;
         }
 
         /* TESTS */
@@ -98,6 +106,16 @@
             var result = copyWithin(array);
             eq(result === array, true);
           },
+          '04 - copyWithin() copies part of array in array starting from \'target\' and returns array.': function () {
+            var array = [1, 2, 3, 4, 5];
+            var result = copyWithin(array , 1);
+            eq(result.length, 5);
+            eq(result[0], 1);
+            eq(result[1], 1);
+            eq(result[2], 2);
+            eq(result[3], 3);
+            eq(result[4], 4);
+          }
         });
       </script>
   </body>
