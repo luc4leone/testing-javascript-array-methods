@@ -17,15 +17,22 @@
         /* INPUT
         - signature
           arr.copyWithin(target[, start[, end]])
+          
           target
-            Zero based index at which to copy the sequence to. If negative, target will be counted from the end.
-            If target is at or greater than arr.length, nothing will be copied. If target is positioned after start, the copied sequence will be trimmed to fit arr.length.
-          start Optional
-            Zero based index at which to start copying elements from. If negative, start will be counted from the end.
-            If start is omitted, copyWithin will copy from the start (defaults to 0).
-          end Optional
-            Zero based index at which to end copying elements from. copyWithin copies up to but not including end. If negative, end will be counted from the end.
-          If end is omitted, copyWithin will copy until the end (default to arr.length).
+            - Zero based index at which to copy the sequence to. 
+            - If negative, target will be counted from the end.
+            - If target is at or greater than arr.length, nothing will be copied. 
+            - If target is positioned after start, the copied sequence will be trimmed to fit arr.length.
+
+          start (Optional)
+            - Zero based index at which to start copying elements from. 
+            - If negative, start will be counted from the end.
+            - If start is omitted, copyWithin will copy from the start (defaults to 0).
+
+          end (Optional)
+            - Zero based index at which to end copying elements from. copyWithin copies up to but not including end. 
+            - If negative, end will be counted from the end.
+            - If end is omitted, copyWithin will copy until the end (default to arr.length).
         */
 
         /* OUTPUT
@@ -37,15 +44,14 @@
         */
 
         /* REQUIREMENTS
-        The copyWithin works like C and C++'s memmove, and is a high-performance method to shift the data of an Array. This especially applies to the TypedArray method of the same name. The sequence is copied and pasted as one operation; pasted sequence will have the copied values even when the copy and paste region overlap.
-
-        The copyWithin function is intentionally generic, it does not require that its this value be an Array object.
-
-        The copyWithin method is a mutable method. It does not alter the length of this, but will change its content and create new properties if necessary.
+        - The sequence is copied and pasted as one operation 
+        - pasted sequence will have the copied values even when the copy and paste region overlap.
+        - The copyWithin function is intentionally generic, it does not require that its this value be an Array object.
+        - The copyWithin method is a mutable method. It does not alter the length of this, but will change its content and create new properties if necessary.
 
         */
 
-        function copyWithin (array) {
+        function copyWithin (array, target, start, end) {
 
           // no arguments passed in
           if (arguments.length === 0) {
@@ -60,13 +66,16 @@
           /*
            CORE LOGIC
            */
+
+
+
+          
         }
 
         /* TESTS */
         SimpleTest.runTests({
           '01 - If no argument is passed to copyWithin(), throw a TypeError.': 
           function () {
-            fail();
             var isTypeError = false;
             try {
               copyWithin();
@@ -76,7 +85,6 @@
             eq(isTypeError, true);
           },
           '02 - If the first argument passed to copyWithin() is not an array, throw a TypeError.': function () {
-            fail();
             var isTypeError = false;
             try {
               copyWithin(1);
@@ -84,6 +92,12 @@
               isTypeError = e instanceof TypeError;
             };
             eq(isTypeError, true);
+          },
+          '03 - It should return the same array.': function () {
+            fail();
+            var array = [1, 2];
+            var result = copyWithin(array);
+            eq(result === array, true);
           },
         });
       </script>
