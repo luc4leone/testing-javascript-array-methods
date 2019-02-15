@@ -79,7 +79,11 @@
           function getArrayPart (array, fromIndex) {
             var arrayPart = [];
             for (var i = fromIndex; i < arrayLength; i++) {
-              arrayPart[arrayPart.length] = array[i];
+              if (i in array) {
+                arrayPart[arrayPart.length] = array[i];
+              } else {
+                arrayPart.length++;
+              }
             }
             return arrayPart;
           }
@@ -88,9 +92,13 @@
 
           var j = 0;
           for (var i = insertIndex; i < arrayLength; i++) {
-            if (j in arrayPart) {
-              array[i] = arrayPart[j];
-              j++;
+            if (j < arrayPart.length) {
+              if (j in arrayPart) {
+                array[i] = arrayPart[j];
+                j++;
+              } else {
+                delete array[i];
+              }
             } else {
               break;
             }
@@ -126,8 +134,6 @@
             eq(result === array, true);
           },
           '04 - copyWithin() copies part of array in array starting from \'target\'.': function () {
-            debugger;
-
             var array = [1, 2, 3, 4, 5];
             var result = copyWithin(array , 1);
             eq(result.length, 5);
@@ -138,8 +144,6 @@
             eq(result[4], 4);
           },
           '05 - copyWithin() copies the part of array from \'start\' and paste it starting from \'target\'.': function () {
-            debugger;
-
             var array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
             var result = copyWithin(array , 1, 6);
             eq(result.length, 9);
@@ -152,6 +156,20 @@
             eq(result[6], 7);
             eq(result[7], 8);
             eq(result[8], 9);
+          },
+          '06 - It should preserve holes.': function () {
+            var array = [1, 2, 3, 4, 5, 6, , 7];
+            var result = copyWithin([1, 2, 3, 4, 5, 6, , 7], 7, 6);
+            eq(result.length, 8);
+            eq(Object.keys(result).length, 6);
+            eq(result[0], 1);
+            eq(result[1], 2);
+            eq(result[2], 3);
+            eq(result[3], 4);
+            eq(result[4], 5);
+            eq(result[5], 6);
+            eq(result[6], undefined);
+            eq(result[7], undefined);
           }
         });
       </script>
