@@ -67,7 +67,7 @@
            CORE LOGIC
            */
 
-
+          return array;
 
           
         }
@@ -94,7 +94,6 @@
             eq(isTypeError, true);
           },
           '03 - It should return the same array.': function () {
-            fail();
             var array = [1, 2];
             var result = copyWithin(array);
             eq(result === array, true);
