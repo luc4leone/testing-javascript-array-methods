@@ -68,18 +68,17 @@
            */
 
           var arrayLength = array.length;
-          var insertIndex = target;
-          var partStartingIndex = 0; // default value
-          var partEndingIndex = array.length; // default value
+
+
+          // if 'start' and 'end' have been passed in they would be the index bounds of arrayPart, otherwise the default's array's bounds
+          var arrayPartStartingIndex = start || 0; 
+          var arrayPartEndingIndex = end || arrayLength; 
           
-          if (start) {
-            partStartingIndex = start;
-          }
+          // position in array where copying arrayPart
+          var insertIndex = target;
 
-          if (end) {
-            partEndingIndex = end;
-          }
 
+          // arrayPart extraction
           function getArrayPart (array, fromIndex, toIndex) {
             var arrayPart = [];
             for (var i = fromIndex; i < toIndex; i++) {
@@ -92,8 +91,9 @@
             return arrayPart;
           }
 
-          var arrayPart = getArrayPart(array, partStartingIndex, partEndingIndex);
+          var arrayPart = getArrayPart(array, arrayPartStartingIndex, arrayPartEndingIndex);
 
+          // copying arrayPart into array
           var j = 0;
           for (var i = insertIndex; i < arrayLength; i++) {
             if (j < arrayPart.length) {
