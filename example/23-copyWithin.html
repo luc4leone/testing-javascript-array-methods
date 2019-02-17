@@ -51,6 +51,7 @@
         */
 
         function copyWithin (array, startPasting, startCopying, endCopying) {
+          /* TYPE ERRORS */
 
           // no arguments passed in
           if (arguments.length === 0) {
@@ -62,50 +63,51 @@
             throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
           }
 
-          /*
-           CORE LOGIC
-           */
+          /* CORE LOGIC */
 
           var arrayLength = array.length;
 
           // if 'startCopying' and 'endCopying' have been passed in they would be the index bounds of arrayPart, otherwise the default's array's bounds
           var arrayPartStartingIndex = startCopying || 0; 
           var arrayPartEndingIndex = endCopying || arrayLength; 
-          
-          // position in array where copying arrayPart
-          var insertIndex = startPasting;
 
-
-          // arrayPart extraction
-          function getArrayPart (array, fromIndex, toIndex) {
+          // 'copy' the part of array to 'paste' in a different position
+          function copyPart (array, fromIndex, toIndex) {
             var arrayPart = [];
+
             for (var i = fromIndex; i < toIndex; i++) {
+              // copy also the array holes 
               if (i in array) {
                 arrayPart[arrayPart.length] = array[i];
               } else {
                 arrayPart.length++;
               }
             }
+
             return arrayPart;
           }
 
-          var arrayPart = getArrayPart(array, arrayPartStartingIndex, arrayPartEndingIndex);
+          var arrayPart = copyPart(array, arrayPartStartingIndex, arrayPartEndingIndex);
 
-          // copying arrayPart into array
-          var j = 0;
-          for (var i = insertIndex; i < arrayLength; i++) {
-            if (j < arrayPart.length) {
-              if (j in arrayPart) {
-                array[i] = arrayPart[j];
-                j++;
-              } else {
-                delete array[i];
-                j++;
-              }
-            } else {
-              break;
+          // position in array where starting to paste arrayPart
+          var arrayStartPasteIndex = startPasting;
+          var arrayEndPasteIndex = Math.min(arrayStartPasteIndex + arrayPart.length, arrayLength);
+
+          function pastePart(array, part, fromIndex, toIndex) {
+            var j = 0;
+            for (var i = fromIndex; i < toIndex; i++) {
+                // if hole in arrayPart I should paste in array
+                if (j in part) { 
+                  array[i] = part[j];
+                  j++;
+                } else {
+                  delete array[i];
+                  j++;
+                }
             }
           }
+
+          pastePart(array, arrayPart, arrayStartPasteIndex, arrayEndPasteIndex);
 
           return array;
         }
