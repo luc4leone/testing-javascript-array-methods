@@ -64,10 +64,9 @@
 
           /* CORE LOGIC */
           // step 1: get array part beginning and ending index
-          
           var partFromIndex = getPartStart();
-          var partToIndex = endCopying || array.length; 
-          
+          var partToIndex = getPartEnd();
+
           // step 2: get array part
           var part = copyPart(array, partFromIndex, partToIndex);
 
@@ -85,6 +84,14 @@
                 from += array.length;
             }
             return from;
+          }
+
+          function getPartEnd () {
+            var to = endCopying || array.length;
+            if (to < 0) {
+                  to += array.length;
+            } 
+            return to;
           }
 
           function copyPart (array, fromIndex, toIndex) {
