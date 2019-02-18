@@ -65,16 +65,23 @@
 
           /* CORE LOGIC */
 
-          var arrayLength = array.length;
+          // step 1: get array part beginning and ending index
+          var partFromIndex = startCopying || 0; 
+          var partToIndex = endCopying || array.length; 
+          
+          // step 2: get array part
+          var part = copyPart(array, partFromIndex, partToIndex);
 
-          // if 'startCopying' and 'endCopying' have been passed in they would be the index bounds of 'part', otherwise the default part is the entire array
-          var partStartingIndex = startCopying || 0; 
-          var partEndingIndex = endCopying || arrayLength; 
+          // step 3: get array beginning and ending paste index
+          var pasteFromIndex = getPasteStart();
+          var pastToIndex = getPasteStop();
 
-          // 'copy' the part of array to 'paste' in a different position
+          // step 4: paste part into array
+          pastePart(array, part);
+
+
           function copyPart (array, fromIndex, toIndex) {
             var arrayPart = [];
-
             for (var i = fromIndex; i < toIndex; i++) {
               // copy also the array holes 
               if (i in array) {
@@ -83,28 +90,25 @@
                 arrayPart.length++;
               }
             }
-
             return arrayPart;
           }
 
-          var part = copyPart(array, partStartingIndex, partEndingIndex);
-
-          function applyConstraintsToStartPasting () {
+          function getPasteStart () {
             if (startPasting < 0) {
-              startPasting += arrayLength;
+              startPasting += array.length;
             }
             return startPasting;
           }
 
-          function calculatePasteStop () {
-            return Math.min(applyConstraintsToStartPasting() + part.length, arrayLength);
+          function getPasteStop () {
+            var PasteStart = getPasteStart();
+            var PasteStop = Math.min(PasteStart + part.length, array.length);
+            return PasteStop;
           }
 
           function pastePart(array, arrayPart) {
-            var fromIndex = applyConstraintsToStartPasting();
-            var toIndex = calculatePasteStop();
             var j = 0;
-            for (var i = fromIndex; i < toIndex; i++) {
+            for (var i = pasteFromIndex; i < pastToIndex; i++) {
                 // also paste holes
                 if (j in arrayPart) { 
                   array[i] = arrayPart[j];
@@ -115,8 +119,6 @@
                 }
             }
           }
-
-          pastePart(array, part);
 
           return array;
         }
@@ -205,7 +207,6 @@
             eq(result[4], 3);
           },
           '09 - If target is at or greater than arr.length, nothing will be copied.': function () {
-            fail();
             var result = copyWithin([1, 2, 3, 4, 5], 10);
             eq(result[0], 1);
             eq(result[1], 2);
