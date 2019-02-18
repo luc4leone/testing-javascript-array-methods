@@ -64,7 +64,8 @@
 
           /* CORE LOGIC */
           // step 1: get array part beginning and ending index
-          var partFromIndex = startCopying || 0; 
+          
+          var partFromIndex = getPartStart();
           var partToIndex = endCopying || array.length; 
           
           // step 2: get array part
@@ -78,6 +79,14 @@
           pastePart(array, part);
 
           // by putting the code into functions I try to make the solution logic clear at first glance, just by reading var and functions name - which I choose carefully
+          function getPartStart () {
+            var from = startCopying || 0; 
+            if (from < 0) {
+                from += array.length;
+            }
+            return from;
+          }
+
           function copyPart (array, fromIndex, toIndex) {
             var arrayPart = [];
             for (var i = fromIndex; i < toIndex; i++) {
@@ -222,7 +231,22 @@
             eq(result[2], 5);
             eq(result[3], 4);
             eq(result[4], 5);
-
+          },
+          '11 - If negative, start will be counted from the end.': function () {
+            var result = copyWithin([1, 2, 3, 4, 5], 2, -2, 5);
+            eq(result[0], 1);
+            eq(result[1], 2);
+            eq(result[2], 4);
+            eq(result[3], 5);
+            eq(result[4], 5);
+          },
+          '12 - If negative, end will be counted from the end.': function () {
+            var result = copyWithin([1, 2, 3, 4, 5], 2, 1, -2);
+            eq(result[0], 1);
+            eq(result[1], 2);
+            eq(result[2], 2);
+            eq(result[3], 3);
+            eq(result[4], 5);
           }
         });
       </script>
