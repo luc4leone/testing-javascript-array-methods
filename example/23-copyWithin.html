@@ -52,7 +52,6 @@
 
         function copyWithin (array, startPasting, startCopying, endCopying) {
           /* TYPE ERRORS */
-
           // no arguments passed in
           if (arguments.length === 0) {
             throw new TypeError('undefined is not an array');
@@ -64,7 +63,6 @@
           }
 
           /* CORE LOGIC */
-
           // step 1: get array part beginning and ending index
           var partFromIndex = startCopying || 0; 
           var partToIndex = endCopying || array.length; 
@@ -74,12 +72,12 @@
 
           // step 3: get array beginning and ending paste index
           var pasteFromIndex = getPasteStart();
-          var pastToIndex = getPasteStop();
+          var pasteToIndex = getPasteStop();
 
           // step 4: paste part into array
           pastePart(array, part);
 
-
+          // by putting the code into functions I try to make the solution logic clear at first glance, just by reading var and functions name - which I choose carefully
           function copyPart (array, fromIndex, toIndex) {
             var arrayPart = [];
             for (var i = fromIndex; i < toIndex; i++) {
@@ -94,6 +92,9 @@
           }
 
           function getPasteStart () {
+            if (startPasting < - array.length) {
+              startPasting = 0;
+            }
             if (startPasting < 0) {
               startPasting += array.length;
             }
@@ -108,7 +109,7 @@
 
           function pastePart(array, arrayPart) {
             var j = 0;
-            for (var i = pasteFromIndex; i < pastToIndex; i++) {
+            for (var i = pasteFromIndex; i < pasteToIndex; i++) {
                 // also paste holes
                 if (j in arrayPart) { 
                   array[i] = arrayPart[j];
@@ -213,6 +214,15 @@
             eq(result[2], 3);
             eq(result[3], 4);
             eq(result[4], 5);
+          },
+          '10 - If target is negative and greater than array.length, startPasting will start from 0.': function () {
+            var result = copyWithin([1, 2, 3, 4, 5], -20, 2, 5);
+            eq(result[0], 3);
+            eq(result[1], 4);
+            eq(result[2], 5);
+            eq(result[3], 4);
+            eq(result[4], 5);
+
           }
         });
       </script>
