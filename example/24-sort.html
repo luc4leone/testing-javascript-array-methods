@@ -63,7 +63,6 @@
         SimpleTest.runTests({
           '01 - If no argument is passed to sort(), throw a TypeError.': 
           function () {
-            fail();
             var isTypeError = false;
             try {
               sort();
@@ -73,7 +72,6 @@
             eq(isTypeError, true);
           },
           '02 - If the first argument passed to sort() is not an array, throw a TypeError.': function () {
-            fail();
             var isTypeError = false;
             try {
               sort(1);
