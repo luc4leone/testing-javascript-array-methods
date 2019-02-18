@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+          * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          }
+        </style>
+  </head>
+  <body>
+      <h2>Test Drive sort()</h2>
+      <h3 id="stats"></h3>
+      <script src="../simpletest.js"></script>
+      <script>
+        /* TESTS FOR Array.prototype.sort */
+
+        /* INPUT
+        signature
+          arr.sort([compareFunction])
+
+        compareFunction (Optional)
+          Specifies a function that defines the sort order. If omitted, the array is sorted according to each character's Unicode code point value, according to the string conversion of each element.
+
+          firstEl
+            The first element for comparison.
+
+          secondEl
+              The second element for comparison.
+
+        */
+
+        /* OUTPUT
+        The sorted array. Note that the array is sorted in place, and no copy is made.
+        */
+
+        /* GENERIC DESCRIPTION
+        The sort() method sorts the elements of an array in place and returns the array. The default sort order is built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values.
+
+        The time and space complexity of the sort cannot be guaranteed as it is implementation dependent.
+
+        */
+
+        /* REQUIREMENTS
+        
+        */
+
+        function sort (array) {
+          /* TYPE ERRORS */
+          // no arguments passed in
+          if (arguments.length === 0) {
+            throw new TypeError('undefined is not an array');
+          }
+
+          // first argument is not an array 
+          if (Array.isArray(arguments[0]) === false) {
+            throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
+          }
+
+          /* CORE LOGIC */
+        }
+
+        /* TESTS */
+        SimpleTest.runTests({
+          '01 - If no argument is passed to sort(), throw a TypeError.': 
+          function () {
+            fail();
+            var isTypeError = false;
+            try {
+              sort();
+            } catch (e) {
+            isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '02 - If the first argument passed to sort() is not an array, throw a TypeError.': function () {
+            fail();
+            var isTypeError = false;
+            try {
+              sort(1);
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+        });
+      </script>
+  </body>
+</html>
