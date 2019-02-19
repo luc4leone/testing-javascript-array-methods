@@ -55,3 +55,30 @@ beginning + part.length = 3 + 3 = 6
 
 */
 ```
+
+## Sorting algorithms
+
+```javascript
+function findSmallest (arr) {
+  var smallest = arr[0];
+  var smallestIndex = 0;
+  for (var i = 1; i < arr.length; i++) {
+    if(arr[i] < smallest) {
+      smallest = arr[i];
+      smallestIndex = i;
+    }
+  }
+  return smallestIndex;
+}
+
+function selectionSort (arr) {
+  var newArr = [];
+  var arrLength = arr.length;
+  for (var i = 0; i < arrLength; i++) {
+    var smallestIndex = findSmallest(arr);
+    newArr[newArr.length] = arr.splice(smallestIndex,1)[0];
+  }
+  return newArr;
+}
+```
+
