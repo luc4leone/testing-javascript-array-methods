@@ -14,33 +14,33 @@
       <script>
         /* TESTS FOR Array.prototype.copyWithin */
 
-        /* INPUT
-        - signature
-          arr.copyWithin(target[, start[, end]])
-          
-          target
-            - Zero based index at which to copy the sequence to. 
-            - If negative, target will be counted from the end.
-            - If target is at or greater than arr.length, nothing will be copied. 
-            - If target is positioned after start, the copied sequence will be trimmed to fit arr.length.
-
-          start (Optional)
-            - Zero based index at which to start copying elements from. 
-            - If negative, start will be counted from the end.
-            - If start is omitted, copyWithin() will copy from the start (defaults to 0).
-
-          end (Optional)
-            - Zero based index at which to end copying elements from. copyWithin copies up to but not including end. 
-            - If negative, end will be counted from the end.
-            - If end is omitted, copyWithin() will copy until the end (default to arr.length).
-        */
-
-        /* OUTPUT
-        The modified array.
-        */
-
         /* GENERIC DESCRIPTION
         copyWithin() copies part of an array to another location in the same array and returns it, without modifying its size.
+        */
+
+        /* INPUT
+        - signature
+            arr.copyWithin(target[, start[, end]])
+            
+            target
+              - Zero based index at which to copy the sequence to. 
+              - If negative, target will be counted from the end.
+              - If target is at or greater than arr.length, nothing will be copied. 
+              - If target is positioned after start, the copied sequence will be trimmed to fit arr.length.
+
+            start (Optional)
+              - Zero based index at which to start copying elements from. 
+              - If negative, start will be counted from the end.
+              - If start is omitted, copyWithin() will copy from the start (defaults to 0).
+
+            end (Optional)
+              - Zero based index at which to end copying elements from. copyWithin copies up to but not including end. 
+              - If negative, end will be counted from the end.
+              - If end is omitted, copyWithin() will copy until the end (default to arr.length).
+        */
+
+        /* RETURN VALUE
+        The modified array.
         */
 
         /* REQUIREMENTS
@@ -57,10 +57,30 @@
             throw new TypeError('undefined is not an array');
           }
 
-          // first argument is not an array 
-          if (Array.isArray(arguments[0]) === false) {
+          // first argument is not an array-like object 
+          // 
+          var shallowProperty = function (key) {
+            return function (obj) {
+              return obj == null ? void 0 : obj[key];
+            };
+          };
+          // constant, it's a language constraint
+          var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1; // 9007199254740991
+
+          // getLength is a function, because shallowProperty returns a function
+          var getLength = shallowProperty('length'); 
+
+          // 
+          var isArrayLike = function (collection) {
+            var length = getLength(collection);
+            return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+          };
+
+
+          if (isArrayLike(arguments[0]) === false) {
             throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
           }
+
 
           /* CORE LOGIC */
           // step 1: get array part beginning and ending index
@@ -152,14 +172,45 @@
             };
             eq(isTypeError, true);
           },
-          '02 - If the first argument passed to copyWithin() is not an array, throw a TypeError.': function () {
+          '02 - If the first argument passed to copyWithin() is not an array-like object, throw a TypeError. Test a number.': function () {
+            var number = 1
             var isTypeError = false;
             try {
-              copyWithin(1);
+              copyWithin(number);
             } catch (e) {
               isTypeError = e instanceof TypeError;
             };
             eq(isTypeError, true);
+          },
+          '02a - If the first argument passed to copyWithin() is not an array-like object, throw a TypeError. Test a plain object.': function () {
+            var obj = {};
+            var isTypeError = false;
+            try {
+              copyWithin(obj);
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, true);
+          },
+          '02b - If the first argument passed to copyWithin() is not an array-like object, throw a TypeError. Test an array.': function () {
+            var arr = [];
+            var isTypeError = false;
+            try {
+              copyWithin(arr);
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, false);
+          },
+          '02c - If the first argument passed to copyWithin() is not an array-like object, throw a TypeError. Test a plain object.': function () {
+            var collection = document.body.getElementsByTagName('h2');
+            var isTypeError = false;
+            try {
+              copyWithin(collection);
+            } catch (e) {
+              isTypeError = e instanceof TypeError;
+            };
+            eq(isTypeError, false);
           },
           '03 - copyWithin() should return the same array.': function () {
             var array = [1, 2];
