@@ -57,28 +57,27 @@
             throw new TypeError('undefined is not an array');
           }
 
-          // first argument is not an array-like object 
-          // 
+           
+          // The following is taken from underscore.js. Basically it checks if the length property of arguments[0] is there
           var shallowProperty = function (key) {
             return function (obj) {
               return obj == null ? void 0 : obj[key];
             };
           };
-          // constant, it's a language constraint
+          // in Javascript arrays can't contain more elements than this
           var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1; // 9007199254740991
 
           // getLength is a function, because shallowProperty returns a function
           var getLength = shallowProperty('length'); 
 
-          // 
           var isArrayLike = function (collection) {
             var length = getLength(collection);
             return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
           };
 
-
+          // first argument is not an array-like object
           if (isArrayLike(arguments[0]) === false) {
-            throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
+            throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array-like object');
           }
 
 
@@ -203,6 +202,7 @@
             eq(isTypeError, false);
           },
           '02c - If the first argument passed to copyWithin() is not an array-like object, throw a TypeError. Test a plain object.': function () {
+            debugger;
             var collection = document.body.getElementsByTagName('h2');
             var isTypeError = false;
             try {

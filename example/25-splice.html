@@ -58,7 +58,7 @@
 
           /* CORE LOGIC */
 
-          return array;
+          return [];
         }
 
         /* TESTS */
@@ -82,6 +82,11 @@
             };
             eq(isTypeError, true);
           },
+          '03 - It should return a new array': function () {
+            var array = [1, 2];
+            var result = splice(array);
+            eq(array !== result, true);
+          }
           
         });
       </script>

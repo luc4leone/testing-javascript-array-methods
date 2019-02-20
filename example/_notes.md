@@ -82,3 +82,61 @@ function selectionSort (arr) {
 }
 ```
 
+## is array-like?
+
+```javascript
+
+// if I pass in 'length' I will get back undefined or the length value
+// why returning a function?
+// why void 0 instead of a simple undefined?
+// summary: check if key in object exist, if it exist returns value, otherwise undefined
+var shallowProperty = function(key) {
+  return function(obj) {
+    return obj == null ? void 0 : obj[key];
+  };
+};
+
+// constant, it's a language constraint
+var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1; // 9007199254740991
+
+// getLength is a function, because shallowProperty returns a function
+var getLength = shallowProperty('length'); 
+
+// 
+var isArrayLike = function(collection) {
+  var length = getLength(collection);
+  return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+};
+
+```
+
+## Alex copyWithin
+
+```javascript
+Array.prototype.myCopyWithin = function(target, optionalStart, optionalEnd) {
+    var arr = this;
+    var originalArr = []; // to be used as temp storage during execution.
+    var startIndex = optionalStart || 0;
+    var endIndex = optionalEnd || arr.length;
+    
+    // copy values of input array into a temp stoarge variable.
+    for (var i = 0; i < arr.length; i++) {
+      originalArr[i] = arr[i];
+    }
+    
+    if (target < 0) {
+      target = arr.length + target;
+    }
+    if (target > arr.length || target < 0) {
+      return arr;
+    }
+    
+    for (var i = startIndex; i < endIndex; i++) { 
+      if (target < arr.length) {
+        arr[target] = originalArr[i];
+        target ++;
+      }
+    }
+    return arr;
+  }
+```
