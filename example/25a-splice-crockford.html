@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+          * {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+          }
+        </style>
+  </head>
+  <body>
+      <h2>Test Drive splice()</h2>
+      <h3 id="stats"></h3>
+      <script src="../simpletest.js"></script>
+      <script>
+
+        function splice (arr, start, deleteCount) {
+          var max = Math.max,
+              min = Math.min,
+              delta,
+              element,
+              insertCount = max(arguments.length - 2, 0),
+              k = 0,
+              len = arr.length,
+              new_len,
+              result = [],
+              shift_count;
+              
+              start = start || 0;
+              if (start < 0) {
+                start += len;
+              }
+              start = max(min(start, len), 0);
+              deleteCount = max(min(typeof deleteCount === 'number' ?
+                deleteCount : len, len - start), 0);
+              delta = insertCount - deleteCount;
+              new_len = len + delta;
+              while (k < deleteCount) {
+                element = arr[start + k];
+                if (element !== undefined) {
+                  result[k] = element;
+                }
+                k += 1;
+              }
+              shift_count = len - start - deleteCount;
+              if (delta < 0) {
+                k = start + insertCount;
+                while (shift_count) {
+                  arr[k] = arr[k - delta];
+                  k += 1;
+                  shift_count -= 1;
+                }
+                arr.length = new_len;
+              } else if (delta > 0) {
+                k = 1;
+                while (shift_count) {
+                  arr[new_len - k] = arr[len - k];
+                  k += 1;
+                  shift_count -= 1;
+                }
+                arr.length = new_len;
+              }
+              for (k = 0; k < insertCount; k += 1) {
+                arr[start + k] = arguments[k + 2];
+              }
+              return result;
+            }
+
+
+
+        
+
+        /* TESTS */
+        SimpleTest.runTests({
+          
+        });
+      </script>
+  </body>
+</html>
+
+

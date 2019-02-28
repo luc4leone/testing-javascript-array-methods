@@ -28,7 +28,8 @@
 
           deleteCount (Optional)
             - An integer indicating the number of old array elements to remove.
-            - If deleteCount is omitted, or if its value is larger than array.length - start (that is, if it is greater than the number of elements left in the array, starting at start), then all of the elements from start through the end of the array will be deleted.
+            - If deleteCount is omitted, 
+              or if its value is larger than array.length - start (that is, if it is greater than the number of elements left in the array, starting at start), then all of the elements from start through the end of the array will be deleted.
             - If deleteCount is 0 or negative, no elements are removed. In this case, you should specify at least one new element (see below).
 
           item1, item2, ... (Optional)
@@ -36,7 +37,8 @@
         */
 
         /* RETURN VALUE
-        An array containing the deleted elements. If only one element is removed, an array of one element is returned. If no elements are removed, an empty array is returned. */
+        - An array containing the deleted elements. If only one element is removed, an array of one element is returned. 
+        - If no elements are removed, an empty array is returned. */
 
 
 
@@ -57,6 +59,18 @@
           }
 
           /* CORE LOGIC */
+
+          /* remove from Resig */
+          function remove(array, from, to) {
+            var rest = array.slice((to || from) + 1 || array.length);
+            array.length = from;
+            return array.push.apply(array, rest);
+          }
+          /* insert */
+          for (var i = start; i < array.length; i++) {
+
+          }
+          delete array[start];
 
           return [];
         }
@@ -82,11 +96,20 @@
             };
             eq(isTypeError, true);
           },
-          '03 - It should return a new array': function () {
+          '03 - splice() should return a new array.': function () {
             var array = [1, 2];
             var result = splice(array);
             eq(array !== result, true);
-          }
+          },
+          '04 - splice() should remove deleteCount elements starting from index start': function () {
+            debugger;
+            var array = [1, 2, 3, 4];
+            var result = splice(array, 1, 1);
+            eq(array.length, 3);
+            eq(array[0, 1]);
+            eq(array[1, 3]);
+
+          },
           
         });
       </script>
