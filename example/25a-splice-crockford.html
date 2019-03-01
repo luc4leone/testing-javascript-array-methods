@@ -18,20 +18,67 @@
               min = Math.min,
               delta,
               element,
+              /* 
+              se ho 2 argomenti
+                2-2 > 0
+              se ho 3 argomenti, significa che devo inserire 1 elemento
+                3-2 >>> 1
+              se ho 1 argomento
+                1-2 >>> 0, non devo inserire alcun argomento.
+                se non avesse messo max... ma solo arguments.length - 2, nel caso di 1 argomento avrebbe avuto insertCount = -1
+               */
               insertCount = max(arguments.length - 2, 0),
-              k = 0,
+              k = 0, // ?
               len = arr.length,
-              new_len,
+              new_len, // newLen
               result = [],
-              shift_count;
+              shift_count; // shiftCount
               
+              // se start passed in, usa start, altrimenti usa 0
               start = start || 0;
               if (start < 0) {
+                /* se len == 10 e start è -3, allora start = -3 + 10 = 7 */
                 start += len;
               }
+              /* 
+              [1, 2, 3, 4]
+              len > start
+              len = 4
+              start = 1
+              min(start, len) = 1
+
+              // caso non possibile perché filtrato dalla condizione sopra
+              [1, 2, 3, 4]
+              len > start
+              len = 4
+              start = -2
+              min(start, len) = -2
+
+              []
+
+
+              len < start 
+              len = 4
+              start = 5
+              min(start, len) = 4
+
+              if (start < 0) start = 0
+              if (start > 0) start = start
+              >>> start = max(0, start)
+
+              if (start > len) start = len
+              if (start < len) start = start
+              >>> start = min(start, len)
+
+
+               */
               start = max(min(start, len), 0);
-              deleteCount = max(min(typeof deleteCount === 'number' ?
-                deleteCount : len, len - start), 0);
+              // calcola quanti elementi rimuovere
+              deleteCount = max(min(typeof deleteCount === 'number' ? deleteCount : len, len - start), 0);
+              /* 
+              [1, 2, 3, 4]
+              deleteCount = 2
+               */
               delta = insertCount - deleteCount;
               new_len = len + delta;
               while (k < deleteCount) {
