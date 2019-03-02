@@ -30,14 +30,15 @@
                 se non avesse messo max... ma solo arguments.length - 2, nel caso di 1 argomento avrebbe avuto insertCount = -1
                */
               insertCount = max(arguments.length - 3, 0),
-              k = 0, // ?
+              k = 0, // è un contatore che uso dopo in un while
               len = arr.length,
               new_len, // newLen
               result = [],
               shift_count; // shiftCount
               
-              // se start passed in, usa start, altrimenti usa 0
+              // if start passed in, use start, otherwise use 0
               start = start || 0;
+              // start che be an offset from the end
               if (start < 0) {
                 /* 
                   se len == 5 e start == -2 >>> start = 3
@@ -54,17 +55,23 @@
               if (start < len) start = start
               >>> start = min(start, len)
 
-              start, l'indice da cui partire a rimuovere ed aggiungere elementi, non può essere negativo, questo mi dice max tra due valori di cui uno è 0. se min è positivo, start sarà min, altrimenti 0. min quindi può essere negativo. min(start, len) mi dice che il limite superiore di s
+              start, l'indice da cui partire a rimuovere ed aggiungere elementi, non può essere negativo, questo mi dice max() tra due valori di cui uno è 0. se min è positivo, start sarà min, altrimenti 0. min quindi può essere negativo. min(start, len) mi dice che il limite superiore di s
                */
               start = max(min(start, len), 0);
-              // calcola quanti elementi rimuovere
+              // max() dice: il limite inferiore di deleteCount, # el da rimuovere, è 0. può essere positivo, il minimo tra len - start e deleteCount se è un numero, altrimenti len
               deleteCount = max(min(typeof deleteCount === 'number' ? deleteCount : len, len - start), 0);
               /* 
               [1, 2, 3, 4]
               deleteCount = 2
                */
+              
+              // la differenza tra il numero di elementi da rimuovere e aggiungere
               delta = insertCount - deleteCount;
+
+              // la lunghezza di arr dopo rimozioni e aggiunte
               new_len = len + delta;
+
+              // prendo gli elementi da rimuovere e li metto in result se non sono undefined, quindi sono a posto per il return value di splice
               while (k < deleteCount) {
                 element = arr[start + k];
                 if (element !== undefined) {
@@ -72,15 +79,22 @@
                 }
                 k += 1;
               }
+
+              // qui deve cominciare la rimozione e l'inserimento
+              // cos'è shift_count?
               shift_count = len - start - deleteCount;
+
+              // delta negativo significa che rimuovo più elementi di quelli che inserisco
               if (delta < 0) {
                 k = start + insertCount;
-                while (shift_count) {
+                while (shift_count) { // qui shifta gli elementi verso sinistra
                   arr[k] = arr[k - delta];
                   k += 1;
                   shift_count -= 1;
                 }
-                arr.length = new_len;
+                arr.length = new_len; // qui rimuove 
+              
+              // delta positivo significa che inserisco più elementi di quelli che rimuovo
               } else if (delta > 0) {
                 k = 1;
                 while (shift_count) {
@@ -90,9 +104,15 @@
                 }
                 arr.length = new_len;
               }
+
+              // dov'è l'else? e il case delta = 0 ?
+
+              // qui inserisco
               for (k = 0; k < insertCount; k += 1) {
-                arr[start + k] = arguments[k + 2];
+                arr[start + k] = arguments[k + 3];
               }
+
+
               return result;
             }
 
