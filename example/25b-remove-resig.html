@@ -13,16 +13,16 @@
       <script src="../simpletest.js"></script>
       <script>
 
-        function remove(arr, from, to) {
-          var rest = arr.slice((to || from) + 1 || arr.length);
-          arr.length = from;
-          return arr.push.apply(arr, rest);
-        }
+        // Array Remove - By John Resig (MIT Licensed)
+        // https://johnresig.com/blog/javascript-array-remove/#postcomment
+        Array.prototype.remove = function(from, to) {
+          var rest = this.slice((to || from) + 1 || this.length);
+          this.length = from < 0 ? this.length + from : from;
+          return this.push.apply(this, rest);
+        };
 
 
 
-
-        
 
         /* TESTS */
         SimpleTest.runTests({
