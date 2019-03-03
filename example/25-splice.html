@@ -62,8 +62,15 @@
 
           /* remove from Resig */
           function remove(arr, from, to) {
+            // var rest =... >>> metto in rest gli elmenti che vengono dopo gli elementi da rimuovere
+              // (to || from)... >>> start the slice just after where the remove operation ended
+              // || arr.length... >>> if the end index was -1, make sure that we don’t start the slice operation at 0, and instead start it after the end of the array
             var rest = arr.slice((to || from) + 1 || arr.length);
+            // remove operation: accorcia arr fino a from
             arr.length = from;
+            // qui fa 2 cose
+              // aggiunge rest - che è un array 
+              // restituisce la nuova lunghezza di arr
             return arr.push.apply(arr, rest);
           }
 
@@ -105,7 +112,7 @@
             eq(array !== result, true);
           },
           '04 - splice() should remove deleteCount elements starting from index start': function () {
-            
+
             var array = [1, 2, 3, 4];
             var result = splice(array, 1, 1);
             eq(array.length, 3);
