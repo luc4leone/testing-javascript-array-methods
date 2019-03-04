@@ -60,9 +60,17 @@
 
           /* CORE LOGIC */
 
-          /* remove from Resig */
+          /* remove() from Resig */
+          /* 
+          var arr = [0, 1, 2, 3, 4, 5, 6]
+          remove(1, 3), che significa 'rimuovi gli el da index 1 a index 3'
+          steps dell'algoritmo:
+            1. metto in rest gli elementi dopo quelli da rimuovere >>> 4, 5 e 6
+            2. accorcio arr togliendo sia rest che gli elementi da rimmuovere >>> arr = [0]
+            3. aggiungo rest ad arr, arr = [0, 4, 5, 6]
+           */
           function remove(arr, from, to) {
-            // var rest =... >>> metto in rest gli elmenti che vengono dopo gli elementi da rimuovere
+            // var rest =... >>> metto in rest gli elementi che vengono dopo gli elementi da rimuovere
               // (to || from)... >>> start the slice just after where the remove operation ended
               // || arr.length... >>> if the end index was -1, make sure that we don’t start the slice operation at 0, and instead start it after the end of the array
             var rest = arr.slice((to || from) + 1 || arr.length);
