@@ -29,7 +29,8 @@
           deleteCount (Optional)
             - An integer indicating the number of old array elements to remove.
             - If deleteCount is omitted, 
-              or if its value is larger than array.length - start (that is, if it is greater than the number of elements left in the array, starting at start), then all of the elements from start through the end of the array will be deleted.
+              or if its value is larger than array.length - start (that is, if it is greater than the number of elements left in the array, starting at start), 
+                then all of the elements from start through the end of the array will be deleted.
             - If deleteCount is 0 or negative, no elements are removed. In this case, you should specify at least one new element (see below).
 
           item1, item2, ... (Optional)
@@ -60,12 +61,6 @@
 
           /* CORE LOGIC */
 
-          // If greater than the length of the array, actual starting index will be set to the length of the array. 
-          var startingIndex = start;
-          if (startingIndex > array.length) {
-            startingIndex = array.length;
-          }
-
           /* remove() from Resig */
           /* 
           var arr = [0, 1, 2, 3, 4, 5, 6]
@@ -88,8 +83,21 @@
             return arr.push.apply(arr, rest);
           }
 
-          var end = startingIndex + deleteCount - 1;
-          remove(array, startingIndex, end);
+          // If greater than the length of the array, actual starting index will be set to the length of the array. 
+          var startingIndex = start;
+          if (startingIndex > array.length) {
+            startingIndex = array.length;
+          }
+
+          // If deleteCount is omitted, then all of the elements from start through the end of the array will be deleted.
+          var endingIndex; 
+          if (deleteCount) {
+            endingIndex = startingIndex + deleteCount - 1;
+          } else {
+            endingIndex = array.length;
+          }
+
+          remove(array, startingIndex, endingIndex);
 
 
 
@@ -149,7 +157,14 @@
             eq(array[2], 3);
             eq(array[3], 4);
             eq(result.length, 0);
-          }
+          },
+          '07 - If deleteCount is omitted, then all of the elements from start through the end of the array will be deleted.': function () {
+            var array = [0, 1, 2, 3, 4];
+            var result = splice(array, 2);
+            eq(array.length, 2);
+            eq(array[0], 0);
+            eq(array[1], 1);
+          },
           
         });
       </script>
