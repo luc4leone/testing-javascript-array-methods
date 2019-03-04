@@ -60,6 +60,12 @@
 
           /* CORE LOGIC */
 
+          // If greater than the length of the array, actual starting index will be set to the length of the array. 
+          var startingIndex = start;
+          if (startingIndex > array.length) {
+            startingIndex = array.length;
+          }
+
           /* remove() from Resig */
           /* 
           var arr = [0, 1, 2, 3, 4, 5, 6]
@@ -77,13 +83,13 @@
             // remove operation: accorcia arr fino a from
             arr.length = from < 0 ? arr.length + from : from;
             // qui fa 2 cose
-              // aggiunge rest - che è un array 
+              // aggiunge gli el di rest ad arr
               // restituisce la nuova lunghezza di arr
             return arr.push.apply(arr, rest);
           }
 
-          var end = start + deleteCount - 1;
-          remove(array, start, end);
+          var end = startingIndex + deleteCount - 1;
+          remove(array, startingIndex, end);
 
 
 
@@ -126,13 +132,23 @@
             eq(array[0], 1);
             eq(array[1], 3);
           },
-          '05 - If start is negative, will begin that many elements from the end of the array': function () {
+          '05 - If start is negative, it will begin that many elements from the end of the array': function () {
             var array = [1, 2, 3, 4];
             var result = splice(array, -2, 1);
             eq(array.length, 3);
             eq(array[0], 1);
             eq(array[1], 2);
             eq(array[2], 4);
+          },
+          '06 - If greater than the length of the array, actual starting index will be set to the length of the array.': function () {
+            var array = [1, 2, 3, 4];
+            var result = splice(array, 5, 1);
+            eq(array.length, 4);
+            eq(array[0], 1);
+            eq(array[1], 2);
+            eq(array[2], 3);
+            eq(array[3], 4);
+            eq(result.length, 0);
           }
           
         });
