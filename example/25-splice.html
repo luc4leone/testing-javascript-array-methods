@@ -165,6 +165,14 @@
             eq(array[0], 0);
             eq(array[1], 1);
           },
+          '08 - If deleteCount is larger than array.length - start (that is, if it is greater than the number of elements left in the array, starting at start), then all of the elements from start through the end of the array will be deleted.': function () {
+            var array = [0, 1, 2, 3, 4];
+            var result = splice(array, 2, 10);
+            eq(array.length, 2);
+            eq(array[0], 0);
+            eq(array[1], 1);
+
+          }
           
         });
       </script>
