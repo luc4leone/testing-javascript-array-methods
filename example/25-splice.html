@@ -71,6 +71,7 @@
             3. aggiungo rest ad arr, arr = [0, 4, 5, 6]
            */
           function remove(arr, from, to) {
+            var removedEls = arr.slice(from, to + 1);
             // var rest =... >>> metto in rest gli elementi che vengono dopo gli elementi da rimuovere
               // (to || from)... >>> start the slice just after where the remove operation ended
               // || arr.length... >>> if the end index was -1, make sure that we don’t start the slice operation at 0, and instead start it after the end of the array
@@ -80,7 +81,8 @@
             // qui fa 2 cose
               // aggiunge gli el di rest ad arr
               // restituisce la nuova lunghezza di arr
-            return arr.push.apply(arr, rest);
+            arr.push.apply(arr, rest);
+            return removedEls;
           }
 
           // If greater than the length of the array, actual starting index will be set to the length of the array. 
@@ -94,22 +96,20 @@
 
           if ((arguments.length >= 3) && (deleteCount > array.length - startingIndex)) {
             endingIndex = array.length;
-          } else if ((arguments.length >= 3) && (deleteCount == 0)) {
-            endingIndex = startingIndex - 1;
           } else if (arguments.length >= 3) {
             endingIndex = startingIndex + deleteCount - 1;
           } else {
             endingIndex = array.length;
           }
 
-          remove(array, startingIndex, endingIndex);
+          return remove(array, startingIndex, endingIndex);
 
 
 
           /* insert */
 
 
-          return [];
+
         }
 
         /* TESTS */
@@ -178,7 +178,6 @@
             eq(array[1], 1);
           },
           '09 - If deleteCount is 0 or negative, no elements are removed.': function () {
-            debugger;
             var myFish = ['angel', 'clown', 'mandarin', 'sturgeon'];
             var result = splice(myFish, 2, 0);
             eq(result.length, 0);
@@ -187,6 +186,18 @@
             eq(myFish[1], 'clown');
             eq(myFish[2], 'mandarin');
             eq(myFish[3], 'sturgeon');
+          },
+          '10 - splice() should return an array containing the deleted elements.': function () {
+            debugger;
+            var myFish = ['angel', 'clown', 'mandarin', 'sturgeon'];
+            var result = splice(myFish, 2, 2);
+            eq(result.length, 2);
+            eq(myFish.length, 2);
+            eq(myFish[0], 'angel');
+            eq(myFish[1], 'clown');
+            eq(result[0], 'mandarin');
+            eq(result[1], 'sturgeon');
+
           }
           
         });
