@@ -89,9 +89,12 @@
             startingIndex = array.length;
           }
 
-          // If deleteCount is omitted, then all of the elements from start through the end of the array will be deleted.
+          // If deleteCount is omitted, or if its value is larger than array.length - start, then all of the elements from start through the end of the array will be deleted.
           var endingIndex; 
-          if (deleteCount) {
+
+          if (deleteCount && (deleteCount > array.length - startingIndex)) {
+            endingIndex = array.length;
+          } else if (deleteCount) {
             endingIndex = startingIndex + deleteCount - 1;
           } else {
             endingIndex = array.length;
@@ -171,6 +174,8 @@
             eq(array.length, 2);
             eq(array[0], 0);
             eq(array[1], 1);
+          },
+          '09 - ': function () {
 
           }
           
