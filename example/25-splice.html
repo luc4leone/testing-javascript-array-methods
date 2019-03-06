@@ -43,13 +43,14 @@
 
         function splice (array, start, deleteCount, item1, item2) {
           var arrayLength = array.length,
-              argumentsLength = arguments.length,
+              args = Array.prototype.slice.call(arguments),
+              argsLength = arguments.length,
               startingIndex = start,
               endingIndex;
 
           /* TYPE ERRORS */
           // no arguments passed in
-          if (argumentsLength === 0) {
+          if (argsLength === 0) {
             throw new TypeError('undefined is not an array');
           }
 
@@ -61,25 +62,24 @@
           /* CORE LOGIC */
 
           // a slighly modified remove() function (original by Resig see file 25b)
-          function remove(arr, from, to) {
-            var removedEls = arr.slice(from, to + 1);
+          function removeAndInsert(arr, from, to) {
+            var calculateFrom = from < 0 ? arr.length + from : from;
+            // removed, if any  
+            var removed = arr.slice(from, to + 1);
+            // rest, if any
             var rest = arr.slice((to || from) + 1 || arr.length);
-            arr.length = from < 0 ? arr.length + from : from;
+            // ins, if any
+            var ins = args.slice(3, argsLength);
+            // cut from
+            arr.length = calculateFrom;
+            // paste insert
+            arr.push.apply(arr, ins);
+            // paste rest
             arr.push.apply(arr, rest);
-            return removedEls;
+
+            return removed;
           }
 
-          var args = arguments;
-
-          function insert(arr, from) {
-            var f = from < 0 ? arr.length + from : from;
-            var r = arr.slice(f);
-            arr.length = f;
-            for (var i = 3; i < args.length; i++) {
-              arr.push(args[i]);
-            }
-            arr.push.apply(arr, r);
-          }
 
           // If greater than the length of the array, actual starting index will be set to the length of the array. 
           function calculateStartingIndex() {
@@ -91,9 +91,9 @@
 
           // If deleteCount is omitted, or if its value is larger than array.length - start, then all of the elements from start through the end of the array will be deleted.
           function calculateEndingIndex() {
-            if ((argumentsLength >= 3) && (deleteCount > arrayLength - startingIndex)) {
+            if ((argsLength >= 3) && (deleteCount > arrayLength - startingIndex)) {
               endingIndex = arrayLength;
-            } else if (argumentsLength >= 3) {
+            } else if (argsLength >= 3) {
               endingIndex = startingIndex + deleteCount - 1;
             } else {
               endingIndex = arrayLength;
@@ -101,9 +101,9 @@
             return endingIndex;
           }
 
-          var re = remove(array, calculateStartingIndex(), calculateEndingIndex());
-          insert(array, calculateStartingIndex());
-          return re;
+          return removeAndInsert(array, calculateStartingIndex(), calculateEndingIndex());
+          //insert(array, calculateStartingIndex());
+          //return re;
 
         }
 
