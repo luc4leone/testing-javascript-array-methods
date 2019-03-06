@@ -41,7 +41,7 @@
         - An array containing the deleted elements. If only one element is removed, an array of one element is returned. 
         - If no elements are removed, an empty array is returned. */
 
-        function splice (array, start, deleteCount, item1, item2) {
+        function splice (array, start, deleteCount) {
           var arrayLength = array.length,
               args = Array.prototype.slice.call(arguments),
               argsLength = arguments.length,
@@ -55,33 +55,11 @@
           }
 
           // first argument is not an array
-          if (Array.isArray(arguments[0]) === false) {
-            throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array');
+          if (Array.isArray(args[0]) === false) {
+            throw new TypeError('value ' + JSON.stringify(args[0]) + ', of type ' + typeof args[0] + ', is not an array');
           }
 
           /* CORE LOGIC */
-
-          // a slighly modified remove() function (original by Resig see file 25b)
-          function removeAndInsert(arr, from, to) {
-            var calculateFrom = from < 0 ? arr.length + from : from;
-            // removed, if any  
-            var removed = arr.slice(from, to + 1);
-            // rest, if any
-            var rest = arr.slice((to || from) + 1 || arr.length);
-            // ins, if any
-            var ins = args.slice(3, argsLength);
-            // cut from
-            arr.length = calculateFrom;
-            // paste insert
-            arr.push.apply(arr, ins);
-            // paste rest
-            arr.push.apply(arr, rest);
-
-            return removed;
-          }
-
-
-          // If greater than the length of the array, actual starting index will be set to the length of the array. 
           function calculateStartingIndex() {
             if (startingIndex > arrayLength) {
               startingIndex = arrayLength;
@@ -101,10 +79,26 @@
             return endingIndex;
           }
 
-          return removeAndInsert(array, calculateStartingIndex(), calculateEndingIndex());
-          //insert(array, calculateStartingIndex());
-          //return re;
+          // some logic taken from remove() function by Resig: see details in file 25b)
+          function removeAndInsert(arr, from, to) {
+            var calculateFrom = from < 0 ? arr.length + from : from;
+            // removed, if any  
+            var removed = arr.slice(from, to + 1);
+            // elementsAfterRemoved, if any
+            var elementsAfterRemoved = arr.slice((to || from) + 1 || arr.length);
+            // elementsToadd, if any
+            var elementsToAdd = args.slice(3, argsLength);
+            // cut arr from
+            arr.length = calculateFrom;
+            // paste in arr elementsToAdd
+            arr.push.apply(arr, elementsToAdd);
+            // paste in arr elementsAfterRemoved
+            arr.push.apply(arr, elementsAfterRemoved);
 
+            return removed;
+          }
+
+          return removeAndInsert(array, calculateStartingIndex(), calculateEndingIndex());
         }
 
         /* TESTS */
