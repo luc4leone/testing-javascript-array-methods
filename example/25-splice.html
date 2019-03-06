@@ -70,6 +70,7 @@
             2. accorcio arr togliendo sia rest che gli elementi da rimmuovere >>> arr = [0]
             3. aggiungo rest ad arr, arr = [0, 4, 5, 6]
            */
+
           function remove(arr, from, to) {
             var removedEls = arr.slice(from, to + 1);
             // var rest =... >>> metto in rest gli elementi che vengono dopo gli elementi da rimuovere
@@ -83,6 +84,18 @@
               // restituisce la nuova lunghezza di arr
             arr.push.apply(arr, rest);
             return removedEls;
+          }
+
+          var args = arguments;
+
+          function insert(arr, from) {
+            var f = from < 0 ? arr.length + from : from;
+            var r = arr.slice(f);
+            arr.length = f;
+            for (var i = 3; i < args.length; i++) {
+              arr.push(args[i]);
+            }
+            arr.push.apply(arr, r);
           }
 
           // If greater than the length of the array, actual starting index will be set to the length of the array. 
@@ -102,11 +115,20 @@
             endingIndex = array.length;
           }
 
-          return remove(array, startingIndex, endingIndex);
+          var re = remove(array, startingIndex, endingIndex);
+          insert(array, startingIndex);
+          return re;
 
 
 
-          /* insert */
+          /* insert 
+          for (var i = 0; i < arguments.length; i++) {
+            arguments[i];
+
+          }
+          
+          */
+          //arr.push.call(arr, arguments[4], arguments[5]);
 
 
 
@@ -188,7 +210,6 @@
             eq(myFish[3], 'sturgeon');
           },
           '10 - splice() should return an array containing the deleted elements.': function () {
-            debugger;
             var myFish = ['angel', 'clown', 'mandarin', 'sturgeon'];
             var result = splice(myFish, 2, 2);
             eq(result.length, 2);
@@ -197,7 +218,18 @@
             eq(myFish[1], 'clown');
             eq(result[0], 'mandarin');
             eq(result[1], 'sturgeon');
-
+          },
+          '11 - splice() should add elements, beginning at the start index.': function () {
+            var myFish = ['angel', 'clown', 'mandarin', 'sturgeon'];
+            var result = splice(myFish, 2, 0, 'drum', 'guitar');
+            eq(myFish.length, 6);
+            eq(myFish[0], 'angel');
+            eq(myFish[1], 'clown');
+            eq(myFish[2], 'drum');
+            eq(myFish[3], 'guitar');
+            eq(myFish[4], 'mandarin');
+            eq(myFish[5], 'sturgeon');
+            eq(result.length, 0);
           }
           
         });
