@@ -67,12 +67,14 @@
             return startingIndex;
           }
 
-          // If deleteCount is omitted, or if its value is larger than array.length - start, then all of the elements from start through the end of the array will be deleted.
           function calculateEndingIndex() {
+            // deleteCount too large
             if ((argsLength >= 3) && (deleteCount > arrayLength - startingIndex)) {
               endingIndex = arrayLength;
+            // default case
             } else if (argsLength >= 3) {
               endingIndex = startingIndex + deleteCount - 1;
+            // deleteCount is omitted
             } else {
               endingIndex = arrayLength;
             }
