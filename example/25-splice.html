@@ -83,21 +83,22 @@
 
           // some logic taken from remove() function by Resig: see details in file 25b)
           function removeAndInsert(arr, from, to) {
+            // considering a negative 'from'
             var calculateFrom = from < 0 ? arr.length + from : from;
-            // removed, if any  
-            var removed = arr.slice(from, to + 1);
-            // elementsAfterRemoved, if any
-            var elementsAfterRemoved = arr.slice((to || from) + 1 || arr.length);
+            // toRemove, if any
+            var toRemove = arr.slice(from, to + 1);
+            // elementsAfterToRemove, if any
+            var elementsAfterToRemove = arr.slice((to || from) + 1 || arr.length);
             // elementsToadd, if any
             var elementsToAdd = args.slice(3, argsLength);
             // cut arr from
             arr.length = calculateFrom;
-            // paste in arr elementsToAdd
+            // add elementsToAdd to arr
             arr.push.apply(arr, elementsToAdd);
-            // paste in arr elementsAfterRemoved
-            arr.push.apply(arr, elementsAfterRemoved);
+            // add elementsAfterToRemove to arr
+            arr.push.apply(arr, elementsAfterToRemove);
 
-            return removed;
+            return toRemove;
           }
 
           return removeAndInsert(array, calculateStartingIndex(), calculateEndingIndex());
