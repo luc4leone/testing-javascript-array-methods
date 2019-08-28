@@ -12,150 +12,30 @@
       <h3 id="stats"></h3>
       <script src="../simpletest.js"></script>
       <script>
-        /* TESTS FOR Array.prototype.copyWithin */
+        function copyWithin(originalArray, target, start) {
+          var originalLength = originalArray.length;
+          var elementsToCopy = [];
 
-        /* GENERIC DESCRIPTION
-        copyWithin() copies part of an array to another location in the same array and returns it, without modifying its size.
-        */
-
-        /* INPUT
-        - signature
-            arr.copyWithin(target[, start[, end]])
-            
-            target
-              - Zero based index at which to copy the sequence to. 
-              - If negative, target will be counted from the end.
-              - If target is at or greater than arr.length, nothing will be copied. 
-              - If target is positioned after start, the copied sequence will be trimmed to fit arr.length.
-
-            start (Optional)
-              - Zero based index at which to start copying elements from. 
-              - If negative, start will be counted from the end.
-              - If start is omitted, copyWithin() will copy from the start (defaults to 0).
-
-            end (Optional)
-              - Zero based index at which to end copying elements from. copyWithin copies up to but not including end. 
-              - If negative, end will be counted from the end.
-              - If end is omitted, copyWithin() will copy until the end (default to arr.length).
-        */
-
-        /* RETURN VALUE
-        The modified array.
-        */
-
-        /* REQUIREMENTS
-        - The sequence is copied and pasted as one operation 
-        - pasted sequence will have the copied values even when the copy and paste region overlap.
-        - The copyWithin function is intentionally generic, it does not require that its this value be an Array object.
-        - The copyWithin method is a mutable method. It does not alter the length of this, but will change its content and create new properties if necessary.
-        */
-
-        function copyWithin (array, startPasting, startCopying, endCopying) {
-          /* TYPE ERRORS */
-          // no arguments passed in
-          if (arguments.length === 0) {
-            throw new TypeError('undefined is not an array');
-          }
-
-          // The following is taken from underscore.js. Basically it checks if the length property of arguments[0] is there
-          var shallowProperty = function (key) {
-            return function (obj) {
-              return obj == null ? void 0 : obj[key];
-            };
-          };
-          // in Javascript arrays can't contain more elements than this
-          var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1; // 9007199254740991
-
-          // getLength is a function, because shallowProperty returns a function
-          var getLength = shallowProperty('length'); 
-
-          var isArrayLike = function (collection) {
-            var length = getLength(collection);
-            return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
-          };
-
-          // first argument is not an array-like object
-          if (isArrayLike(arguments[0]) === false) {
-            throw new TypeError('value ' + JSON.stringify(arguments[0]) + ', of type ' + typeof arguments[0] + ', is not an array-like object');
-          }
-
-
-          /* CORE LOGIC */
-          // step 1: get array part beginning and ending index
-          var partFromIndex = getPartStart();
-          var partToIndex = getPartEnd();
-
-          // step 2: get array part
-          var part = copyPart(array, partFromIndex, partToIndex);
-
-          // step 3: get array beginning and ending paste index
-          var pasteFromIndex = getPasteStart();
-          var pasteToIndex = getPasteStop();
-
-          // step 4: paste part into array
-          pastePart(array, part);
-
-          // by putting the code into functions I try to make the solution logic clear at first glance, just by reading carefully choosen var and functions names 
-          function getPartStart () {
-            var from = startCopying || 0; 
-            if (from < 0) {
-                from += array.length;
-            }
-            return from;
-          }
-
-          function getPartEnd () {
-            var to = endCopying || array.length;
-            if (to < 0) {
-                  to += array.length;
-            } 
-            return to;
-          }
-
-          function copyPart (array, fromIndex, toIndex) {
-            var arrayPart = [];
-            for (var i = fromIndex; i < toIndex; i++) {
-              // copy also the array holes 
-              if (i in array) {
-                arrayPart[arrayPart.length] = array[i];
-              } else {
-                arrayPart.length++;
-              }
-            }
-            return arrayPart;
-          }
-
-          function getPasteStart () {
-            if (startPasting < - array.length) {
-              startPasting = 0;
-            }
-            if (startPasting < 0) {
-              startPasting += array.length;
-            }
-            return startPasting;
-          }
-
-          function getPasteStop () {
-            var PasteStart = getPasteStart();
-            var PasteStop = Math.min(PasteStart + part.length, array.length);
-            return PasteStop;
-          }
-
-          function pastePart(array, arrayPart) {
-            var j = 0;
-            for (var i = pasteFromIndex; i < pasteToIndex; i++) {
-                // also paste holes
-                if (j in arrayPart) { 
-                  array[i] = arrayPart[j];
-                  j++;
-                } else {
-                  delete array[i];
-                  j++;
-                }
+          if (target < 0) {
+            target += originalLength;
+            if (target < 0) {
+              return originalArray;
             }
           }
 
-          return array;
+          if (!start) {
+            start = 0;
+          }
+          
+          for (var i = 0; i < originalLength - target - start; i++) {
+            elementsToCopy[i] = originalArray[i + start];
+          }
+
+          for (var i = 0; i < elementsToCopy.length; i++) {
+            originalArray[i + target] = elementsToCopy[i];
+          }
+          
+          return originalArray;
         }
 
         /* TESTS */
