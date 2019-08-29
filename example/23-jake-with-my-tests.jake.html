@@ -8,33 +8,85 @@
         </style>
   </head>
   <body>
-      <h2>Test Drive copyWithin()</h2>
+      <h2>Test Drive jake copyWithin() with my tests</h2>
       <h3 id="stats"></h3>
       <script src="../simpletest.js"></script>
       <script>
-        function copyWithin(originalArray, target, start) {
+        // function copyWithin(originalArray, target, start) {
+        //   var originalLength = originalArray.length;
+        //   var elementsToCopy = [];
+
+        //   if (target < 0) {
+        //     target += originalLength;
+        //     if (target < 0) {
+        //       return originalArray;
+        //     }
+        //   }
+
+        //   if (!start) {
+        //     start = 0;
+        //   }
+          
+        //   for (var i = 0; i < originalLength - target - start; i++) {
+        //     elementsToCopy[i] = originalArray[i + start];
+        //   }
+
+        //   for (var i = 0; i < elementsToCopy.length; i++) {
+        //     originalArray[i + target] = elementsToCopy[i];
+        //   }
+          
+        //   return originalArray;
+        // }
+
+        function copyWithin(originalArray, target, start, end) {
           var originalLength = originalArray.length;
           var elementsToCopy = [];
 
-          if (target < 0) {
-            target += originalLength;
-            if (target < 0) {
-              return originalArray;
-            }
-          }
+          // the vars I need to break down the problem
+          var copyFrom, copyTo, pasteFrom, pasteTo;
 
+          // set copyFrom
+          // if undefined let's set it to 0
           if (!start) {
             start = 0;
           }
-          
-          for (var i = 0; i < originalLength - target - start; i++) {
-            elementsToCopy[i] = originalArray[i + start];
+          // set copyFrom to start, meaning 0 or a defined value
+          copyFrom = start; 
+          // if this value is negative let's start counting from the end
+          if (copyFrom < 0) {
+            copyFrom += originalLength;
           }
 
-          for (var i = 0; i < elementsToCopy.length; i++) {
-            originalArray[i + target] = elementsToCopy[i];
+          // set copyTo
+          var copyTo = end || originalLength;
+          if (copyTo < 0) {
+            copyTo += originalLength;
+          } 
+
+          // get elementsToCopy
+          for (var i = copyFrom, k = 0; i < copyTo; i++) {
+            elementsToCopy[k] = originalArray[i];
+            k++;
+          }
+
+          // set pasteFrom
+          pasteFrom = target;
+          if (pasteFrom < - originalLength) {
+            pasteFrom = 0;
+          }
+          if (pasteFrom < 0) {
+            pasteFrom += originalLength;
           }
           
+          // set pasteTo
+          pasteTo = Math.min(pasteFrom + elementsToCopy.length, originalLength);
+
+          // paste elementsToCopy
+          for (var i = pasteFrom, k = 0; i < pasteTo; i++) {
+            originalArray[i] = elementsToCopy[k];
+            k++;
+          }
+
           return originalArray;
         }
 

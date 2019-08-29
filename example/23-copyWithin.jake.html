@@ -43,94 +43,76 @@
           [1, 2, 3].copyWithin(1, 2) ==> [1, 3, 3]
           [1, 2, 3].copyWithin(1, 3) ==> [1, 2, 3]
 
-
         */
-        // function copyWithin(originalArray, target, start) {
-        //   var originalLength = originalArray.length;
-        //   var elementsToCopy = [];
 
-        //   if (target < 0) {
-        //     target += originalLength;
-        //     if (target < 0) {
-        //       return originalArray;
-        //     }
-        //   }
 
-        //   if (!start) {
-        //     start = 0;
-        //   }
-          
-        //   for (var i = 0; i < originalLength - target - start; i++) {
-        //     elementsToCopy[i] = originalArray[i + start];
-        //   }
-
-        //   for (var i = 0; i < elementsToCopy.length; i++) {
-        //     originalArray[i + target] = elementsToCopy[i];
-        //   }
-          
-        //   return originalArray;
-        // }
-
-        // function copyWithin(originalArray, target, start) {
-        //   var originalLength = originalArray.length;
-        //   var elementsToCopy = [];
-
-        //   if (target < 0) {
-        //     target = target + originalLength;
-        //     if (target < 0) {
-        //       return originalArray;
-        //     }
-        //   }
-
-        //   if (!start) {
-        //     start = 0;
-        //   }
-
-        //   for (var i = start, k = 0; i < originalLength; i++) {
-        //     elementsToCopy[k] = originalArray[i];
-        //     k++;
-        //   }
-
-        //   for (var i = target, k = 0; i < elementsToCopy.length; i++, k++) {
-        //     originalArray[i] = elementsToCopy[k];
-        //   }
-        //   return originalArray;
-        // }
-
-        function copyWithin(originalArray, target, start) {
+        // jake you forgot the end parameter, added!
+        function copyWithin(originalArray, target, start, end) {
           var originalLength = originalArray.length;
           var elementsToCopy = [];
 
-          if (target < 0) {
-            target = target + originalLength;
-            if (target < 0) {
-              return originalArray;
-            }
-          }
+          // the vars I need to break down the problem
+          var copyFrom, copyTo, pasteFrom, pasteTo;
 
+          // set copyFrom
+          // if undefined let's set it to 0
           if (!start) {
             start = 0;
           }
+          // set copyFrom to start, meaning 0 or a defined value
+          copyFrom = start; 
+          // if this value is negative let's start counting from the end
+          if (copyFrom < 0) {
+            copyFrom += originalLength;
+          }
 
-          for (var i = start, k = 0; i < originalLength; i++) {
-          elementsToCopy[k] = originalArray[i];
+          // set copyTo
+          var copyTo = end || originalLength;
+          if (copyTo < 0) {
+            copyTo += originalLength;
+          } 
+
+          // get elementsToCopy
+          for (var i = copyFrom, k = 0; i < copyTo; i++) {
+            elementsToCopy[k] = originalArray[i];
             k++;
           }
 
-          for (var i = 0; i < elementsToCopy.length; i++) {
-            originalArray[i + target] = elementsToCopy[i];
+          // set pasteFrom
+          // I commented out your calculation because it gave me problems if target < originalLength
+          // if (target < 0) {
+          //   target = target + originalLength;
+          //   if (target < 0) {
+          //     return originalArray;
+          //   }
+          // }
+          pasteFrom = target;
+          if (pasteFrom < - originalLength) {
+            pasteFrom = 0;
+          }
+          if (pasteFrom < 0) {
+            pasteFrom += originalLength;
           }
           
+          // set pasteTo
+          pasteTo = Math.min(pasteFrom + elementsToCopy.length, originalLength);
+
+          // paste elementsToCopy
+          for (var i = pasteFrom, k = 0; i < pasteTo; i++) {
+            originalArray[i] = elementsToCopy[k];
+            k++;
+          }
+
           return originalArray;
         }
 
         /* TESTS */
         SimpleTest.runTests({
-          'it should return the originalArray': function() {
+          'it should return the originalArray': function() { 
             var originalArray = [1];
 
             var returnedArray = copyWithin(originalArray, 0);
-            eq(originalArray, returnedArray);
+            eq(originalArray, returnedArray); 
           },
           'it should insert the copied section of originalArray back into originalArray, starting at target index': function() {
             var originalArray = [1, 2];

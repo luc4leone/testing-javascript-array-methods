@@ -112,6 +112,8 @@
             return to;
           }
 
+          // to < 0 ? to + array.length : endCopying || array.length
+
           function copyPart (array, fromIndex, toIndex) {
             var arrayPart = [];
             for (var i = fromIndex; i < toIndex; i++) {
@@ -136,9 +138,9 @@
           }
 
           function getPasteStop () {
-            var PasteStart = getPasteStart();
-            var PasteStop = Math.min(PasteStart + part.length, array.length);
-            return PasteStop;
+            var pasteStart = getPasteStart();
+            var pasteStop = Math.min(pasteStart + part.length, array.length);
+            return pasteStop;
           }
 
           function pastePart(array, arrayPart) {
